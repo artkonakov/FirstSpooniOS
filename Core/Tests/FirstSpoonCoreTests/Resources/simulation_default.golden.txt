@@ -1,0 +1,120 @@
+day   0  Try      broccoli           AGE_FITS
+day   1  Continue broccoli           CONTINUE_SERIES
+day   2  Continue broccoli           CONTINUE_SERIES
+day   3  Try      zucchini           AGE_FITS
+day   4  Continue zucchini           CONTINUE_SERIES
+day   5  Continue zucchini           CONTINUE_SERIES
+day   6  Try      brussels-sprouts   AGE_FITS
+day   7  Continue brussels-sprouts   CONTINUE_SERIES
+day   8  Continue brussels-sprouts   CONTINUE_SERIES
+day   9  Try      pear               NEW_CATEGORY, AGE_FITS
+day  10  Continue pear               CONTINUE_SERIES
+day  11  Continue pear               CONTINUE_SERIES
+day  12  Try      cauliflower        AGE_FITS
+day  13  Continue cauliflower        CONTINUE_SERIES
+day  14  Continue cauliflower        CONTINUE_SERIES
+day  15  Try      wheat-groats       ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  16  Continue wheat-groats       CONTINUE_SERIES
+day  17  Continue wheat-groats       CONTINUE_SERIES
+day  18  Try      white-fish         ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  19  Continue white-fish         CONTINUE_SERIES
+day  20  Continue white-fish         CONTINUE_SERIES
+day  21  Try      egg-yolk           ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  22  Continue egg-yolk           CONTINUE_SERIES
+day  23  Continue egg-yolk           CONTINUE_SERIES
+day  24  Try      yogurt             ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  25  Continue yogurt             CONTINUE_SERIES
+day  26  Continue yogurt             CONTINUE_SERIES
+day  27  Try      soy                ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  28  Continue soy                CONTINUE_SERIES
+day  29  Continue soy                CONTINUE_SERIES
+day  30  Try      peanut             ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  31  Continue peanut             CONTINUE_SERIES
+day  32  Continue peanut             CONTINUE_SERIES
+day  33  Try      butter             ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  34  Continue butter             CONTINUE_SERIES
+day  35  Continue butter             CONTINUE_SERIES
+day  36  Try      carrot             AGE_FITS
+day  37  Continue carrot             CONTINUE_SERIES
+day  38  Continue carrot             CONTINUE_SERIES
+day  39  Try      pumpkin            AGE_FITS
+day  40  Continue pumpkin            CONTINUE_SERIES
+day  41  Continue pumpkin            CONTINUE_SERIES
+day  42  Try      egg-white          ALLERGEN_DUE, AGE_FITS
+day  43  Continue egg-white          CONTINUE_SERIES
+day  44  Continue egg-white          CONTINUE_SERIES
+day  45  Try      potato             AGE_FITS
+day  46  Continue potato             CONTINUE_SERIES
+day  47  Continue potato             CONTINUE_SERIES
+day  48  Try      prune              AGE_FITS
+day  49  Continue prune              CONTINUE_SERIES
+day  50  Continue prune              CONTINUE_SERIES
+day  51  Try      apple              AGE_FITS
+day  52  Continue apple              CONTINUE_SERIES
+day  53  Continue apple              CONTINUE_SERIES
+day  54  Try      beef               NEW_CATEGORY, AGE_FITS
+day  55  Continue beef               CONTINUE_SERIES
+day  56  Continue beef               CONTINUE_SERIES
+day  57  Try      apricot            AGE_FITS
+day  58  Continue apricot            CONTINUE_SERIES
+day  59  Continue apricot            CONTINUE_SERIES
+day  60  Try      banana             AGE_FITS
+day  61  Continue banana             CONTINUE_SERIES
+day  62  Continue banana             CONTINUE_SERIES
+day  63  Try      whole-grain-bread  ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  64  Continue whole-grain-bread  CONTINUE_SERIES
+day  65  Continue whole-grain-bread  CONTINUE_SERIES
+day  66  Try      barley             ALLERGEN_DUE, AGE_FITS
+day  67  Continue barley             CONTINUE_SERIES
+day  68  Continue barley             CONTINUE_SERIES
+day  69  Try      bulgur             ALLERGEN_DUE, AGE_FITS
+day  70  Continue bulgur             CONTINUE_SERIES
+day  71  Continue bulgur             CONTINUE_SERIES
+day  72  Try      couscous           ALLERGEN_DUE, AGE_FITS
+day  73  Continue couscous           CONTINUE_SERIES
+day  74  Continue couscous           CONTINUE_SERIES
+day  75  Try      pasta              ALLERGEN_DUE, AGE_FITS
+day  76  Continue pasta              CONTINUE_SERIES
+day  77  Continue pasta              CONTINUE_SERIES
+day  78  Try      semolina           ALLERGEN_DUE, AGE_FITS
+day  79  Continue semolina           CONTINUE_SERIES
+day  80  Continue semolina           CONTINUE_SERIES
+day  81  Try      spinach            ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  82  Continue spinach            CONTINUE_SERIES
+day  83  Continue spinach            CONTINUE_SERIES
+day  84  Try      eggplant           AGE_FITS
+day  85  Continue eggplant           CONTINUE_SERIES
+day  86  Continue eggplant           CONTINUE_SERIES
+day  87  Try      white-cabbage      AGE_FITS
+day  88  Continue white-cabbage      CONTINUE_SERIES
+day  89  Continue white-cabbage      CONTINUE_SERIES
+day  90  Try      bell-pepper        AGE_FITS
+day  91  Continue bell-pepper        CONTINUE_SERIES
+day  92  Continue bell-pepper        CONTINUE_SERIES
+day  93  Try      beetroot           AGE_FITS
+day  94  Continue beetroot           CONTINUE_SERIES
+day  95  Continue beetroot           CONTINUE_SERIES
+day  96  Try      oily-fish          ALLERGEN_DUE, AGE_FITS
+day  97  Continue oily-fish          CONTINUE_SERIES
+day  98  Continue oily-fish          CONTINUE_SERIES
+day  99  Try      tomato             AGE_FITS
+day 100  Continue tomato             CONTINUE_SERIES
+day 101  Continue tomato             CONTINUE_SERIES
+day 102  Try      corn               AGE_FITS
+day 103  Continue corn               CONTINUE_SERIES
+day 104  Continue corn               CONTINUE_SERIES
+day 105  Try      cucumber           AGE_FITS
+day 106  Continue cucumber           CONTINUE_SERIES
+day 107  Continue cucumber           CONTINUE_SERIES
+day 108  Try      kefir              ALLERGEN_DUE, AGE_FITS
+day 109  Continue kefir              CONTINUE_SERIES
+day 110  Continue kefir              CONTINUE_SERIES
+day 111  Try      cheese             ALLERGEN_DUE, AGE_FITS
+day 112  Continue cheese             CONTINUE_SERIES
+day 113  Continue cheese             CONTINUE_SERIES
+day 114  Try      cottage-cheese     ALLERGEN_DUE, AGE_FITS
+day 115  Continue cottage-cheese     CONTINUE_SERIES
+day 116  Continue cottage-cheese     CONTINUE_SERIES
+day 117  Try      sour-cherry        AGE_FITS
+day 118  Continue sour-cherry        CONTINUE_SERIES
+day 119  Continue sour-cherry        CONTINUE_SERIES

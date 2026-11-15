@@ -1,0 +1,56 @@
+[
+  {
+    "name": "Первый продукт 6-месячного без истории — первый овощ по порядку",
+    "ageMonths": 6,
+    "expect": { "type": "try", "product": "broccoli" }
+  },
+  {
+    "name": "Серия в процессе — продолжаем её, а не новый продукт",
+    "ageMonths": 7,
+    "history": [ { "product": "zucchini", "daysAgo": 1, "times": 2 } ],
+    "expect": { "type": "continue", "product": "zucchini" }
+  },
+  {
+    "name": "Вчера была реакция — пауза",
+    "ageMonths": 7,
+    "history": [ { "product": "carrot", "daysAgo": 1, "times": 1, "reaction": "reaction" } ],
+    "expect": { "type": "wait" }
+  },
+  {
+    "name": "Сомнительная реакция тоже даёт паузу",
+    "ageMonths": 7,
+    "history": [ { "product": "carrot", "daysAgo": 0, "times": 1, "reaction": "unsure" } ],
+    "expect": { "type": "wait" }
+  },
+  {
+    "name": "После 5 овощей — первый аллерген или новая категория, а не шестой овощ",
+    "ageMonths": 7,
+    "introduced": ["broccoli", "zucchini", "brussels-sprouts", "cauliflower", "carrot"],
+    "expect": { "type": "try", "reasonsContain": ["NEW_CATEGORY"] }
+  },
+  {
+    "name": "Аллергия на яйцо из профиля — яйцо никогда не рекомендуется",
+    "ageMonths": 9,
+    "profile": { "known_allergens": "egg" },
+    "introduced": ["broccoli", "zucchini", "brussels-sprouts", "cauliflower", "carrot", "pumpkin", "apple", "pear"],
+    "expect": { "type": "try", "notProducts": ["egg-yolk", "egg-white"] }
+  },
+  {
+    "name": "Экзема — аллергены не рекомендуем (сначала врач)",
+    "ageMonths": 8,
+    "profile": { "eczema": "yes" },
+    "introduced": ["broccoli", "zucchini", "brussels-sprouts", "cauliflower", "carrot", "pumpkin"],
+    "expect": { "type": "try", "excludedReason": { "egg-yolk": "DOCTOR_FIRST", "peanut": "DOCTOR_FIRST" } }
+  },
+  {
+    "name": "Отметка «Исключить» и «Уже введён» не попадают в рекомендации",
+    "ageMonths": 6,
+    "marks": { "broccoli": "excluded", "zucchini": "known" },
+    "expect": { "type": "try", "product": "brussels-sprouts" }
+  },
+  {
+    "name": "Возраст 6 мес — продукты с 8 мес исключены по возрасту",
+    "ageMonths": 6,
+    "expect": { "type": "try", "excludedReason": { "eggplant": "TOO_YOUNG", "pasta": "TOO_YOUNG" } }
+  }
+]

@@ -1,0 +1,40 @@
+day   0  Try      broccoli           AGE_FITS
+day   1  Continue broccoli           CONTINUE_SERIES
+day   2  Continue broccoli           CONTINUE_SERIES
+day   3  Try      zucchini           AGE_FITS
+day   4  Continue zucchini           CONTINUE_SERIES
+day   5  Continue zucchini           CONTINUE_SERIES
+day   6  Try      brussels-sprouts   AGE_FITS
+day   7  Continue brussels-sprouts   CONTINUE_SERIES
+day   8  Continue brussels-sprouts   CONTINUE_SERIES
+day   9  Try      pear               NEW_CATEGORY, AGE_FITS
+day  10  Continue pear               CONTINUE_SERIES
+day  11  Continue pear               CONTINUE_SERIES
+day  12  Try      cauliflower        AGE_FITS
+day  13  Continue cauliflower        CONTINUE_SERIES
+day  14  Continue cauliflower        CONTINUE_SERIES
+day  15  Try      wheat-groats       ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  16  Continue wheat-groats       CONTINUE_SERIES
+day  17  Continue wheat-groats       CONTINUE_SERIES
+day  18  Try      white-fish         ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  19  Continue white-fish         CONTINUE_SERIES
+day  20  Continue white-fish         CONTINUE_SERIES
+day  21  Try      egg-yolk           ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  22  Continue egg-yolk           CONTINUE_SERIES
+day  23  Continue egg-yolk           CONTINUE_SERIES
+day  24  Try      yogurt             ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  25  Continue yogurt             CONTINUE_SERIES
+day  26  Continue yogurt             CONTINUE_SERIES
+day  27  Try      soy                ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  28  Continue soy                CONTINUE_SERIES
+day  29  Continue soy                CONTINUE_SERIES
+day  30  Try      peanut             ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  31  Continue peanut             CONTINUE_SERIES
+day  32  Continue peanut             CONTINUE_SERIES
+day  33  Try      butter             ALLERGEN_DUE, NEW_CATEGORY, AGE_FITS
+day  34  Continue butter             CONTINUE_SERIES
+day  35  Continue butter             CONTINUE_SERIES
+day  36  Try      carrot             AGE_FITS
+day  37  Wait     carrot             PAUSE_AFTER_REACTION
+day  38  Wait     carrot             PAUSE_AFTER_REACTION
+day  39  Try      pumpkin            AGE_FITS

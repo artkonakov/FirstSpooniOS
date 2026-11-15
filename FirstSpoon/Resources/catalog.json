@@ -1,0 +1,2103 @@
+{
+ "version": 1,
+ "categories": [
+  {
+   "id": "vegetables",
+   "sort": 10,
+   "name": {
+    "ru": "Овощи",
+    "en": "Vegetables"
+   }
+  },
+  {
+   "id": "grains-cereals-sides",
+   "sort": 20,
+   "name": {
+    "ru": "Крупы, злаки и гарниры",
+    "en": "Grains, cereals and sides"
+   }
+  },
+  {
+   "id": "dairy",
+   "sort": 30,
+   "name": {
+    "ru": "Молочные продукты",
+    "en": "Dairy"
+   }
+  },
+  {
+   "id": "meat-poultry",
+   "sort": 40,
+   "name": {
+    "ru": "Мясо и птица",
+    "en": "Meat and poultry"
+   }
+  },
+  {
+   "id": "eggs",
+   "sort": 50,
+   "name": {
+    "ru": "Яйца",
+    "en": "Eggs"
+   }
+  },
+  {
+   "id": "bread-bakery",
+   "sort": 60,
+   "name": {
+    "ru": "Хлеб и выпечка",
+    "en": "Bread and baked goods"
+   }
+  },
+  {
+   "id": "fruits-berries",
+   "sort": 70,
+   "name": {
+    "ru": "Фрукты и ягоды",
+    "en": "Fruits and berries"
+   }
+  },
+  {
+   "id": "oils-fats",
+   "sort": 80,
+   "name": {
+    "ru": "Масла и жиры",
+    "en": "Oils and fats"
+   }
+  },
+  {
+   "id": "fish-seafood",
+   "sort": 90,
+   "name": {
+    "ru": "Рыба и морепродукты",
+    "en": "Fish and seafood"
+   }
+  },
+  {
+   "id": "legumes",
+   "sort": 100,
+   "name": {
+    "ru": "Бобовые",
+    "en": "Legumes"
+   }
+  },
+  {
+   "id": "mushrooms",
+   "sort": 110,
+   "name": {
+    "ru": "Грибы",
+    "en": "Mushrooms"
+   }
+  },
+  {
+   "id": "greens-herbs-spices",
+   "sort": 120,
+   "name": {
+    "ru": "Зелень, травы и специи",
+    "en": "Greens, herbs and spices"
+   }
+  },
+  {
+   "id": "nuts-seeds",
+   "sort": 130,
+   "name": {
+    "ru": "Орехи и семена",
+    "en": "Nuts and seeds"
+   }
+  }
+ ],
+ "allergens": [
+  {
+   "id": "milk",
+   "name": {
+    "ru": "Молоко",
+    "en": "Milk"
+   }
+  },
+  {
+   "id": "egg",
+   "name": {
+    "ru": "Яйцо",
+    "en": "Egg"
+   }
+  },
+  {
+   "id": "fish",
+   "name": {
+    "ru": "Рыба",
+    "en": "Fish"
+   }
+  },
+  {
+   "id": "shellfish_seafood",
+   "name": {
+    "ru": "Морепродукты",
+    "en": "Shellfish and seafood"
+   }
+  },
+  {
+   "id": "peanut",
+   "name": {
+    "ru": "Арахис",
+    "en": "Peanut"
+   }
+  },
+  {
+   "id": "tree_nuts",
+   "name": {
+    "ru": "Орехи",
+    "en": "Tree nuts"
+   }
+  },
+  {
+   "id": "wheat_gluten",
+   "name": {
+    "ru": "Пшеница / глютен",
+    "en": "Wheat / gluten"
+   }
+  },
+  {
+   "id": "sesame",
+   "name": {
+    "ru": "Кунжут",
+    "en": "Sesame"
+   }
+  },
+  {
+   "id": "soy",
+   "name": {
+    "ru": "Соя",
+    "en": "Soy"
+   }
+  },
+  {
+   "id": "greens",
+   "name": {
+    "ru": "Зелень",
+    "en": "Greens"
+   }
+  }
+ ],
+ "products": [
+  {
+   "id": "broccoli",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 0,
+   "name": {
+    "ru": "Брокколи",
+    "en": "Broccoli"
+   },
+   "description": {
+    "ru": "Гладкое пюре или мягкое соцветие для еды руками. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth puree or soft floret as finger food. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "zucchini",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 1,
+   "name": {
+    "ru": "Кабачок",
+    "en": "Zucchini"
+   },
+   "description": {
+    "ru": "Гладкое пюре без кожуры. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth puree without skin. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "brussels-sprouts",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 2,
+   "name": {
+    "ru": "Брюссельская капуста",
+    "en": "Brussels sprouts"
+   },
+   "description": {
+    "ru": "Пюре из 1-2 кочанчиков, разваренных до мягкости. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Puree of 1-2 sprouts cooked until soft. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "cauliflower",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 3,
+   "name": {
+    "ru": "Цветная капуста",
+    "en": "Cauliflower"
+   },
+   "description": {
+    "ru": "Гладкое пюре или мягкое соцветие для еды руками. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth puree or soft floret as finger food. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "carrot",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 4,
+   "name": {
+    "ru": "Морковь",
+    "en": "Carrot"
+   },
+   "description": {
+    "ru": "Гладкое пюре с каплей масла. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth puree with a drop of oil. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "pumpkin",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 5,
+   "name": {
+    "ru": "Тыква",
+    "en": "Pumpkin"
+   },
+   "description": {
+    "ru": "Гладкое запеченное пюре. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth baked puree. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "eggplant",
+   "category": "vegetables",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 6,
+   "name": {
+    "ru": "Баклажан",
+    "en": "Eggplant"
+   },
+   "description": {
+    "ru": "Запеченное пюре без кожицы. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Baked puree without skin. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "white-cabbage",
+   "category": "vegetables",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 7,
+   "name": {
+    "ru": "Капуста белокочанная",
+    "en": "White cabbage"
+   },
+   "description": {
+    "ru": "Только в составе тушеных блюд, мелко нарезанная. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Only in stewed dishes, finely chopped. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "bell-pepper",
+   "category": "vegetables",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 8,
+   "name": {
+    "ru": "Перец",
+    "en": "Bell pepper"
+   },
+   "description": {
+    "ru": "Запеченный без кожицы, в виде пюре или мягких кусочков. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Baked without skin, as puree or soft pieces. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "beetroot",
+   "category": "vegetables",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 9,
+   "name": {
+    "ru": "Свекла",
+    "en": "Beetroot"
+   },
+   "description": {
+    "ru": "Гладкое пюре из вареной свеклы. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth puree from boiled beetroot. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "tomato",
+   "category": "vegetables",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 10,
+   "name": {
+    "ru": "Томат",
+    "en": "Tomato"
+   },
+   "description": {
+    "ru": "Бланшированный без кожицы и семян, размятый. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Blanched without skin and seeds, mashed. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "corn",
+   "category": "vegetables",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 11,
+   "name": {
+    "ru": "Кукуруза",
+    "en": "Corn"
+   },
+   "description": {
+    "ru": "Размятая каша из кукурузной муки или хорошо разваренные размятые зерна. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Mashed corn flour porridge or well-cooked mashed kernels. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "onion",
+   "category": "vegetables",
+   "minAgeMonths": 10,
+   "allergens": [],
+   "sort": 12,
+   "name": {
+    "ru": "Лук",
+    "en": "Onion"
+   },
+   "description": {
+    "ru": "Мелко нарезанный и тушеный в составе супов или рагу. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Finely chopped and stewed in soups or stews. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "cucumber",
+   "category": "vegetables",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 13,
+   "name": {
+    "ru": "Огурец",
+    "en": "Cucumber"
+   },
+   "description": {
+    "ru": "Очищенный, без семян, тонкими полосками для еды руками. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Peeled, seedless, thin strips as finger food. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "radish",
+   "category": "vegetables",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 14,
+   "name": {
+    "ru": "Редис",
+    "en": "Radish"
+   },
+   "description": {
+    "ru": "Только проваренная и мелко нарезанная в составе блюд. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Only cooked and finely chopped in dishes. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "potato",
+   "category": "vegetables",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 15,
+   "name": {
+    "ru": "Картофель",
+    "en": "Potato"
+   },
+   "description": {
+    "ru": "Гладкое пюре без масла. Меняйте форму по навыку: сначала мягкая крупная подача или пюре, затем маленькие кусочки",
+    "en": "Smooth puree without butter. Change the form with skill: start with a soft large piece or puree, then move to small pieces"
+   },
+   "firstServing": {
+    "ru": "1-2 чайные ложки (5-10 г)",
+    "en": "1-2 teaspoons (5-10 g)"
+   }
+  },
+  {
+   "id": "pear",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 16,
+   "name": {
+    "ru": "Груша",
+    "en": "Pear"
+   },
+   "description": {
+    "ru": "Пюре из спелой груши без кожуры. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from ripe pear without skin. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "prune",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 17,
+   "name": {
+    "ru": "Чернослив",
+    "en": "Prune"
+   },
+   "description": {
+    "ru": "Пюре из размоченного чернослива без косточки. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from soaked pitted prunes.5 teaspoon (2-3 g). Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "apple",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 18,
+   "name": {
+    "ru": "Яблоко",
+    "en": "Apple"
+   },
+   "description": {
+    "ru": "Пюре из запеченного или вареного яблока. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from baked or boiled apple. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "apricot",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 19,
+   "name": {
+    "ru": "Абрикос",
+    "en": "Apricot"
+   },
+   "description": {
+    "ru": "Пюре из спелого абрикоса без кожицы и косточки. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from ripe apricot without skin and pit. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "banana",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 20,
+   "name": {
+    "ru": "Банан",
+    "en": "Banana"
+   },
+   "description": {
+    "ru": "Размятый спелый банан или мягкий кусочек для еды руками. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Mashed ripe banana or soft piece as finger food. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "peach",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 21,
+   "name": {
+    "ru": "Персик",
+    "en": "Peach"
+   },
+   "description": {
+    "ru": "Пюре из спелого персика без кожицы и косточки. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from ripe peach without skin and pit. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "plum",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 22,
+   "name": {
+    "ru": "Слива",
+    "en": "Plum"
+   },
+   "description": {
+    "ru": "Пюре из спелой сливы без кожицы и косточки. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from ripe plum without skin and pit. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "sour-cherry",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 23,
+   "name": {
+    "ru": "Вишня",
+    "en": "Sour cherry"
+   },
+   "description": {
+    "ru": "Размятая или протертая через сито вишня без косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Mashed or sieved sour cherry without pits. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "strawberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 24,
+   "name": {
+    "ru": "Клубника",
+    "en": "Strawberry"
+   },
+   "description": {
+    "ru": "Размятая спелая клубника. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Mashed ripe strawberry. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "nectarine",
+   "category": "fruits-berries",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 25,
+   "name": {
+    "ru": "Нектарин",
+    "en": "Nectarine"
+   },
+   "description": {
+    "ru": "Пюре из спелого нектарина без кожицы и косточки. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree from ripe nectarine without skin and pit. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "currant",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 26,
+   "name": {
+    "ru": "Смородина",
+    "en": "Currant"
+   },
+   "description": {
+    "ru": "Пюре через сито от кожицы и косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Puree through sieve to remove skin and seeds. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "sweet-cherry",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 27,
+   "name": {
+    "ru": "Черешня",
+    "en": "Sweet cherry"
+   },
+   "description": {
+    "ru": "Размятая спелая черешня без косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Mashed ripe pitted sweet cherry. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "pineapple",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 28,
+   "name": {
+    "ru": "Ананас",
+    "en": "Pineapple"
+   },
+   "description": {
+    "ru": "Мелкие кусочки спелой мякоти без сердцевины. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small pieces of ripe flesh without core. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "orange",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 29,
+   "name": {
+    "ru": "Апельсин",
+    "en": "Orange"
+   },
+   "description": {
+    "ru": "Маленькие дольки без пленок и косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small segments without membranes and seeds. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "watermelon",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 30,
+   "name": {
+    "ru": "Арбуз",
+    "en": "Watermelon"
+   },
+   "description": {
+    "ru": "Маленькие кубики мякоти без косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small flesh cubes without seeds. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "lingonberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 31,
+   "name": {
+    "ru": "Брусника",
+    "en": "Lingonberry"
+   },
+   "description": {
+    "ru": "Морс или пюре из протертой через сито ягоды. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Fruit drink or sieved berry puree. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "grapes",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 32,
+   "name": {
+    "ru": "Виноград",
+    "en": "Grapes"
+   },
+   "description": {
+    "ru": "ВСЕГДА разрезайте вдоль на четвертинки. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "ALWAYS cut lengthwise into quarters. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "blueberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 33,
+   "name": {
+    "ru": "Голубика",
+    "en": "Blueberry"
+   },
+   "description": {
+    "ru": "Раздавленные или разрезанные пополам ягоды. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Crushed or halved berries. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "pomegranate",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 34,
+   "name": {
+    "ru": "Гранат",
+    "en": "Pomegranate"
+   },
+   "description": {
+    "ru": "Разбавленный сок 1:1 с водой. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Juice diluted 1:1 with water. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "grapefruit",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 35,
+   "name": {
+    "ru": "Грейпфрут",
+    "en": "Grapefruit"
+   },
+   "description": {
+    "ru": "Маленькая долька без пленок и косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small segment without membranes and seeds. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "melon",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 36,
+   "name": {
+    "ru": "Дыня",
+    "en": "Melon"
+   },
+   "description": {
+    "ru": "Маленькие кубики спелой мякоти без семян. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small cubes of ripe flesh without seeds. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "blackberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 37,
+   "name": {
+    "ru": "Ежевика",
+    "en": "Blackberry"
+   },
+   "description": {
+    "ru": "Раздавленные или протертые ягоды. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Crushed or sieved berries. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "kiwi",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 38,
+   "name": {
+    "ru": "Киви",
+    "en": "Kiwi"
+   },
+   "description": {
+    "ru": "Маленькие кубики спелой мякоти без сердцевины. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small cubes of ripe flesh without core. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "cranberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 39,
+   "name": {
+    "ru": "Клюква",
+    "en": "Cranberry"
+   },
+   "description": {
+    "ru": "Морс из клюквы без сахара. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Unsweetened cranberry drink. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "gooseberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 40,
+   "name": {
+    "ru": "Крыжовник",
+    "en": "Gooseberry"
+   },
+   "description": {
+    "ru": "Пюре из спелых ягод протертое через сито. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Ripe berry puree strained through sieve. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "lemon",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 41,
+   "name": {
+    "ru": "Лимон",
+    "en": "Lemon"
+   },
+   "description": {
+    "ru": "Пара капель сока в готовое блюдо. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "A few drops of juice in a cooked dish. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "raspberry",
+   "category": "fruits-berries",
+   "minAgeMonths": 9,
+   "allergens": [],
+   "sort": 42,
+   "name": {
+    "ru": "Малина",
+    "en": "Raspberry"
+   },
+   "description": {
+    "ru": "Раздавленные ягоды или пюре. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Crushed berries or puree. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "mandarin",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 43,
+   "name": {
+    "ru": "Мандарин",
+    "en": "Mandarin"
+   },
+   "description": {
+    "ru": "Маленькие дольки без пленок и косточек. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Small segments without membranes and seeds. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "persimmon",
+   "category": "fruits-berries",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 44,
+   "name": {
+    "ru": "Хурма",
+    "en": "Persimmon"
+   },
+   "description": {
+    "ru": "Спелая мякоть, размятая ложкой. Ориентируйтесь на спелость, мягкость и безопасную нарезку без косточек, жесткой кожицы и круглых форм",
+    "en": "Ripe flesh, mashed with a spoon. Focus on ripeness, softness, and safe cutting without pits, tough skin, or round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "buckwheat-groats",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 45,
+   "name": {
+    "ru": "Гречневая крупа",
+    "en": "Buckwheat groats"
+   },
+   "description": {
+    "ru": "Гладкая каша на воде или смеси из крупы тонкого помола. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth porridge on water or formula from finely ground groats. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "corn-grits",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 46,
+   "name": {
+    "ru": "Кукурузная крупа",
+    "en": "Corn grits"
+   },
+   "description": {
+    "ru": "Гладкая разваренная каша. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth well-cooked porridge. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "oat-groats",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 47,
+   "name": {
+    "ru": "Овсяная крупа",
+    "en": "Oat groats"
+   },
+   "description": {
+    "ru": "Гладкая каша из перемолотых хлопьев. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth porridge from ground flakes. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "wheat-groats",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 6,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 48,
+   "name": {
+    "ru": "Пшеничная крупа",
+    "en": "Wheat groats"
+   },
+   "description": {
+    "ru": "Гладкая каша из перемолотой крупы. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth porridge from ground groats. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "rice",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 49,
+   "name": {
+    "ru": "Рис",
+    "en": "Rice"
+   },
+   "description": {
+    "ru": "Гладкая разваренная каша из рисовой муки или развареного риса. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth well-cooked porridge from rice flour or cooked rice. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "millet",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 50,
+   "name": {
+    "ru": "Пшено",
+    "en": "Millet"
+   },
+   "description": {
+    "ru": "Гладкая каша из тщательно промытого пшена. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth porridge from thoroughly rinsed millet. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "barley",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 8,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 51,
+   "name": {
+    "ru": "Ячмень",
+    "en": "Barley"
+   },
+   "description": {
+    "ru": "Гладкая каша из ячневой (дробленой) крупы. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Smooth porridge from barley grits (cracked). Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "bulgur",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 8,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 52,
+   "name": {
+    "ru": "Булгур",
+    "en": "Bulgur"
+   },
+   "description": {
+    "ru": "Запаренный мелкий бульгур, размятый. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Steeped fine bulgur, mashed. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "couscous",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 8,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 53,
+   "name": {
+    "ru": "Кускус",
+    "en": "Couscous"
+   },
+   "description": {
+    "ru": "Запаренный кускус, размятый. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Steeped couscous, mashed. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "pasta",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 8,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 54,
+   "name": {
+    "ru": "Макароны",
+    "en": "Pasta"
+   },
+   "description": {
+    "ru": "Разваренные мелкие фигурки или сломанные на короткие куски спагетти. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Well-cooked small shapes or spaghetti broken into short pieces. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "semolina",
+   "category": "grains-cereals-sides",
+   "minAgeMonths": 8,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 55,
+   "name": {
+    "ru": "Манная крупа",
+    "en": "Semolina"
+   },
+   "description": {
+    "ru": "Жидкая каша на воде или смеси без сахара, не чаще 1-2 раз в неделю. Подавайте влажной текстурой: от гладкой каши к более густой и зернистой",
+    "en": "Thin porridge on water or formula without sugar, no more than 1-2 times a week. Serve with a moist texture: from smooth porridge to thicker, grainier textures"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "whole-grain-bread",
+   "category": "bread-bakery",
+   "minAgeMonths": 8,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 56,
+   "name": {
+    "ru": "Цельнозерновой хлеб",
+    "en": "Whole-grain bread"
+   },
+   "description": {
+    "ru": "Размоченный мякиш в супе или с овощным пюре. Следите, чтобы хлеб не склеивался во рту: помогает подсушенная полоска или маленький влажный кусочек",
+    "en": "Soaked crumb in soup or with vegetable puree. Watch that bread does not clump in the mouth: a toasted strip or small moist piece helps"
+   },
+   "firstServing": {
+    "ru": "маленький мягкий кусочек",
+    "en": "a small soft piece"
+   }
+  },
+  {
+   "id": "rye-bread",
+   "category": "bread-bakery",
+   "minAgeMonths": 10,
+   "allergens": [
+    "wheat_gluten"
+   ],
+   "sort": 57,
+   "name": {
+    "ru": "Хлеб ржаной",
+    "en": "Rye bread"
+   },
+   "description": {
+    "ru": "Маленький кусочек слегка подсушенного мякиша. Следите, чтобы хлеб не склеивался во рту: помогает подсушенная полоска или маленький влажный кусочек",
+    "en": "A small piece of slightly dried crumb. Watch that bread does not clump in the mouth: a toasted strip or small moist piece helps"
+   },
+   "firstServing": {
+    "ru": "маленький мягкий кусочек",
+    "en": "a small soft piece"
+   }
+  },
+  {
+   "id": "beef",
+   "category": "meat-poultry",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 58,
+   "name": {
+    "ru": "Говядина",
+    "en": "Beef"
+   },
+   "description": {
+    "ru": "Мелко перемолотое мясное пюре. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Finely ground meat puree. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "turkey",
+   "category": "meat-poultry",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 59,
+   "name": {
+    "ru": "Индейка",
+    "en": "Turkey"
+   },
+   "description": {
+    "ru": "Мелко перемолотое мясное пюре. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Finely ground meat puree. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "rabbit",
+   "category": "meat-poultry",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 60,
+   "name": {
+    "ru": "Кролик",
+    "en": "Rabbit"
+   },
+   "description": {
+    "ru": "Мелко перемолотое пюре из вареного кролика. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Finely ground puree from cooked rabbit. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "veal",
+   "category": "meat-poultry",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 61,
+   "name": {
+    "ru": "Телятина",
+    "en": "Veal"
+   },
+   "description": {
+    "ru": "Мелко перемолотое пюре из вареной телятины. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Finely ground puree from cooked veal. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "chicken",
+   "category": "meat-poultry",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 62,
+   "name": {
+    "ru": "Курица",
+    "en": "Chicken"
+   },
+   "description": {
+    "ru": "Мелко перемолотое пюре из вареной курицы. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Finely ground puree from boiled chicken. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "beef-liver",
+   "category": "meat-poultry",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 63,
+   "name": {
+    "ru": "Печень говяжья",
+    "en": "Beef liver"
+   },
+   "description": {
+    "ru": "Мягкий печеночный паштет с овощами, не чаще 1 раза в неделю. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Soft liver pâté with vegetables, no more than once a week. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "duck",
+   "category": "meat-poultry",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 64,
+   "name": {
+    "ru": "Утка",
+    "en": "Duck"
+   },
+   "description": {
+    "ru": "Пюре из утиной грудки без кожи и жира. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Puree from duck breast without skin and fat. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "lamb",
+   "category": "meat-poultry",
+   "minAgeMonths": 10,
+   "allergens": [],
+   "sort": 65,
+   "name": {
+    "ru": "Баранина",
+    "en": "Lamb"
+   },
+   "description": {
+    "ru": "Пюре из вареного нежирного ягненка. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Puree from boiled lean lamb. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "pork",
+   "category": "meat-poultry",
+   "minAgeMonths": 10,
+   "allergens": [],
+   "sort": 66,
+   "name": {
+    "ru": "Свинина",
+    "en": "Pork"
+   },
+   "description": {
+    "ru": "Пюре из вареной нежирной свинины. Подавайте очень мягким и влажным: пюре, нежные волокна, фрикадельки или кусочки поперек волокон",
+    "en": "Puree from boiled lean pork. Serve very soft and moist: puree, tender shreds, meatballs, or pieces cut across the grain"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "white-fish",
+   "category": "fish-seafood",
+   "minAgeMonths": 6,
+   "allergens": [
+    "fish"
+   ],
+   "sort": 67,
+   "name": {
+    "ru": "Белая рыба",
+    "en": "White fish"
+   },
+   "description": {
+    "ru": "Пюре из вареной рыбы без костей, 1-2 раза в неделю. Подавайте полностью готовой, влажной и тщательно проверенной на кости",
+    "en": "Puree from boiled bone-free fish, 1-2 times a week. Serve fully cooked, moist, and carefully checked for bones"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "oily-fish",
+   "category": "fish-seafood",
+   "minAgeMonths": 8,
+   "allergens": [
+    "fish"
+   ],
+   "sort": 68,
+   "name": {
+    "ru": "Рыба красная",
+    "en": "Oily fish"
+   },
+   "description": {
+    "ru": "Пюре из вареной рыбы без костей, 1-2 раза в неделю. Подавайте полностью готовой, влажной и тщательно проверенной на кости",
+    "en": "Puree from boiled bone-free fish, 1-2 times a week. Serve fully cooked, moist, and carefully checked for bones"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "egg-yolk",
+   "category": "eggs",
+   "minAgeMonths": 6,
+   "allergens": [
+    "egg"
+   ],
+   "sort": 69,
+   "name": {
+    "ru": "Яйцо (желток)",
+    "en": "Egg yolk"
+   },
+   "description": {
+    "ru": "1/4 крутого желтка, размятого с грудным молоком или смесью. Подавайте полностью приготовленным и меняйте форму от размятой ложки к мягким кусочкам",
+    "en": "1/4 of a hard-boiled yolk mashed with breast milk or formula. Serve fully cooked and move from mashed spoon-feeding to soft pieces"
+   },
+   "firstServing": {
+    "ru": "крошка или до 1/4 чайной ложки",
+    "en": "crumb or up to 1/4 teaspoon"
+   }
+  },
+  {
+   "id": "egg-white",
+   "category": "eggs",
+   "minAgeMonths": 6,
+   "allergens": [
+    "egg"
+   ],
+   "sort": 70,
+   "name": {
+    "ru": "Яйцо (белок)",
+    "en": "Egg white"
+   },
+   "description": {
+    "ru": "Маленький кусочек крутого белка. Подавайте полностью приготовленным и меняйте форму от размятой ложки к мягким кусочкам",
+    "en": "A small piece of hard-boiled white. Serve fully cooked and move from mashed spoon-feeding to soft pieces"
+   },
+   "firstServing": {
+    "ru": "крошка или до 1/4 чайной ложки",
+    "en": "crumb or up to 1/4 teaspoon"
+   }
+  },
+  {
+   "id": "yogurt",
+   "category": "dairy",
+   "minAgeMonths": 6,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 71,
+   "name": {
+    "ru": "Йогурт",
+    "en": "Yogurt"
+   },
+   "description": {
+    "ru": "Натуральный йогурт без сахара. Используйте ложку, миску или густую текстуру для тренировки самостоятельной еды",
+    "en": "Plain unsweetened yogurt. Use a spoon, bowl, or thicker texture to support self-feeding practice"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "kefir",
+   "category": "dairy",
+   "minAgeMonths": 8,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 72,
+   "name": {
+    "ru": "Кефир",
+    "en": "Kefir"
+   },
+   "description": {
+    "ru": "Однодневный детский кефир без сахара. Используйте ложку, миску или густую текстуру для тренировки самостоятельной еды",
+    "en": "One-day baby kefir without sugar. Use a spoon, bowl, or thicker texture to support self-feeding practice"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 мл)",
+    "en": "1 teaspoon (5 ml)"
+   }
+  },
+  {
+   "id": "cheese",
+   "category": "dairy",
+   "minAgeMonths": 8,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 73,
+   "name": {
+    "ru": "Сыр",
+    "en": "Cheese"
+   },
+   "description": {
+    "ru": "Натертый мягкий сыр в овощное пюре или пасту. Используйте ложку, миску или густую текстуру для тренировки самостоятельной еды",
+    "en": "Grated soft cheese in vegetable puree or pasta. Use a spoon, bowl, or thicker texture to support self-feeding practice"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "cottage-cheese",
+   "category": "dairy",
+   "minAgeMonths": 8,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 74,
+   "name": {
+    "ru": "Творог",
+    "en": "Cottage cheese"
+   },
+   "description": {
+    "ru": "Размятый детский творог со смесью или йогуртом. Используйте ложку, миску или густую текстуру для тренировки самостоятельной еды",
+    "en": "Mashed baby cottage cheese with formula or yogurt. Use a spoon, bowl, or thicker texture to support self-feeding practice"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "milk",
+   "category": "dairy",
+   "minAgeMonths": 12,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 75,
+   "name": {
+    "ru": "Молоко",
+    "en": "Milk"
+   },
+   "description": {
+    "ru": "Цельное коровье молоко как напиток. Используйте ложку, миску или густую текстуру для тренировки самостоятельной еды",
+    "en": "Whole cow's milk as a drink. Use a spoon, bowl, or thicker texture to support self-feeding practice"
+   },
+   "firstServing": {
+    "ru": "1-2 чайные ложки (5-10 мл)",
+    "en": "1-2 teaspoons (5-10 ml)"
+   }
+  },
+  {
+   "id": "sour-cream",
+   "category": "dairy",
+   "minAgeMonths": 12,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 76,
+   "name": {
+    "ru": "Сметана",
+    "en": "Sour cream"
+   },
+   "description": {
+    "ru": "Ложка нежирной сметаны в суп или к творогу. Используйте ложку, миску или густую текстуру для тренировки самостоятельной еды",
+    "en": "A spoonful of low-fat sour cream in soup or with cottage cheese. Use a spoon, bowl, or thicker texture to support self-feeding practice"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "green-beans",
+   "category": "legumes",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 77,
+   "name": {
+    "ru": "Зеленая фасоль",
+    "en": "Green beans"
+   },
+   "description": {
+    "ru": "Размятые проваренные стручки. Разминайте до мягкой пасты или приплюснутых зерен, чтобы убрать риск круглой плотной формы",
+    "en": "Mashed cooked pods. Mash into a soft paste or flatten beans and peas to avoid firm round shapes"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "green-peas",
+   "category": "legumes",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 78,
+   "name": {
+    "ru": "Зеленый горошек",
+    "en": "Green peas"
+   },
+   "description": {
+    "ru": "Раздавленный или размятый зеленый горошек. Разминайте до мягкой пасты или приплюснутых зерен, чтобы убрать риск круглой плотной формы",
+    "en": "Crushed or mashed green peas. Mash into a soft paste or flatten beans and peas to avoid firm round shapes"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "beans",
+   "category": "legumes",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 79,
+   "name": {
+    "ru": "Фасоль",
+    "en": "Beans"
+   },
+   "description": {
+    "ru": "Пюре из хорошо разваренной фасоли. Разминайте до мягкой пасты или приплюснутых зерен, чтобы убрать риск круглой плотной формы",
+    "en": "Puree from well-cooked beans. Mash into a soft paste or flatten beans and peas to avoid firm round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "soy",
+   "category": "legumes",
+   "minAgeMonths": 6,
+   "allergens": [
+    "soy"
+   ],
+   "sort": 80,
+   "name": {
+    "ru": "Соя",
+    "en": "Soy"
+   },
+   "description": {
+    "ru": "Размятый шелковый тофу. Разминайте до мягкой пасты или приплюснутых зерен, чтобы убрать риск круглой плотной формы",
+    "en": "Mashed silken tofu. Mash into a soft paste or flatten beans and peas to avoid firm round shapes"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "peanut",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "peanut"
+   ],
+   "sort": 81,
+   "name": {
+    "ru": "Арахис",
+    "en": "Peanut"
+   },
+   "description": {
+    "ru": "Гладкая арахисовая паста, разбавленная грудным молоком, смесью или водой. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Smooth peanut butter diluted with breast milk, formula, or water. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "walnut",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "tree_nuts"
+   ],
+   "sort": 82,
+   "name": {
+    "ru": "Грецкий орех",
+    "en": "Walnut"
+   },
+   "description": {
+    "ru": "Молотый орех (мука) в кашу или пюре. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground nut (flour) in porridge or puree. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "cashew",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "tree_nuts"
+   ],
+   "sort": 83,
+   "name": {
+    "ru": "Кешью",
+    "en": "Cashew"
+   },
+   "description": {
+    "ru": "Молотый орех или паста кешью. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground or cashew butter. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "sesame",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "sesame"
+   ],
+   "sort": 84,
+   "name": {
+    "ru": "Кунжут",
+    "en": "Sesame"
+   },
+   "description": {
+    "ru": "Тахини (кунжутная паста) разбавленная в каше или пюре. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Tahini (sesame paste) diluted in porridge or puree. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "almond",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "tree_nuts"
+   ],
+   "sort": 85,
+   "name": {
+    "ru": "Миндаль",
+    "en": "Almond"
+   },
+   "description": {
+    "ru": "Молотый миндаль или паста. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground almond or butter. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "sunflower-seeds",
+   "category": "nuts-seeds",
+   "minAgeMonths": 10,
+   "allergens": [],
+   "sort": 86,
+   "name": {
+    "ru": "Семена подсолнечные",
+    "en": "Sunflower seeds"
+   },
+   "description": {
+    "ru": "Молотые семечки в кашу или пюре. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground seeds in porridge or puree. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "pumpkin-seeds",
+   "category": "nuts-seeds",
+   "minAgeMonths": 10,
+   "allergens": [],
+   "sort": 87,
+   "name": {
+    "ru": "Семена тыквенные",
+    "en": "Pumpkin seeds"
+   },
+   "description": {
+    "ru": "Молотые семечки или паста. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground seeds or butter. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "pistachio",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "tree_nuts"
+   ],
+   "sort": 88,
+   "name": {
+    "ru": "Фисташка",
+    "en": "Pistachio"
+   },
+   "description": {
+    "ru": "Молотая фисташка или паста (без соли). Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground pistachio or butter (unsalted). Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "hazelnut",
+   "category": "nuts-seeds",
+   "minAgeMonths": 6,
+   "allergens": [
+    "tree_nuts"
+   ],
+   "sort": 89,
+   "name": {
+    "ru": "Фундук",
+    "en": "Hazelnut"
+   },
+   "description": {
+    "ru": "Молотый фундук или паста. Используйте только пасту, муку или мелкую крошку, вмешанную во влажную еду; целые орехи не подходят",
+    "en": "Ground hazelnut or butter. Use only butter, flour, or fine crumbs mixed into moist food; whole nuts are not suitable"
+   },
+   "firstServing": {
+    "ru": "1/4 чайной ложки (1-2 г)",
+    "en": "1/4 teaspoon (1-2 g)"
+   }
+  },
+  {
+   "id": "avocado",
+   "category": "oils-fats",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 90,
+   "name": {
+    "ru": "Авокадо",
+    "en": "Avocado"
+   },
+   "description": {
+    "ru": "Размятая мякоть спелого авокадо. Добавляйте небольшое количество в теплую еду, а не подавайте отдельно",
+    "en": "Mashed flesh of ripe avocado. Stir a small amount into warm food rather than serving it on its own"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "vegetable-oils",
+   "category": "oils-fats",
+   "minAgeMonths": 6,
+   "allergens": [],
+   "sort": 91,
+   "name": {
+    "ru": "Растительные масла",
+    "en": "Vegetable oils"
+   },
+   "description": {
+    "ru": "1-2 капли в овощное или мясное пюре. Добавляйте небольшое количество в теплую еду, а не подавайте отдельно",
+    "en": "1-2 drops in vegetable or meat puree. Stir a small amount into warm food rather than serving it on its own"
+   },
+   "firstServing": {
+    "ru": "1/4-1/2 чайной ложки (1-3 г)",
+    "en": "1/4-1/2 teaspoon (1-3 g)"
+   }
+  },
+  {
+   "id": "butter",
+   "category": "oils-fats",
+   "minAgeMonths": 6,
+   "allergens": [
+    "milk"
+   ],
+   "sort": 92,
+   "name": {
+    "ru": "Сливочное масло",
+    "en": "Butter"
+   },
+   "description": {
+    "ru": "1-3 г сливочного масла в кашу или овощное пюре. Добавляйте небольшое количество в теплую еду, а не подавайте отдельно",
+    "en": "1-3 g of butter in porridge or vegetable puree. Stir a small amount into warm food rather than serving it on its own"
+   },
+   "firstServing": {
+    "ru": "1/4-1/2 чайной ложки (1-3 г)",
+    "en": "1/4-1/2 teaspoon (1-3 g)"
+   }
+  },
+  {
+   "id": "olives",
+   "category": "oils-fats",
+   "minAgeMonths": 10,
+   "allergens": [],
+   "sort": 93,
+   "name": {
+    "ru": "Оливки",
+    "en": "Olives"
+   },
+   "description": {
+    "ru": "1-2 оливки без косточки, нарезанные мелко, промытые. Добавляйте небольшое количество в теплую еду, а не подавайте отдельно",
+    "en": "1-2 pitted olives, finely chopped, rinsed. Stir a small amount into warm food rather than serving it on its own"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "dill",
+   "category": "greens-herbs-spices",
+   "minAgeMonths": 8,
+   "allergens": [],
+   "sort": 94,
+   "name": {
+    "ru": "Укроп",
+    "en": "Dill"
+   },
+   "description": {
+    "ru": "Мелко нарезанный укроп в овощное пюре или суп. Мелко нарезайте и вмешивайте в знакомые блюда, убирая жесткие стебли",
+    "en": "Finely chopped dill in vegetable puree or soup. Finely chop and mix into familiar foods, removing tough stems"
+   },
+   "firstServing": {
+    "ru": "щепотка",
+    "en": "a pinch"
+   }
+  },
+  {
+   "id": "spinach",
+   "category": "greens-herbs-spices",
+   "minAgeMonths": 8,
+   "allergens": [
+    "greens"
+   ],
+   "sort": 95,
+   "name": {
+    "ru": "Шпинат",
+    "en": "Spinach"
+   },
+   "description": {
+    "ru": "Пюре из проваренного шпината с другими овощами, не чаще 1-2 раз в неделю. Мелко нарезайте и вмешивайте в знакомые блюда, убирая жесткие стебли",
+    "en": "Puree from cooked spinach with other vegetables, no more than 1-2 times a week. Finely chop and mix into familiar foods, removing tough stems"
+   },
+   "firstServing": {
+    "ru": "2 чайные ложки (10 г)",
+    "en": "2 teaspoons (10 g)"
+   }
+  },
+  {
+   "id": "celery",
+   "category": "greens-herbs-spices",
+   "minAgeMonths": 8,
+   "allergens": [
+    "greens"
+   ],
+   "sort": 96,
+   "name": {
+    "ru": "Сельдерей",
+    "en": "Celery"
+   },
+   "description": {
+    "ru": "Проваренный мелко нарезанный сельдерей в супе. Мелко нарезайте и вмешивайте в знакомые блюда, убирая жесткие стебли",
+    "en": "Cooked finely chopped celery in soup. Finely chop and mix into familiar foods, removing tough stems"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  },
+  {
+   "id": "champignons",
+   "category": "mushrooms",
+   "minAgeMonths": 12,
+   "allergens": [],
+   "sort": 97,
+   "name": {
+    "ru": "Шампиньоны",
+    "en": "Champignons"
+   },
+   "description": {
+    "ru": "Мелко нарезанные тушеные шампиньоны в составе блюд. Подавайте полностью приготовленными, мягкими и мелко нарезанными",
+    "en": "Finely chopped stewed champignons in dishes. Serve fully cooked, soft, and finely chopped"
+   },
+   "firstServing": {
+    "ru": "1 чайная ложка (5 г)",
+    "en": "1 teaspoon (5 g)"
+   }
+  }
+ ]
+}

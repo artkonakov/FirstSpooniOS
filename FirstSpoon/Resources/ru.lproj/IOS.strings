@@ -1,0 +1,3 @@
+/* Строки только для iOS (нет в Android strings.xml). Правится руками. */
+
+"catalog_custom_category" = "Свои продукты";
