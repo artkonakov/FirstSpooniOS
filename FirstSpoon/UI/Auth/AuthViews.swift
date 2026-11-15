@@ -160,6 +160,16 @@ struct AuthCodeView: View {
         }
         .appScreen()
         .navigationTitle(L.s("auth_otp_title"))
+        .onAppear {
+            #if DEBUG
+            // Только debug, для e2e-проверки входа: код кладётся в настройки симулятора извне
+            // (`defaults write app.littlebite.dev debug_otp …`), подставляется один раз и сразу стирается.
+            if model.code.isEmpty, let code = UserDefaults.standard.string(forKey: "debug_otp") {
+                UserDefaults.standard.removeObject(forKey: "debug_otp")
+                model.code = code
+            }
+            #endif
+        }
     }
 }
 

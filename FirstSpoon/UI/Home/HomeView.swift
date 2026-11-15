@@ -43,7 +43,7 @@ struct HomeView: View {
                 if let rec = app.recommendations.result?.recommendation {
                     RecommendationCard(rec: rec, catalog: app.catalog.catalog,
                                        onOpenProduct: { nav.open(.product($0)) },
-                                       onRecord: { nav.open(.entry(entryId: nil, productId: $0)) },
+                                       onRecord: { Analytics.track(.recommendationRecord); nav.open(.entry(entryId: nil, productId: $0)) },
                                        onOther: { app.recommendations.skip($0) })
                 }
                 ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal)

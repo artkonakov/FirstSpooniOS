@@ -78,6 +78,7 @@ final class OnboardingViewModel {
         do {
             let id = try diary.saveChild(id: childId, name: name, birthDate: birthDate, sex: sex, profile: profile)
             diary.selectChild(id)
+            Analytics.track(.onboardingCompleted)
             store.set(true)
         } catch {
             saving = false

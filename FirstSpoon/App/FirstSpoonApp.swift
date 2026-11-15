@@ -1,5 +1,6 @@
 import SwiftUI
 import UserNotifications
+import FirstSpoonCore
 
 @main
 struct FirstSpoonApp: App {
@@ -22,6 +23,13 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+        // Аналитика: AppMetrica (ключ общий с Android) + лог в debug. Каталог событий и правила — docs/analytics.md.
+        var trackers: [AnalyticsTracker] = []
+        if let appMetrica = AppMetricaTracker.activate() { trackers.append(appMetrica) }
+        #if DEBUG
+        trackers.append(LogTracker())
+        #endif
+        Analytics.install(trackers)
         return true
     }
 

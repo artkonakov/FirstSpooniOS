@@ -1,5 +1,6 @@
 import Foundation
 import Observation
+import FirstSpoonCore
 
 enum LoginStep { case codeSent, loggedIn }
 
@@ -44,6 +45,7 @@ final class AuthRepository {
     func startAnonymous() {
         defaults.set(true, forKey: Key.guest)
         guest = true
+        Analytics.track(.guestStarted)
         Task { await ensureAnonymous() }
     }
 
@@ -87,7 +89,10 @@ final class AuthRepository {
                                body: VerifyRequest(email: mail, code: code.trimmingCharacters(in: .whitespacesAndNewlines),
                                                    anonymousRefreshToken: anonymousToken),
                                authorized: false, as: TokenResponse.self)
-        if case .success(let t) = r { completeLogin(access: t.token, refresh: t.refreshToken, userId: t.userId, email: t.email ?? mail) }
+        if case .success(let t) = r {
+            completeLogin(access: t.token, refresh: t.refreshToken, userId: t.userId, email: t.email ?? mail)
+            Analytics.track(.login(fromGuest: anonymousToken != nil))
+        }
         return r.map { _ in () }
     }
 
@@ -107,6 +112,7 @@ final class AuthRepository {
             tokens.save(access: b.token, refresh: nil, userId: b.userId, email: b.email)
             defaults.set(false, forKey: Key.ownerAnonymous)
             session.onLoggedIn()
+            Analytics.track(.emailLinked)
         }
         return r.map { _ in () }
     }
@@ -123,6 +129,12 @@ final class AuthRepository {
     }
 
     func logout() {
+        Analytics.track(.logout)
+        signOutLocally()
+    }
+
+    /// Стереть дневник, флаги и токены (выход, удаление аккаунта).
+    private func signOutLocally() {
         try? db.clearUserData()
         for key in [Key.owner, Key.ownerAnonymous, Key.guest] { defaults.removeObject(forKey: key) }
         guest = false
@@ -145,12 +157,17 @@ final class AuthRepository {
 
     func deleteAccount() async -> ApiResult<Void> {
         // Гость, чей аккаунт ещё не создан на сервере: удалять там нечего.
-        guard tokens.hasSession else { logout(); return .success(()) }
+        guard tokens.hasSession else { accountDeleted(); return .success(()) }
         let r = await api.call("DELETE", "user/me", authorized: true, as: DeleteAccountResponse.self)
         let alreadyDeleted = r.error?.status == 410
-        if case .success = r { logout(); return .success(()) }
-        if alreadyDeleted { logout(); return .success(()) }
+        if case .success = r { accountDeleted(); return .success(()) }
+        if alreadyDeleted { accountDeleted(); return .success(()) }
         return r.map { _ in () }
+    }
+
+    private func accountDeleted() {
+        Analytics.track(.accountDeleted)
+        signOutLocally()
     }
 
     private func completeLogin(access: String, refresh: String?, userId: String?, email: String?) {

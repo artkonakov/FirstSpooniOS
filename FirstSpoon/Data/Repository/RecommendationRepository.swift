@@ -33,6 +33,7 @@ final class RecommendationRepository {
 
     /// Кнопка «Другой»: этот продукт сегодня больше не предлагать.
     func skip(_ productId: String) {
+        Analytics.track(.recommendationOther)
         let today = debugToday ?? .today()
         if skipped.day == today { skipped.ids.insert(productId) } else { skipped = (today, [productId]) }
     }

@@ -66,6 +66,7 @@ final class CatalogRepository {
         let record = CustomProductRecord(id: newId(), name: name.trimmingCharacters(in: .whitespacesAndNewlines),
                                          categoryId: categoryId, allergenIds: allergenIds, createdAt: now, updatedAt: now)
         try db.dbQueue.write { try record.insert($0) }
+        Analytics.track(.customProductAdded)
         reload()
         return record.id
     }

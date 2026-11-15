@@ -22,7 +22,8 @@
 | Доменные правила: FeedingRules, ChildProfile, рекомендации (Gate/Filter/Scorer), ReminderRules, Subscription/Entitlement | ✅ 62 XCTest; сценарии и golden-симуляции — **те же файлы, что в Android**, совпадают байт в байт | `Core/Sources/FirstSpoonCore` |
 | Приветствие: «Продолжить» (гость), «У меня уже есть аккаунт», документы в SFSafariViewController | ✅ проверено в симуляторе | `UI/Auth/WelcomeView.swift` |
 | Гость: флаг сразу, `POST /auth/anonymous` в фоне (повтор при старте) | ✅ код; в симуляторе — только с `debug_offline` (без сервера) | `AuthRepository.startAnonymous/ensureAnonymous` |
-| Вход email + OTP, повтор кода (60 с), привязка почты в настройках, «Войти в этот аккаунт» | ✅ код, вживую не проверено | `UI/Auth/AuthViews.swift`, `LinkEmailFlow` |
+| Вход email + OTP на боевом сервере | ✅ проверено в симуляторе 2026-11-15 (e2e-ios): `/auth/email` и `/auth/email/verify` → 200, сессия, онбординг, почта в настройках | `UI/Auth/AuthViews.swift`, `AuthRepository` |
+| Повтор кода (60 с), привязка почты в настройках, «Войти в этот аккаунт» | ✅ код, вживую не проверено | `AuthViewModel`, `LinkEmailFlow` |
 | Refresh на 401 (один на всех), 410 ACCOUNT_DELETED → выход и очистка | ✅ код, тестов нет | `Core/Network/ApiClient.swift` |
 | Онбординг: имя → пол → дата рождения → аллергены → экзема → аллергия в семье → питание | ✅ проверено в симуляторе | `UI/Onboarding/*` |
 | Системный таб-бар (`TabView`) Главная / Дневник / Продукты / Профиль, у каждой вкладки свой `NavigationStack` | ✅ проверено | `UI/Navigation/MainFlow.swift` |
@@ -34,6 +35,7 @@
 | Дети: добавить/редактировать (имя, дата, пол, вопросы профиля)/удалить/переключить | ✅ код, вживую не проверено | `UI/Profile/*` |
 | Настройки: напоминания, привязка почты / выход, удаление данных/аккаунта; debug: «Пройти онбординг заново» | ✅ код | `UI/Settings/*` |
 | Локальные напоминания (UNUserNotificationCenter, тихие часы, запрос разрешения один раз) | ✅ код; запрос разрешения проверен, срабатывание — нет | `Core/Notifications/ReminderScheduler.swift` |
+| Аналитика AppMetrica (ключ **общий с Android**): сессии, падения + каталог из 17 событий с теми же именами; без IDFA и геолокации; debug не отправляет | ✅ тест `AnalyticsCatalogTests` (сверка с docs/analytics.md и с Android); в симуляторе: SDK активируется, события `login`, `child_added`, `onboarding_completed` в логе; ⏳ данные в консоли — после релизной сборки | `Core/.../Analytics.swift`, `Core/Analytics/AppMetricaTracker.swift`, [docs/analytics.md](docs/analytics.md) |
 | Подписка «Плюс» (StoreKit), синхронизация дневника | ❌ не делаем на первом этапе (логика Entitlement уже в Core) | — |
 | Debug-экраны рекомендаций/уведомлений, витрина компонентов, демо-данные, тап по уведомлению → экран | ❌ ещё нет | — |
 
@@ -46,6 +48,7 @@ Core/                         Swift-пакет FirstSpoonCore: чистый Swif
   Tests/FirstSpoonCoreTests/  порт Android unit-тестов; Resources/ = копия Android src/test/resources/recommendation
 FirstSpoon/
   App/                        FirstSpoonApp (точка входа, RootView), AppContainer (ручной DI, rootGraph)
+  Core/Analytics/             AppMetricaTracker, LogTracker (debug) — каталог событий в Core/Analytics.swift
   Core/Network/               ApiClient (ApiResult/ApiError, refresh, 410, debug_offline), Dto
   Core/Session/               TokenStore (Keychain), SessionManager
   Core/Notifications/         ReminderScheduler
@@ -96,6 +99,12 @@ docs/screenshots/             скриншоты из симулятора
   новой установки (`installed` в UserDefaults) сессия стирается.
 - Настройки устройства (онбординг, активный ребёнок, гость, владелец данных, напоминания) — UserDefaults, ключи как в Android prefs.
 
+**Аналитика** — подробно в [docs/analytics.md](docs/analytics.md)
+- Код шлёт события только через `Analytics.track(.x)`; SDK AppMetrica — только в `AppMetricaTracker`.
+- Ключ, имена и параметры событий — **общие с Android**. Новое событие: case в `AnalyticsEvent` + `allNames` → вызов там,
+  где действие точно произошло → строка в docs/analytics.md → то же в Android. `AnalyticsCatalogTests` сверяет всё это.
+- Никаких личных данных в параметрах. Состав данных меняется → обновить «Конфиденциальность приложения» в App Store Connect до выпуска.
+
 **Тексты**
 - Только русские, только из `ru.lproj`: `Localizable.strings` генерируется из Android `strings.xml` (те же ключи, руками не править),
   iOS-только строки — `IOS.strings`. В коде — `L.s("key", args…)`, plurals — `L.plural("key", n, args…)` (русские правила
@@ -114,7 +123,8 @@ cd Core && swift test                                   # 62 теста доме
 cd Core && UPDATE_GOLDEN=1 swift test                   # принять новые траектории симуляции
 xcodebuild -project FirstSpoon.xcodeproj -scheme FirstSpoon -destination 'platform=iOS Simulator,name=iPhone 17 Pro,OS=27.2' -derivedDataPath build/DerivedData build
 python3 tools/import_android_assets.py --icon ~/Documents/First-spoon/assets/icon.png   # обновить каталог/картинки/строки из Android
-xcrun simctl spawn booted defaults write app.littlebite.dev debug_offline -bool YES     # debug: сеть выключена, сервер не трогаем
+xcrun simctl spawn booted defaults write app.littlebite.dev debug_offline -bool YES     # debug: сеть выключена, сервер не трогаем (снять: defaults delete …)
+xcrun simctl spawn booted log stream --predicate 'category == "Analytics"'              # события аналитики в debug
 xcrun simctl install booted build/DerivedData/Build/Products/Debug-iphonesimulator/FirstSpoon.app && xcrun simctl launch booted app.littlebite.dev
 ```
 
@@ -125,5 +135,11 @@ xcrun simctl install booted build/DerivedData/Build/Products/Debug-iphonesimulat
   (код в `~/Documents/First-spoon/.maestro/.env.local`, не печатать).
 - Ключи, пароли, сертификаты — не читать и не выводить.
 - Git: свой репозиторий, ветка `main`, веток под задачи не создаём. Коммитить и пушить — только по просьбе пользователя.
+- Вход e2e в симуляторе: код не вводить руками и не печатать — положить в настройки приложения из `.env.local`
+  (`defaults write app.littlebite.dev debug_otp -string "$(…)"`), экран кода (debug) подставит его один раз и сотрёт.
+- Симулятор, загруженный (`simctl boot`) или приложение, запущенное из песочницы агента, наследует её сетевые ограничения →
+  «Нет соединения». Загружать/запускать вне песочницы (или инструментом симулятора).
+- `api.littlebite.app` (Yandex API Gateway) из сети этого Mac 2026-11-15 отвечал нестабильно (~1 из 5 TCP-соединений) —
+  при «Нет соединения» сначала проверить `curl https://api.littlebite.app/warmup` вне песочницы.
 - Инструмент симулятора не печатает кириллицу (нет вставки) — вводить латиницей; его скриншоты иногда отстают на одно действие.
 - После изменения функциональности обновить таблицу «Состояние».

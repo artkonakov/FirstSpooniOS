@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		A10000000000000000000101 /* FirstSpoonCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000201 /* FirstSpoonCore */; };
 		A10000000000000000000102 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000202 /* GRDB */; };
+		A10000000000000000000103 /* AppMetricaCore in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000203 /* AppMetricaCore */; };
+		A10000000000000000000104 /* AppMetricaCrashes in Frameworks */ = {isa = PBXBuildFile; productRef = A10000000000000000000204 /* AppMetricaCrashes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 			files = (
 				A10000000000000000000101 /* FirstSpoonCore in Frameworks */,
 				A10000000000000000000102 /* GRDB in Frameworks */,
+				A10000000000000000000103 /* AppMetricaCore in Frameworks */,
+				A10000000000000000000104 /* AppMetricaCrashes in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +78,8 @@
 			packageProductDependencies = (
 				A10000000000000000000201 /* FirstSpoonCore */,
 				A10000000000000000000202 /* GRDB */,
+				A10000000000000000000203 /* AppMetricaCore */,
+				A10000000000000000000204 /* AppMetricaCrashes */,
 			);
 			productName = FirstSpoon;
 			productReference = A10000000000000000000301 /* FirstSpoon.app */;
@@ -106,6 +112,7 @@
 			packageReferences = (
 				A10000000000000000000A01 /* XCLocalSwiftPackageReference "Core" */,
 				A10000000000000000000A02 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				A10000000000000000000A03 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A10000000000000000000602 /* Products */;
@@ -286,6 +293,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		A10000000000000000000A03 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/appmetrica/appmetrica-sdk-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -297,6 +312,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A10000000000000000000A02 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		A10000000000000000000203 /* AppMetricaCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000A03 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaCore;
+		};
+		A10000000000000000000204 /* AppMetricaCrashes */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A10000000000000000000A03 /* XCRemoteSwiftPackageReference "appmetrica-sdk-ios" */;
+			productName = AppMetricaCrashes;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

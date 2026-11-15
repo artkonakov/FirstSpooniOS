@@ -73,6 +73,7 @@ final class DiaryRepository {
         record.updatedAt = now
         try db.dbQueue.write { try record.save($0) }
         if existing == nil { activeStore.set(record.id) }
+        if id == nil { Analytics.track(.childAdded) }
         reload()
         return record.id
     }
@@ -99,6 +100,7 @@ final class DiaryRepository {
                                  meal: meal?.rawValue, amount: amount?.rawValue, reaction: reaction.rawValue,
                                  symptoms: symptoms.map(\.rawValue), note: Self.clean(note), createdAt: now, updatedAt: now)
         try db.dbQueue.write { try record.insert($0) }
+        Analytics.track(.entryAdded)
         reload()
         return record.id
     }
@@ -148,6 +150,8 @@ final class DiaryRepository {
     /// Поставить или снять (mark = nil) ручную отметку продукта. Избранное не трогает.
     func setMark(_ productId: String, _ mark: ProductMark?) throws {
         try updateProductRow(productId) { $0.status = mark?.rawValue }
+        // Только тип отметки, без продукта.
+        if let mark { Analytics.track(.productMarked(mark: mark)) }
     }
 
     /// Добавить или убрать продукт из избранного. Отметку не трогает.
