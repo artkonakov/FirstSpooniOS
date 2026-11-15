@@ -126,7 +126,24 @@ python3 tools/import_android_assets.py --icon ~/Documents/First-spoon/assets/ico
 xcrun simctl spawn booted defaults write app.littlebite.dev debug_offline -bool YES     # debug: сеть выключена, сервер не трогаем (снять: defaults delete …)
 xcrun simctl spawn booted log stream --predicate 'category == "Analytics"'              # события аналитики в debug
 xcrun simctl install booted build/DerivedData/Build/Products/Debug-iphonesimulator/FirstSpoon.app && xcrun simctl launch booted app.littlebite.dev
+tools/upload_testflight.sh 2                              # сборка №2 → TestFlight (номер растёт с каждой загрузкой)
+node tools/asc_api.mjs builds                           # статус обработки сборок
 ```
+
+## Выкладка (App Store Connect)
+
+- Приложение «Ложку за маму», Bundle ID `app.littlebite`, Apple ID приложения 6835090508, Team ID `93DY8Q8W67` (в проекте,
+  подпись автоматическая). Debug — `app.littlebite.dev`, в App Store Connect не регистрируется.
+- `tools/upload_testflight.sh [номер]` — Release-архив → подпись → загрузка в App Store Connect. Номер сборки
+  (CFBundleVersion) растёт с каждой загрузкой. Подпись для App Store делает Apple Account, в который вошли в Xcode
+  (Settings → Accounts): ключу с ролью App Manager облачная подпись недоступна.
+- `node tools/asc_api.mjs apps|builds|whats-new|groups|add-to-group|versions|listing` — App Store Connect API (описание —
+  в начале скрипта). Ключ — `~/.littlebite-keys/AuthKey_A2VCF6W9QB.p8` (роль App Manager; создаёт пользователь, вне git,
+  не читать и не печатать). Key ID и Issuer ID — в скрипте, не секреты.
+- Загрузка в TestFlight и выдача внутренним тестировщикам — по просьбе пользователя. Отправка версии на проверку
+  в App Store и публикация — только с его подтверждения.
+- Анкета App Privacy — по факту сборки: AppMetrica (взаимодействие с приложением, сбои, диагностика, идентификатор
+  устройства), без рекламного ID и геолокации; почта — для входа.
 
 ## Осторожно
 
