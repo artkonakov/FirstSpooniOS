@@ -10,6 +10,7 @@ final class AppContainer {
     @ObservationIgnored let tokens: TokenStore
     let session: SessionManager
     @ObservationIgnored let db: AppDatabase
+    @ObservationIgnored let photos: PhotoStore
     @ObservationIgnored let api: ApiClient
     let auth: AuthRepository
     let catalog: CatalogRepository
@@ -18,6 +19,8 @@ final class AppContainer {
     let onboarding: OnboardingStore
     let recommendations: RecommendationRepository
     let reminderSettings: ReminderSettings
+    /// Запрещён ли приложению доступ к сети (блокирующий экран).
+    let networkAccess = NetworkAccessMonitor()
     @ObservationIgnored private(set) var reminders: ReminderScheduler!
 
     init(db: AppDatabase? = nil, defaults: UserDefaults = .standard, tokens: TokenStore = TokenStore()) {
@@ -28,12 +31,13 @@ final class AppContainer {
         }
         self.tokens = tokens
         self.db = db ?? (try! AppDatabase.makeShared())
+        photos = PhotoStore()
         session = SessionManager(tokens: tokens)
         api = ApiClient(tokens: tokens)
-        auth = AuthRepository(api: api, tokens: tokens, session: session, db: self.db, defaults: defaults)
-        catalog = CatalogRepository(db: self.db)
+        auth = AuthRepository(api: api, tokens: tokens, session: session, db: self.db, photos: photos, defaults: defaults)
+        catalog = CatalogRepository(db: self.db, photos: photos)
         activeChildStore = ActiveChildStore(defaults: defaults)
-        diary = DiaryRepository(db: self.db, activeStore: activeChildStore)
+        diary = DiaryRepository(db: self.db, activeStore: activeChildStore, photos: photos)
         onboarding = OnboardingStore(defaults: defaults)
         recommendations = RecommendationRepository(diary: diary, catalog: catalog)
         reminderSettings = ReminderSettings(defaults: defaults)

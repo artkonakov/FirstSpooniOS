@@ -55,6 +55,10 @@
 | `custom_product_added` | Добавлен свой продукт | — | `CatalogRepository.addCustomProduct` |
 | `recommendation_record` | «Записать пробу» на карточке рекомендации | — | `HomeView` → `RecommendationCard.onRecord` |
 | `recommendation_other` | «Другой» на карточке рекомендации | — | `RecommendationRepository.skip` |
+| `diary_exported` | Дневник выгружен в PDF (файл готов, открыт лист «Поделиться») | — | `ProfileView.exportDiary` |
+| `child_photo_set` | Ребёнку поставлено новое фото (редактор или онбординг) | — | `DiaryRepository.saveChild` |
+| `custom_product_photo_set` | Своему продукту поставлено новое фото | — | `CatalogRepository.add/updateCustomProduct` |
+| `network_blocked_shown` | Показан блокирующий экран «Нет доступа к интернету» (запрет сети для приложения) | — | `NetworkAccessMonitor` |
 | `paywall_opened` | Открыт экран «Плюс» (на iOS пока нет) | — | — |
 | `purchase_started` | Нажата кнопка оформления подписки (на iOS пока нет) | `product`: ID тарифа | — |
 | `purchase_completed` | Магазин подтвердил покупку (на iOS пока нет) | `product`: ID тарифа | — |

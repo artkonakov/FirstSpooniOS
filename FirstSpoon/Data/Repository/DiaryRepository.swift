@@ -21,10 +21,12 @@ final class DiaryRepository {
 
     @ObservationIgnored private let db: AppDatabase
     @ObservationIgnored private let activeStore: ActiveChildStore
+    @ObservationIgnored let photos: PhotoStore
 
-    init(db: AppDatabase, activeStore: ActiveChildStore) {
+    init(db: AppDatabase, activeStore: ActiveChildStore, photos: PhotoStore) {
         self.db = db
         self.activeStore = activeStore
+        self.photos = photos
         reload()
     }
 
@@ -59,8 +61,11 @@ final class DiaryRepository {
     }
 
     /// Создать (`id` = nil) или изменить ребёнка. Новый ребёнок сразу становится активным.
+    /// `photo`: `.none` — не менять; `.some(nil)` — убрать фото; `.some(имя)` — файл из `PhotoStore`.
+    /// Прежний файл при замене или удалении фото стирается.
     @discardableResult
-    func saveChild(id: String?, name: String, birthDate: LocalDate?, sex: Sex?, profile: ChildProfile) throws -> String {
+    func saveChild(id: String?, name: String, birthDate: LocalDate?, sex: Sex?, profile: ChildProfile,
+                   photo: String?? = .none) throws -> String {
         let now = nowMillis()
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let existing = try id.flatMap { id in try db.dbQueue.read { try ChildRecord.fetchOne($0, key: id) } }
@@ -70,8 +75,14 @@ final class DiaryRepository {
         record.birthDate = birthDate?.iso
         record.sex = sex?.rawValue
         record.profile = profile.toMap()
+        let oldPhoto = record.photo
+        if case .some(let newPhoto) = photo { record.photo = newPhoto }
         record.updatedAt = now
         try db.dbQueue.write { try record.save($0) }
+        if oldPhoto != record.photo {
+            photos.delete(oldPhoto)
+            if record.photo != nil { Analytics.track(.childPhotoSet) }
+        }
         if existing == nil { activeStore.set(record.id) }
         if id == nil { Analytics.track(.childAdded) }
         reload()
@@ -86,7 +97,9 @@ final class DiaryRepository {
     /// Мягкое удаление ребёнка; его пробы остаются в базе, но больше не показываются.
     func deleteChild(_ id: String) throws {
         let now = nowMillis()
-        try db.dbQueue.write { try $0.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ? WHERE id = ?", arguments: [now, now, id]) }
+        // Фото живёт только на устройстве — при удалении ребёнка стираем файл сразу.
+        photos.delete(getChild(id)?.photo)
+        try db.dbQueue.write { try $0.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id]) }
         if activeStore.id == id { activeStore.set(nil) }
         reload()
     }

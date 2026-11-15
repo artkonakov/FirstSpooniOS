@@ -42,14 +42,18 @@ final class OnboardingViewModel {
     @ObservationIgnored private let diary: DiaryRepository
     @ObservationIgnored private let store: OnboardingStore
     let allergens: [Allergen]
+    /// Фото ребёнка (по желанию, на шаге с именем).
+    let photo: PhotoDraft
 
     init(diary: DiaryRepository, catalog: CatalogRepository, store: OnboardingStore) {
         self.diary = diary
         self.store = store
         allergens = catalog.base.allergens
-        if let child = diary.activeChild {
+        let child = diary.activeChild
+        if let child {
             childId = child.id; name = child.name; sex = child.sex; birthDate = child.birthDate; profile = child.profile
         }
+        photo = PhotoDraft(store: diary.photos, original: child?.photo)
     }
 
     /// Обязательны имя и дата рождения (от неё зависит фильтр по возрасту), остальное можно пропустить.
@@ -76,7 +80,8 @@ final class OnboardingViewModel {
         guard !saving, canContinue(.name) else { return }
         saving = true
         do {
-            let id = try diary.saveChild(id: childId, name: name, birthDate: birthDate, sex: sex, profile: profile)
+            let id = try diary.saveChild(id: childId, name: name, birthDate: birthDate, sex: sex, profile: profile,
+                                         photo: .some(photo.commit()))
             diary.selectChild(id)
             Analytics.track(.onboardingCompleted)
             store.set(true)
@@ -149,6 +154,7 @@ struct OnboardingStepView: View {
             AppTextField(text: Binding(get: { model.name }, set: { model.name = String($0.prefix(40)) }),
                          placeholder: L.s("child_name"), capitalization: .words,
                          onSubmit: { if model.canContinue(step) { next() } })
+            PhotoPickerField(draft: model.photo, placeholder: AnyView(ChildAvatarPlaceholder(sex: model.sex, size: 96)))
         case .sex:
             BigTiles(options: Sex.allCases, selected: model.sex, label: Labels.label, emoji: Labels.emoji) { model.setSex($0) }
         case .birthDate:

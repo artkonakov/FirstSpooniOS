@@ -91,6 +91,11 @@ final class AppDatabase {
                 t.primaryKey(["child_id", "product_id"])
             }
         }
+        // Фото ребёнка и своего продукта: имя файла в Application Support/photos (только на устройстве, не синхронизируется).
+        m.registerMigration("v2_photos") { db in
+            try db.alter(table: "children") { t in t.add(column: "photo", .text) }
+            try db.alter(table: "custom_products") { t in t.add(column: "photo", .text) }
+        }
         return m
     }
 

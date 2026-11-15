@@ -30,9 +30,11 @@ final class CatalogRepository {
 
     @ObservationIgnored private let db: AppDatabase
     @ObservationIgnored private let source: CatalogSource
+    @ObservationIgnored let photos: PhotoStore
 
-    init(db: AppDatabase, source: CatalogSource = BundleCatalogSource()) {
+    init(db: AppDatabase, photos: PhotoStore, source: CatalogSource = BundleCatalogSource()) {
         self.db = db
+        self.photos = photos
         self.source = source
         do {
             base = try source.load().toCatalog()
@@ -51,7 +53,7 @@ final class CatalogRepository {
         let customProducts = custom.map { c in
             Product(id: c.id, categoryId: c.categoryId.flatMap { known.contains($0) ? $0 : nil } ?? Self.customCategoryId,
                     name: c.name, minAgeMonths: 0, allergens: c.allergenIds.compactMap { allergenNames[$0] },
-                    description: "", firstServing: "", isCustom: true, allergenIds: c.allergenIds)
+                    description: "", firstServing: "", isCustom: true, allergenIds: c.allergenIds, photo: c.photo)
         }
         let customCategory = customProducts.contains { $0.categoryId == Self.customCategoryId }
             ? [Category(id: Self.customCategoryId, name: L.s("catalog_custom_category"))] : []
@@ -61,20 +63,40 @@ final class CatalogRepository {
 
     /// Добавить свой продукт. Возвращает его id (UUID) — его же пишем в `entries.product_id`.
     @discardableResult
-    func addCustomProduct(name: String, categoryId: String?, allergenIds: [String]) throws -> String {
+    func addCustomProduct(name: String, categoryId: String?, allergenIds: [String], photo: String? = nil) throws -> String {
         let now = nowMillis()
         let record = CustomProductRecord(id: newId(), name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-                                         categoryId: categoryId, allergenIds: allergenIds, createdAt: now, updatedAt: now)
+                                         categoryId: categoryId, allergenIds: allergenIds, photo: photo,
+                                         createdAt: now, updatedAt: now)
         try db.dbQueue.write { try record.insert($0) }
         Analytics.track(.customProductAdded)
+        if photo != nil { Analytics.track(.customProductPhotoSet) }
         reload()
         return record.id
     }
 
+    /// Изменить свой продукт. Прежнее фото при замене или удалении стирается.
+    func updateCustomProduct(_ id: String, name: String, categoryId: String?, allergenIds: [String], photo: String?) throws {
+        guard var record = try db.dbQueue.read({ try CustomProductRecord.fetchOne($0, key: id) }) else { return }
+        let oldPhoto = record.photo
+        record.name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        record.categoryId = categoryId
+        record.allergenIds = allergenIds
+        record.photo = photo
+        record.updatedAt = nowMillis()
+        try db.dbQueue.write { try record.update($0) }
+        if oldPhoto != photo {
+            photos.delete(oldPhoto)
+            if photo != nil { Analytics.track(.customProductPhotoSet) }
+        }
+        reload()
+    }
+
     func deleteCustomProduct(_ id: String) throws {
         let now = nowMillis()
+        photos.delete(catalog.productsById[id]?.photo)
         try db.dbQueue.write { db in
-            try db.execute(sql: "UPDATE custom_products SET deleted_at = ?, updated_at = ? WHERE id = ?", arguments: [now, now, id])
+            try db.execute(sql: "UPDATE custom_products SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id])
         }
         reload()
     }

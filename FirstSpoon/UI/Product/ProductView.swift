@@ -38,6 +38,13 @@ struct ProductView: View {
         .navigationTitle(catalog.productsById[productId]?.name ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
+            // Свой продукт можно изменить (название, категория, аллергены, фото).
+            if catalog.productsById[productId]?.isCustom == true {
+                ToolbarItem(placement: .primaryAction) {
+                    Button { nav.open(.editCustomProduct(productId)) } label: { Image(systemName: "pencil") }
+                        .accessibilityLabel(L.s("custom_edit"))
+                }
+            }
             if catalog.productsById[productId] != nil {
                 ToolbarItem(placement: .primaryAction) {
                     Button { try? app.diary.setLiked(productId, !liked) } label: {

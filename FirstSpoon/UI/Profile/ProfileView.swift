@@ -6,6 +6,8 @@ import FirstSpoonCore
 struct ProfileView: View {
     @Environment(AppContainer.self) private var app
     @Environment(Navigator.self) private var nav
+    @State private var exported: URL?
+    @State private var exportFailed = false
 
     var body: some View {
         ScrollView {
@@ -17,6 +19,9 @@ struct ProfileView: View {
                 }
                 AppButton(L.s("child_add"), kind: .soft, icon: "plus") { nav.open(.child(nil)) }
                 Spacer().frame(height: 12)
+                if app.diary.activeChild != nil {
+                    ActionRow(title: L.s("export_pdf"), icon: "doc.richtext") { exportDiary() }
+                }
                 ActionRow(title: L.s("settings"), icon: "gearshape.fill") { nav.open(.settings) }
             }
             .padding(.horizontal, screenPadding)
@@ -24,7 +29,31 @@ struct ProfileView: View {
         }
         .appScreen()
         .navigationTitle(L.s("profile_title"))
+        .sheet(item: $exported) { ShareSheet(items: [$0]).ignoresSafeArea() }
+        .alert(L.s("export_failed"), isPresented: $exportFailed) { Button(L.s("ok"), role: .cancel) {} }
     }
+
+    /// PDF дневника активного ребёнка → системный лист «Поделиться» (в нём же «Сохранить в Файлы»).
+    private func exportDiary() {
+        guard let child = app.diary.activeChild else { return }
+        let input = DiaryPdfExporter.Input(child: child, entries: app.diary.entries, marks: app.diary.marks,
+                                           catalog: app.catalog.catalog, today: .today())
+        do {
+            exported = try DiaryPdfExporter.export(input)
+            Analytics.track(.diaryExported)
+        } catch {
+            exportFailed = true
+        }
+    }
+}
+
+/// Системный лист «Поделиться» (UIActivityViewController): отправить, сохранить в Файлы, распечатать.
+struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+    func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
 }
 
 /// Карточка ребёнка: тап — сделать активным (фиолетовая рамка), карандаш — редактировать.
@@ -65,10 +94,15 @@ struct ChildEditView: View {
     @State private var profile = ChildProfile()
     @State private var pickDate = false
     @State private var confirmDelete = false
+    @State private var photo: PhotoDraft?
 
     var body: some View {
         ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
+                    if let photo {
+                        PhotoPickerField(draft: photo, placeholder: AnyView(ChildAvatarPlaceholder(sex: sex, size: 96)))
+                            .padding(.top, 8)
+                    }
                     FieldLabel(L.s("child_name")).padding(.top, 8)
                     AppTextField(text: Binding(get: { name }, set: { name = String($0.prefix(40)) }),
                                  placeholder: L.s("child_name"), capitalization: .words)
@@ -94,7 +128,9 @@ struct ChildEditView: View {
         .scrollDismissesKeyboard(.interactively)
         .bottomAction {
             AppButton(L.s("save"), enabled: !name.trimmingCharacters(in: .whitespaces).isEmpty) {
-                if (try? app.diary.saveChild(id: childId, name: name, birthDate: birthDate, sex: sex, profile: profile)) != nil { nav.back() }
+                let newPhoto = photo?.commit()
+                if (try? app.diary.saveChild(id: childId, name: name, birthDate: birthDate, sex: sex, profile: profile,
+                                             photo: .some(newPhoto))) != nil { nav.back() }
             }
             .padding(.horizontal, screenPadding)
             .padding(.vertical, 12)
@@ -104,10 +140,14 @@ struct ChildEditView: View {
         .onAppear {
             guard !loaded else { return }
             loaded = true
-            if let id = childId, let c = app.diary.getChild(id) {
+            let existing = childId.flatMap { app.diary.getChild($0) }
+            if let c = existing {
                 name = c.name; birthDate = c.birthDate; sex = c.sex; profile = c.profile
             }
+            photo = PhotoDraft(store: app.photos, original: existing?.photo)
         }
+        // Ушли без «Сохранить» — выбранные здесь снимки не нужны.
+        .onDisappear { photo?.discard() }
         .sheet(isPresented: $pickDate) {
             VStack(spacing: 16) {
                 BirthDatePicker(value: $birthDate, name: name)

@@ -17,13 +17,15 @@ struct ChildRecord: SnakeCaseRecord, Equatable {
     var birthDate: String?
     var sex: String?
     var profile: [String: String]
+    /// Имя файла фото (PhotoStore) или nil.
+    var photo: String?
     var createdAt: Int64
     var updatedAt: Int64
     var deletedAt: Int64?
 
     func toDomain() -> Child {
         Child(id: id, name: name, birthDate: birthDate.flatMap(LocalDate.parse), sex: sex.flatMap(Sex.init(rawValue:)),
-              profile: ChildProfile.fromMap(profile))
+              profile: ChildProfile.fromMap(profile), photo: photo)
     }
 }
 
@@ -33,6 +35,8 @@ struct CustomProductRecord: SnakeCaseRecord, Equatable {
     var name: String
     var categoryId: String?
     var allergenIds: [String]
+    /// Имя файла фото (PhotoStore) или nil.
+    var photo: String?
     var createdAt: Int64
     var updatedAt: Int64
     var deletedAt: Int64?

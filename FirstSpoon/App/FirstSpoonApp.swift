@@ -43,18 +43,25 @@ struct RootView: View {
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        Group {
+        ZStack {
             switch app.rootGraph {
             case .auth: AuthFlow()
             case .onboarding: OnboardingFlow()
             case .main: MainFlow()
             }
+            // Блокирующий экран поверх всего — только при запрете сети для приложения (не авиарежим, не сбой сети).
+            if app.networkAccess.blocked {
+                NetworkBlockedView().transition(.opacity).zIndex(1)
+            }
         }
+        .animation(.easeInOut(duration: 0.2), value: app.networkAccess.blocked)
         .animation(.easeInOut(duration: 0.25), value: app.rootGraph)
         // Пересчёт напоминаний на любое изменение данных и настроек.
         .onChange(of: app.diary.version) { app.reminders.refresh() }
         .onChange(of: app.reminderSettings.enabled) { app.reminders.refresh() }
         .onChange(of: app.onboarding.done) { app.reminders.refresh() }
-        .onChange(of: scenePhase) { _, phase in if phase == .active { app.reminders.refresh() } }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { app.reminders.refresh(); app.networkAccess.refresh() }
+        }
     }
 }

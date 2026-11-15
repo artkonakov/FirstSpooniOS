@@ -74,12 +74,15 @@ public struct Product: Hashable, Sendable, Identifiable {
     public let isCustom: Bool
     /// id аллергенов — для сверки с аллергиями ребёнка.
     public let allergenIds: [String]
+    /// Только для своих продуктов: имя файла фото в локальном хранилище фото (`PhotoStore`); nil — без фото.
+    public let photo: String?
 
     public init(id: String, categoryId: String, name: String, minAgeMonths: Int, allergens: [String],
-                description: String, firstServing: String, isCustom: Bool = false, allergenIds: [String] = []) {
+                description: String, firstServing: String, isCustom: Bool = false, allergenIds: [String] = [],
+                photo: String? = nil) {
         self.id = id; self.categoryId = categoryId; self.name = name; self.minAgeMonths = minAgeMonths
         self.allergens = allergens; self.description = description; self.firstServing = firstServing
-        self.isCustom = isCustom; self.allergenIds = allergenIds
+        self.isCustom = isCustom; self.allergenIds = allergenIds; self.photo = photo
     }
 
     public var isAllergen: Bool { !allergens.isEmpty }
@@ -105,9 +108,12 @@ public struct Child: Hashable, Sendable, Identifiable {
     public var birthDate: LocalDate?
     public var sex: Sex?
     public var profile: ChildProfile
+    /// Имя файла фото в локальном хранилище фото; nil — без фото (аватар-эмодзи).
+    public var photo: String?
 
-    public init(id: String, name: String, birthDate: LocalDate? = nil, sex: Sex? = nil, profile: ChildProfile = ChildProfile()) {
-        self.id = id; self.name = name; self.birthDate = birthDate; self.sex = sex; self.profile = profile
+    public init(id: String, name: String, birthDate: LocalDate? = nil, sex: Sex? = nil, profile: ChildProfile = ChildProfile(),
+                photo: String? = nil) {
+        self.id = id; self.name = name; self.birthDate = birthDate; self.sex = sex; self.profile = profile; self.photo = photo
     }
 
     /// Полных месяцев на дату `today`; nil, если дата рождения не указана.

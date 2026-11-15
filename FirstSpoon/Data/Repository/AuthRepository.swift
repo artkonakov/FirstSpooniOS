@@ -18,6 +18,7 @@ final class AuthRepository {
     @ObservationIgnored private let tokens: TokenStore
     @ObservationIgnored private let session: SessionManager
     @ObservationIgnored private let db: AppDatabase
+    @ObservationIgnored private let photos: PhotoStore
     @ObservationIgnored private let defaults: UserDefaults
     /// Вызывается после стирания данных пользователя — репозитории перечитывают состояние.
     @ObservationIgnored var onUserDataCleared: () -> Void = {}
@@ -29,7 +30,9 @@ final class AuthRepository {
         static let guest = "local_data/guest_started"
     }
 
-    init(api: ApiClient, tokens: TokenStore, session: SessionManager, db: AppDatabase, defaults: UserDefaults = .standard) {
+    init(api: ApiClient, tokens: TokenStore, session: SessionManager, db: AppDatabase, photos: PhotoStore,
+         defaults: UserDefaults = .standard) {
+        self.photos = photos
         self.api = api
         self.tokens = tokens
         self.session = session
@@ -136,6 +139,7 @@ final class AuthRepository {
     /// Стереть дневник, флаги и токены (выход, удаление аккаунта).
     private func signOutLocally() {
         try? db.clearUserData()
+        photos.deleteAll()
         for key in [Key.owner, Key.ownerAnonymous, Key.guest] { defaults.removeObject(forKey: key) }
         guest = false
         session.onLoggedOut()
@@ -176,6 +180,7 @@ final class AuthRepository {
         // Дневник анонимного пользователя переходит к аккаунту, в который вошли; чужой (с email) — стираем.
         if let userId, let previousOwner, previousOwner != userId, !previousAnonymous {
             try? db.clearUserData()
+            photos.deleteAll()
             onUserDataCleared()
         }
         tokens.save(access: access, refresh: refresh, userId: userId, email: email)

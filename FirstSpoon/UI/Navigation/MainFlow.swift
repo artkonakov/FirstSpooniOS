@@ -7,6 +7,7 @@ enum Route: Hashable {
     /// Новая проба (`entryId` = nil, можно с продуктом) или редактирование.
     case entry(entryId: String?, productId: String?)
     case customProduct(query: String)
+    case editCustomProduct(String)
     case child(String?)
     case settings
     case linkEmail
@@ -74,6 +75,7 @@ extension View {
             case .product(let id): ProductView(productId: id)
             case .entry(let entryId, let productId): EntryView(entryId: entryId, productId: productId)
             case .customProduct(let query): CustomProductView(initialName: query)
+            case .editCustomProduct(let id): CustomProductView(editId: id)
             case .child(let id): ChildEditView(childId: id)
             case .settings: SettingsView()
             case .linkEmail: LinkEmailFlow()

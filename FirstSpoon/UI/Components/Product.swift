@@ -4,6 +4,7 @@ import FirstSpoonCore
 
 /// Картинка продукта в мягком квадрате; для своих продуктов (и без картинки) — первая буква названия.
 struct ProductThumb: View {
+    @Environment(AppContainer.self) private var app
     let productId: String
     let name: String
     var size: CGFloat = 56
@@ -11,7 +12,11 @@ struct ProductThumb: View {
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: size * 0.32, style: .continuous).fill(AppColors.surfaceSoft)
-            if let image = ProductImages.image(productId) {
+            // Своё фото продукта (только у своих продуктов) — вместо буквы-заглушки.
+            if let photo = app.photos.image(app.catalog.catalog.productsById[productId]?.photo) {
+                Image(uiImage: photo).resizable().scaledToFill().frame(width: size, height: size)
+                    .clipShape(RoundedRectangle(cornerRadius: size * 0.32, style: .continuous))
+            } else if let image = ProductImages.image(productId) {
                 Image(uiImage: image).resizable().scaledToFit().frame(width: size * 0.82, height: size * 0.82)
             } else {
                 Text(name.prefix(1).uppercased()).font(AppFont.titleLarge).foregroundStyle(AppColors.inkMuted)
@@ -137,10 +142,24 @@ extension ProductCard where Supporting == EmptyView, Trailing == Chevron, Footer
 
 /// Аватар ребёнка: эмодзи по полу на мягком круге.
 struct ChildAvatar: View {
+    @Environment(AppContainer.self) private var app
     let child: Child
     var size: CGFloat = 56
     var body: some View {
-        Text(child.sex.map(Labels.emoji) ?? "👶")
+        if let photo = app.photos.image(child.photo) {
+            Image(uiImage: photo).resizable().scaledToFill().frame(width: size, height: size).clipShape(Circle())
+        } else {
+            ChildAvatarPlaceholder(sex: child.sex, size: size)
+        }
+    }
+}
+
+/// Аватар без фото: эмодзи по полу на мягком круге.
+struct ChildAvatarPlaceholder: View {
+    let sex: Sex?
+    var size: CGFloat = 56
+    var body: some View {
+        Text(sex.map(Labels.emoji) ?? "👶")
             .font(.system(size: size * 0.5))
             .frame(width: size, height: size)
             .background(AppColors.primarySoft, in: Circle())

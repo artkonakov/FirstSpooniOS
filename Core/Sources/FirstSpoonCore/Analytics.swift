@@ -24,6 +24,12 @@ public enum AnalyticsEvent: Hashable, Sendable {
     // Рекомендации
     case recommendationRecord
     case recommendationOther
+    // Профиль и фото
+    case diaryExported
+    case childPhotoSet
+    case customProductPhotoSet
+    // Сеть
+    case networkBlockedShown
     // Плюс (на iOS пейвола пока нет — события объявлены для единого каталога с Android)
     case paywallOpened
     case purchaseStarted(product: String)
@@ -36,6 +42,7 @@ public enum AnalyticsEvent: Hashable, Sendable {
         "guest_started", "login", "email_linked", "logout", "account_deleted",
         "onboarding_completed", "child_added", "entry_added", "product_marked", "custom_product_added",
         "recommendation_record", "recommendation_other",
+        "diary_exported", "child_photo_set", "custom_product_photo_set", "network_blocked_shown",
         "paywall_opened", "purchase_started", "purchase_completed", "purchase_failed", "restore_tapped",
     ]
 
@@ -53,6 +60,10 @@ public enum AnalyticsEvent: Hashable, Sendable {
         case .customProductAdded: return "custom_product_added"
         case .recommendationRecord: return "recommendation_record"
         case .recommendationOther: return "recommendation_other"
+        case .diaryExported: return "diary_exported"
+        case .childPhotoSet: return "child_photo_set"
+        case .customProductPhotoSet: return "custom_product_photo_set"
+        case .networkBlockedShown: return "network_blocked_shown"
         case .paywallOpened: return "paywall_opened"
         case .purchaseStarted: return "purchase_started"
         case .purchaseCompleted: return "purchase_completed"

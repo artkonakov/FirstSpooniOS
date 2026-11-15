@@ -36,6 +36,10 @@
 | Настройки: напоминания, привязка почты / выход, удаление данных/аккаунта; debug: «Пройти онбординг заново» | ✅ код | `UI/Settings/*` |
 | Локальные напоминания (UNUserNotificationCenter, тихие часы, запрос разрешения один раз) | ✅ код; запрос разрешения проверен, срабатывание — нет | `Core/Notifications/ReminderScheduler.swift` |
 | Аналитика AppMetrica (ключ **общий с Android**): сессии, падения + каталог из 17 событий с теми же именами; без IDFA и геолокации; debug не отправляет | ✅ тест `AnalyticsCatalogTests` (сверка с docs/analytics.md и с Android); в симуляторе: SDK активируется, события `login`, `child_added`, `onboarding_completed` в логе; ⏳ данные в консоли — после релизной сборки | `Core/.../Analytics.swift`, `Core/Analytics/AppMetricaTracker.swift`, [docs/analytics.md](docs/analytics.md) |
+| Экспорт дневника в PDF: Профиль → «Экспорт дневника в PDF» (активный ребёнок), A4 на устройстве, лист «Поделиться» / «Сохранить в Файлы»; «Дневник прикорма — <Имя> — yyyy-MM-dd.pdf» | ✅ проверено в симуляторе 2026-11-15 (1 страница; многостраничная разбивка — по коду) | `Data/Export/DiaryPdfExporter.swift`, `ProfileView` |
+| Фото ребёнка: PhotosPicker без разрешений, квадрат 512 px JPEG, только локально; редактор ребёнка и шаг с именем в онбординге; аватар на главной, в меню выбора ребёнка, в Профиле | ✅ проверено в симуляторе (редактор, сохранение, показ) | `Data/Local/PhotoStore.swift`, `UI/Components/PhotoPicker.swift` |
+| Фото своего продукта: создание и **новое** редактирование своего продукта (карандаш на его странице); вместо буквы в карточках, на странице, в выборе продукта | ✅ проверено (создание с фото, удаление фото → файл стёрт) | `CustomProductView(editId:)`, `ProductThumb` |
+| Блокирующий экран «Нет доступа к интернету» при запрете сети для приложения (не авиарежим, не сбой сети), «Открыть настройки», снимается сам | ✅ экран проверен через debug-флаг; реальный запрет в симуляторе не воспроизвести | `Core/Network/NetworkAccessMonitor.swift` |
 | Подписка «Плюс» (StoreKit), синхронизация дневника | ❌ не делаем на первом этапе (логика Entitlement уже в Core) | — |
 | Debug-экраны рекомендаций/уведомлений, витрина компонентов, демо-данные, тап по уведомлению → экран | ❌ ещё нет | — |
 
@@ -52,7 +56,8 @@ FirstSpoon/
   Core/Network/               ApiClient (ApiResult/ApiError, refresh, 410, debug_offline), Dto
   Core/Session/               TokenStore (Keychain), SessionManager
   Core/Notifications/         ReminderScheduler
-  Data/Local/                 AppDatabase (GRDB, миграции), Records
+  Data/Local/                 AppDatabase (GRDB, миграции), Records, PhotoStore (фото на устройстве)
+  Data/Export/                DiaryPdfExporter (PDF дневника)
   Data/Repository/            Auth, Catalog, Diary, Recommendation, Stores (онбординг, активный ребёнок, напоминания)
   UI/Theme                    цвета, шрифт Onest, внешний вид системных панелей (SystemBars)
   UI/Components               общие компоненты (аналоги ui/components/* в Android)
@@ -94,10 +99,23 @@ docs/screenshots/             скриншоты из симулятора
 - БД `first_spoon.sqlite` (Application Support, исключена из бэкапа). Схема пользовательских таблиц совпадает с Room v4
   (UUID, `created_at/updated_at/deleted_at`, мягкое удаление, `entries.product_id` без FK). Изменение схемы — новая миграция в
   `AppDatabase.migrator`, старые не трогать.
+- Фото ребёнка и своего продукта — **только на устройстве**: `Application Support/photos/<uuid>.jpg` (не в бэкапе),
+  в БД — имя файла (`children.photo`, `custom_products.photo`, миграция `v2_photos`); не синхронизируются.
+  Файл стирается при замене/удалении фото, удалении ребёнка или продукта, выходе и удалении данных (`PhotoStore.deleteAll`).
+  На экранах редактирования — `PhotoDraft`: выбранные, но не сохранённые снимки стираются при уходе с экрана.
+  `saveChild(photo:)`: `.none` — не трогать фото (иначе повторный онбординг стёр бы его).
 - Каталог в БД **не** хранится (отличие от Android): read-only, читается из `catalog.json` (`CatalogSource`). Свои продукты — в `custom_products`.
 - Токены и почта — Keychain, `AfterFirstUnlockThisDeviceOnly`. Keychain переживает удаление приложения → на первом запуске
   новой установки (`installed` в UserDefaults) сессия стирается.
 - Настройки устройства (онбординг, активный ребёнок, гость, владелец данных, напоминания) — UserDefaults, ключи как в Android prefs.
+
+**Сеть**
+- Блокирующий экран — только при запрете сети для приложения: `NWPath.status == .unsatisfied` и
+  `unsatisfiedReason` = `.cellularDenied` / `.wifiDenied`. Авиарежим, нет сети, ошибки сервера — приложение работает офлайн,
+  экран не показываем. Debug: `defaults write app.littlebite.dev debug_network_blocked -bool YES` (снять: `defaults delete`).
+
+**PDF дневника** — `DiaryPdfExporter`: A4, Onest, всегда светлые цвета; вёрстка в два прохода (раскладка → «стр. N из M»).
+Содержимое и имя файла — как в Android (общая спецификация 2026-11-15); меняется одно — менять обе платформы.
 
 **Аналитика** — подробно в [docs/analytics.md](docs/analytics.md)
 - Код шлёт события только через `Analytics.track(.x)`; SDK AppMetrica — только в `AppMetricaTracker`.
