@@ -158,6 +158,9 @@ node tools/asc_api.mjs builds                           # статус обра�
 - `node tools/asc_api.mjs apps|builds|whats-new|groups|add-to-group|versions|listing` — App Store Connect API (описание —
   в начале скрипта). Ключ — `~/.littlebite-keys/AuthKey_A2VCF6W9QB.p8` (роль App Manager; создаёт пользователь, вне git,
   не читать и не печатать). Key ID и Issuer ID — в скрипте, не секреты.
+- `node tools/asc_api.mjs listing-set` / `screenshots` — тексты (`store/appstore.ru.json`) и скриншоты (`store/screenshots/{iphone,ipad}`,
+  снимаются в debug с `-demo_data YES -debug_offline YES -demo_screen …`); `submit <сборка> --yes` — на проверку App Store.
+  1.0 (2) отправлена на проверку 2026-11-16.
 - Загрузка в TestFlight и выдача внутренним тестировщикам — по просьбе пользователя. Отправка версии на проверку
   в App Store и публикация — только с его подтверждения.
 - Анкета App Privacy — по факту сборки: AppMetrica (взаимодействие с приложением, сбои, диагностика, идентификатор

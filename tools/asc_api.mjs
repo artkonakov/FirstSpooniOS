@@ -14,7 +14,8 @@
 //                                                       PNG по порядку имён (01-…, 02-…)
 //
 // Загрузка сборки — tools/upload_testflight.sh (xcodebuild archive + export с destination=upload, тот же ключ).
-// Отправка версии на проверку в App Store — только с подтверждения пользователя (команды пока нет).
+//   node tools/asc_api.mjs submit <номер сборки> --yes  привязать сборку к версии в подготовке и отправить на проверку
+//                                                       App Store — ТОЛЬКО с подтверждения пользователя
 //
 // Ключ: ~/.littlebite-keys/AuthKey_<KEY_ID>.p8 (создаёт пользователь, вне git, не читать и не печатать).
 // KEY_ID и ISSUER_ID — не секреты. Роль ключа — App Manager.
@@ -218,6 +219,28 @@ const commands = {
         console.log(`${folder} ${type}: ${f}`)
       }
     }
+  },
+
+  async submit(number) {
+    if (!number || !process.argv.includes('--yes')) throw new Error('submit <номер сборки> --yes (только с подтверждения пользователя)')
+    const app = await appId()
+    const version = await editableVersion(app)
+    const build = await buildByNumber(app, number)
+    if (build.attributes.processingState !== 'VALID') throw new Error(`сборка ${number}: ${build.attributes.processingState}`)
+    await api('PATCH', `/v1/appStoreVersions/${version.id}/relationships/build`, { data: { type: 'builds', id: build.id } })
+    console.log(`версия ${version.attributes.versionString}: сборка ${number}`)
+    // Открытая (не отправленная) заявка на проверку или новая.
+    const open = (await get(`/v1/reviewSubmissions?filter[app]=${app}&filter[platform]=IOS&filter[state]=READY_FOR_REVIEW`)).data[0]
+    const sub = open ?? (await api('POST', '/v1/reviewSubmissions', { data: { type: 'reviewSubmissions',
+      attributes: { platform: 'IOS' }, relationships: { app: { data: { type: 'apps', id: app } } } } })).data
+    const items = (await get(`/v1/reviewSubmissions/${sub.id}/items`)).data
+    if (!items.length) {
+      await api('POST', '/v1/reviewSubmissionItems', { data: { type: 'reviewSubmissionItems', relationships: {
+        reviewSubmission: { data: { type: 'reviewSubmissions', id: sub.id } },
+        appStoreVersion: { data: { type: 'appStoreVersions', id: version.id } } } } })
+    }
+    const done = await api('PATCH', `/v1/reviewSubmissions/${sub.id}`, { data: { type: 'reviewSubmissions', id: sub.id, attributes: { submitted: true } } })
+    console.log(`отправлено на проверку: ${done.data.attributes.state}`)
   },
 
   async listing() {
