@@ -27,7 +27,7 @@ private enum Tab: Hashable { case home, diary, products, profile }
 /// Основной граф: системный таб-бар (`TabView`), у каждой вкладки свой `NavigationStack` с системным навбаром.
 struct MainFlow: View {
     @Environment(AppContainer.self) private var app
-    @State private var tab = Tab.home
+    @State private var tab = MainFlow.initialTab
     @State private var catalogState = CatalogViewState()
 
     var body: some View {
@@ -38,7 +38,7 @@ struct MainFlow: View {
             TabStack { DiaryView() }
                 .tabItem { Label(L.s("tab_diary"), systemImage: "calendar") }
                 .tag(Tab.diary)
-            TabStack { ProductsTab(state: catalogState) }
+            TabStack(initialPath: MainFlow.initialProductsPath) { ProductsTab(state: catalogState) }
                 .tabItem { Label(L.s("tab_products"), systemImage: "list.bullet") }
                 .tag(Tab.products)
             TabStack { ProfileView() }
@@ -56,8 +56,15 @@ struct MainFlow: View {
 
 /// `NavigationStack` вкладки: свой `Navigator` и общие маршруты.
 struct TabStack<Root: View>: View {
-    @State private var nav = Navigator()
+    @State private var nav: Navigator
     @ViewBuilder let root: () -> Root
+
+    init(initialPath: [Route] = [], @ViewBuilder root: @escaping () -> Root) {
+        let nav = Navigator()
+        nav.path = initialPath
+        _nav = State(initialValue: nav)
+        self.root = root
+    }
 
     var body: some View {
         NavigationStack(path: $nav.path) {
@@ -90,5 +97,33 @@ private struct ProductsTab: View {
     let state: CatalogViewState
     var body: some View {
         CatalogView(state: state, onPick: { nav.open(.product($0)) })
+    }
+}
+
+extension MainFlow {
+    /// Только debug: экран для скриншотов магазина (`-demo_screen`), иначе — Главная.
+    fileprivate static var initialTab: Tab {
+        #if DEBUG
+        switch DemoScreen.current {
+        case "diary": return .diary
+        case "catalog", "entry": return .products
+        case let s? where s.hasPrefix("product:"): return .products
+        default: return .home
+        }
+        #else
+        return .home
+        #endif
+    }
+
+    fileprivate static var initialProductsPath: [Route] {
+        #if DEBUG
+        switch DemoScreen.current {
+        case let s? where s.hasPrefix("product:"): return [.product(String(s.dropFirst("product:".count)))]
+        case "entry": return [.product("broccoli"), .entry(entryId: nil, productId: "broccoli")]
+        default: return []
+        }
+        #else
+        return []
+        #endif
     }
 }

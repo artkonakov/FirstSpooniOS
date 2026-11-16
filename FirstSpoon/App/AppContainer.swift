@@ -56,6 +56,10 @@ final class AppContainer {
             }
         }
         // Гость, у которого при «Продолжить» не было сети: создаём анонимный аккаунт сейчас.
+        #if DEBUG
+        // Демо-данные для скриншотов: `-demo_data YES -debug_offline YES` на чистой установке.
+        DemoData.seedIfRequested(self, defaults: defaults)
+        #endif
         Task { await auth.ensureAnonymous() }
     }
 

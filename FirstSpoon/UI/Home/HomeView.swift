@@ -35,6 +35,7 @@ struct HomeView: View {
 
     var body: some View {
         let state = HomeState(diary: app.diary, catalog: app.catalog.catalog)
+        ScrollViewReader { proxy in
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 14) {
                 if let child = app.diary.activeChild {
@@ -46,7 +47,7 @@ struct HomeView: View {
                                        onRecord: { Analytics.track(.recommendationRecord); nav.open(.entry(entryId: nil, productId: $0)) },
                                        onOther: { app.recommendations.skip($0) })
                 }
-                ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal)
+                ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal).id("progress")
                 if state.isEmpty {
                     EmptyState(emoji: "🥄", title: L.s("home_empty_title"), text: L.s("home_empty"))
                 }
@@ -87,6 +88,16 @@ struct HomeView: View {
             }
             .padding(.horizontal, screenPadding)
             .padding(.bottom, 24)
+        }
+        #if DEBUG
+        .task {
+            // Скриншоты: `-demo_screen home_progress` — главная, прокрученная к прогрессу и «Требуют внимания».
+            if DemoScreen.current == "home_progress" {
+                try? await Task.sleep(for: .milliseconds(400))
+                proxy.scrollTo("progress", anchor: .top)
+            }
+        }
+        #endif
         }
         .bottomAction {
             AppButton(L.s("home_new_entry"), icon: "plus") { nav.open(.entry(entryId: nil, productId: nil)) }

@@ -44,11 +44,17 @@ struct RootView: View {
 
     var body: some View {
         ZStack {
-            switch app.rootGraph {
-            case .auth: AuthFlow()
-            case .onboarding: OnboardingFlow()
-            case .main: MainFlow()
+            Group {
+                switch app.rootGraph {
+                case .auth: AuthFlow()
+                case .onboarding: OnboardingFlow()
+                case .main: MainFlow()
+                }
             }
+            // iPad: приложение — колонка удобной ширины по центру, а не карточки на всю ширину 13".
+            .frame(maxWidth: 760)
+            .frame(maxWidth: .infinity)
+            .background(AppColors.background.ignoresSafeArea())
             // Блокирующий экран поверх всего — только при запрете сети для приложения (не авиарежим, не сбой сети).
             if app.networkAccess.blocked {
                 NetworkBlockedView().transition(.opacity).zIndex(1)

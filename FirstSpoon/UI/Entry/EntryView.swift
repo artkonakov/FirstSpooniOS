@@ -91,7 +91,15 @@ struct EntryView: View {
         }
         .appScreen()
         .navigationTitle(L.s(entryId != nil ? "entry_edit_title" : "entry_title"))
-        .onAppear { if model == nil { model = EntryViewModel(diary: app.diary, entryId: entryId, productId: productId) } }
+        .onAppear {
+            guard model == nil else { return }
+            let m = EntryViewModel(diary: app.diary, entryId: entryId, productId: productId)
+            #if DEBUG
+            // Скриншоты (`-demo_screen entry`): дневное время и «Обед», как в Android, а не текущее время.
+            if DemoScreen.current == "entry" { m.time = LocalTime(12, 30); m.meal = .lunch }
+            #endif
+            model = m
+        }
         .sheet(isPresented: $pickProduct) {
             ProductPicker { id in model?.productId = id; pickProduct = false } onClose: { pickProduct = false }
         }

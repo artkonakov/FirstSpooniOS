@@ -8,6 +8,10 @@
 //   node tools/asc_api.mjs add-to-group <номер> <группа> выдать сборку группе тестировщиков (имя или id)
 //   node tools/asc_api.mjs versions                     версии App Store и их состояние
 //   node tools/asc_api.mjs listing                      тексты страницы App Store (по языкам)
+//   node tools/asc_api.mjs listing-set [store/appstore.ru.json]   залить тексты: имя, подзаголовок, описание,
+//                                                       промо-текст, ключевые слова, ссылки (версия в подготовке)
+//   node tools/asc_api.mjs screenshots [store/screenshots]  заменить скриншоты версии: папки iphone/ (6.9") и ipad/ (13"),
+//                                                       PNG по порядку имён (01-…, 02-…)
 //
 // Загрузка сборки — tools/upload_testflight.sh (xcodebuild archive + export с destination=upload, тот же ключ).
 // Отправка версии на проверку в App Store — только с подтверждения пользователя (команды пока нет).
@@ -15,10 +19,10 @@
 // Ключ: ~/.littlebite-keys/AuthKey_<KEY_ID>.p8 (создаёт пользователь, вне git, не читать и не печатать).
 // KEY_ID и ISSUER_ID — не секреты. Роль ключа — App Manager.
 
-import { createPrivateKey, sign } from 'node:crypto'
-import { readFileSync } from 'node:fs'
+import { createHash, createPrivateKey, sign } from 'node:crypto'
+import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs'
 import { homedir } from 'node:os'
-import { join } from 'node:path'
+import { basename, join } from 'node:path'
 
 export const KEY_ID = 'A2VCF6W9QB'
 export const ISSUER_ID = 'd7cee3e8-50f7-4cfb-bf4f-d3127e6a691a'
@@ -68,6 +72,27 @@ async function buildByNumber(app, number) {
   if (!b) throw new Error(`Сборка с номером ${number} не найдена (ещё обрабатывается? см. builds)`)
   return b
 }
+
+
+/** Версия App Store, которую ещё можно править (в подготовке / отклонена разработчиком). */
+async function editableVersion(app) {
+  const r = await get(`/v1/apps/${app}/appStoreVersions?filter[platform]=IOS&limit=10`)
+  const ok = ['PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED', 'WAITING_FOR_REVIEW']
+  const v = r.data.find((x) => ok.includes(x.attributes.appStoreState ?? x.attributes.appVersionState))
+  if (!v) throw new Error('Нет версии в подготовке — создайте её в App Store Connect')
+  return v
+}
+
+async function versionLocalization(version, locale) {
+  const r = await get(`/v1/appStoreVersions/${version.id}/appStoreVersionLocalizations`)
+  return r.data.find((l) => l.attributes.locale === locale) ?? (await api('POST', '/v1/appStoreVersionLocalizations', {
+    data: { type: 'appStoreVersionLocalizations', attributes: { locale },
+      relationships: { appStoreVersion: { data: { type: 'appStoreVersions', id: version.id } } } },
+  })).data
+}
+
+/** Тип скриншотов App Store Connect для папки. */
+const SCREENSHOT_TYPES = { iphone: 'APP_IPHONE_67', ipad: 'APP_IPAD_PRO_3GEN_129' }
 
 const arg = (name, def) => {
   const i = process.argv.indexOf(name)
@@ -139,6 +164,59 @@ const commands = {
       const a = v.attributes
       const b = builds[v.relationships?.build?.data?.id]
       console.log(`${a.versionString}  ${a.appStoreState ?? a.appVersionState}  ${a.platform}${b ? `  сборка ${b}` : '  без сборки'}`)
+    }
+  },
+
+  async 'listing-set'(file = 'store/appstore.ru.json') {
+    const t = JSON.parse(readFileSync(file, 'utf8'))
+    const app = await appId()
+    // Имя, подзаголовок, политика — appInfo (редактируемый, если их несколько).
+    const infos = (await get(`/v1/apps/${app}/appInfos`)).data
+    const info = infos.find((i) => i.attributes.appStoreState !== 'READY_FOR_SALE') ?? infos[0]
+    const infoLoc = (await get(`/v1/appInfos/${info.id}/appInfoLocalizations`)).data.find((l) => l.attributes.locale === t.locale)
+    if (!infoLoc) throw new Error(`Нет локализации ${t.locale} в appInfo — основной язык приложения другой?`)
+    await api('PATCH', `/v1/appInfoLocalizations/${infoLoc.id}`, { data: { type: 'appInfoLocalizations', id: infoLoc.id,
+      attributes: { name: t.name, subtitle: t.subtitle, privacyPolicyUrl: t.privacyPolicyUrl } } })
+    console.log(`appInfo [${t.locale}]: имя, подзаголовок, политика конфиденциальности`)
+    const version = await editableVersion(app)
+    const loc = await versionLocalization(version, t.locale)
+    await api('PATCH', `/v1/appStoreVersionLocalizations/${loc.id}`, { data: { type: 'appStoreVersionLocalizations', id: loc.id,
+      attributes: { description: t.description, keywords: t.keywords, promotionalText: t.promotionalText,
+        supportUrl: t.supportUrl, marketingUrl: t.marketingUrl } } })
+    console.log(`версия ${version.attributes.versionString} [${t.locale}]: описание ${t.description.length} симв., ключевые слова ${t.keywords.length}/100`)
+  },
+
+  async screenshots(dir = 'store/screenshots') {
+    const app = await appId()
+    const version = await editableVersion(app)
+    const loc = await versionLocalization(version, arg('--locale', 'ru'))
+    const sets = (await get(`/v1/appStoreVersionLocalizations/${loc.id}/appScreenshotSets`)).data
+    for (const [folder, type] of Object.entries(SCREENSHOT_TYPES)) {
+      const path = join(dir, folder)
+      if (!existsSync(path)) { console.log(`${folder}: папки нет — пропуск`); continue }
+      const files = readdirSync(path).filter((f) => f.endsWith('.png')).sort()
+      if (!files.length) continue
+      let set = sets.find((x) => x.attributes.screenshotDisplayType === type)
+      if (set) {
+        for (const old of (await get(`/v1/appScreenshotSets/${set.id}/appScreenshots`)).data) await api('DELETE', `/v1/appScreenshots/${old.id}`)
+      } else {
+        set = (await api('POST', '/v1/appScreenshotSets', { data: { type: 'appScreenshotSets', attributes: { screenshotDisplayType: type },
+          relationships: { appStoreVersionLocalization: { data: { type: 'appStoreVersionLocalizations', id: loc.id } } } } })).data
+      }
+      for (const f of files) {
+        const bytes = readFileSync(join(path, f))
+        const shot = (await api('POST', '/v1/appScreenshots', { data: { type: 'appScreenshots',
+          attributes: { fileName: f, fileSize: statSync(join(path, f)).size },
+          relationships: { appScreenshotSet: { data: { type: 'appScreenshotSets', id: set.id } } } } })).data
+        for (const op of shot.attributes.uploadOperations) {
+          const headers = Object.fromEntries(op.requestHeaders.map((h) => [h.name, h.value]))
+          const res = await fetch(op.url, { method: op.method, headers, body: bytes.subarray(op.offset, op.offset + op.length) })
+          if (!res.ok) throw new Error(`загрузка ${f}: HTTP ${res.status}`)
+        }
+        await api('PATCH', `/v1/appScreenshots/${shot.id}`, { data: { type: 'appScreenshots', id: shot.id,
+          attributes: { uploaded: true, sourceFileChecksum: createHash('md5').update(bytes).digest('hex') } } })
+        console.log(`${folder} ${type}: ${f}`)
+      }
     }
   },
 
