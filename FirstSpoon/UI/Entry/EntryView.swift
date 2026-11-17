@@ -125,7 +125,7 @@ struct EntryView: View {
                     }
                 }
                 section("entry_datetime") {
-                    ActionRow(title: "\(dayText(model.date)), \(model.time)", icon: "calendar") { pickDate = true }
+                    ActionRow(title: "\(dayText(model.date)), \(UiLocale.time(model.time))", icon: "calendar") { pickDate = true }
                 }
                 section("entry_meal") {
                     TileGrid(items: Meal.allCases) { m in

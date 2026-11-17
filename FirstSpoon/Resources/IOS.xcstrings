@@ -1,0 +1,22 @@
+{
+  "sourceLanguage" : "ru",
+  "strings" : {
+    "catalog_custom_category" : {
+      "comment" : "Только iOS (в Android — категория из CatalogRepository). Группа своих продуктов без категории.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "My products" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Свои продукты" } }
+      }
+    },
+    "custom_edit" : {
+      "comment" : "Только iOS: кнопка-карандаш на странице своего продукта.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit food" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Изменить продукт" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

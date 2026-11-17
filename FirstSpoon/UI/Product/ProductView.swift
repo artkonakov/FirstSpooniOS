@@ -138,7 +138,7 @@ private struct TryRow: View {
     let entry: DiaryEntry
     let onTap: () -> Void
     var body: some View {
-        let meta = [entry.time?.description, entry.amount.map(Labels.label)].compactMap { $0 }
+        let meta = [entry.time.map(UiLocale.time), entry.amount.map(Labels.label)].compactMap { $0 }
         AppCard(padding: EdgeInsets(top: 16, leading: 20, bottom: 16, trailing: 20), onTap: onTap) {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {

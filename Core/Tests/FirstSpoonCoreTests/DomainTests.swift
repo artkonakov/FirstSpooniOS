@@ -168,3 +168,24 @@ final class ReminderRulesTests: XCTestCase {
         XCTAssertEqual(ReminderRules.schedule(day, now: now), day)
     }
 }
+
+final class AppLocaleTests: XCTestCase {
+    func testRussianAndCisLanguagesGetRussian() {
+        for lang in ["ru-RU", "ru", "be-BY", "uk-UA", "kk-KZ", "ky", "uz-Cyrl-UZ", "uz-Latn", "tg", "tk", "hy-AM", "az-AZ", "ka-GE"] {
+            XCTAssertEqual(AppLocale.resolve(preferredLanguages: [lang, "en-US"]), .ru, lang)
+        }
+    }
+
+    func testEverythingElseGetsEnglish() {
+        for lang in ["en-US", "en-GB", "de-DE", "fr", "zh-Hans-CN", "pl-PL", "lv", "et"] {
+            XCTAssertEqual(AppLocale.resolve(preferredLanguages: [lang, "ru-RU"]), .en, lang)
+        }
+        XCTAssertEqual(AppLocale.resolve(preferredLanguages: []), .en)
+    }
+
+    /// Решает первый язык телефона, а не «есть ли русский где-то в списке».
+    func testOnlyFirstLanguageCounts() {
+        XCTAssertEqual(AppLocale.resolve(preferredLanguages: ["kk-KZ", "en-US"]), .ru)
+        XCTAssertEqual(AppLocale.resolve(preferredLanguages: ["en-US", "kk-KZ"]), .en)
+    }
+}

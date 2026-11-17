@@ -1,0 +1,26 @@
+1. SCREEN RECORDING
+A screen recording from a physical iPhone (latest iOS) is attached to this submission. It starts with launching the app and shows: continuing without an account, onboarding, logging a food try, the product catalog, PDF export, linking an email with a one-time code, and account deletion (Profile > Settings > Delete account).
+
+2. PURPOSE AND AUDIENCE
+«Ложку за маму» ("A spoon for mom") is a baby food diary for parents of infants starting solid foods (about 4–12 months). Parents log every food the baby tries (food, amount, meal, reaction, symptoms), see which foods are introduced, in progress or caused a reaction, get a suggestion of what to try next based on the baby's age, known allergies and foods already introduced, and export the diary to PDF for their pediatrician. It solves the problem of keeping track of dozens of new foods and possible reactions, which parents usually do on paper or in notes.
+
+3. HOW TO USE
+- No account is needed: tap "Продолжить" (Continue) on the first screen, enter a child's name, sex and date of birth, and answer a few optional questions.
+- Home: today's suggestion, progress to 100 foods, foods that need attention. Tap "Новая запись" (New entry) to log a try.
+- Foods: catalog with search and filters; open a food for serving tips, marks and its tries. "+" adds your own food (with an optional photo).
+- Profile ("Профиль"): children (with photos), "Экспорт дневника в PDF" (Export diary to PDF), Settings ("Настройки").
+- Optional email sign-in: Profile > Settings > "Привязать почту" (Link email), or "У меня уже есть аккаунт" (I already have an account) on the first screen. Demo account: apple-review@littlebite.app — the one-time code for this account is fixed and is entered in the password field above (no email access needed).
+- Account deletion: Profile > Settings > "Удалить аккаунт" (Delete account); for a guest: "Удалить все данные" (Delete all data).
+The interface is in Russian.
+
+4. EXTERNAL SERVICES
+- Our own backend at api.littlebite.app (Yandex Cloud): email one-time-code sign-in and account management (create, link email, delete). Diary data is NOT sent to the server; it stays on the device.
+- Email delivery of one-time codes from our own domain (littlebite.app).
+- AppMetrica (Yandex): anonymous usage analytics and crash reports; no advertising identifier, no tracking.
+No AI services, no third-party data providers, no payments or in-app purchases in this version.
+
+5. REGIONAL DIFFERENCES
+The app works the same in all regions; there are no regional differences in features or content.
+
+6. REGULATION / THIRD-PARTY MATERIAL
+The app is not a medical device and does not provide diagnosis or treatment; it is a diary with general feeding guidance and repeatedly advises consulting a pediatrician. All texts and food images are our own. No protected third-party material is used.

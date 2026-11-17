@@ -43,10 +43,26 @@ public enum ProductMark: String, CaseIterable, Codable, Sendable {
     case allergy
 }
 
-public enum AppLocale: Sendable {
+/// Язык интерфейса и каталога. Выбирается по языку телефона, переключателя в приложении нет (решение пользователя,
+/// то же правило в Android): русский — для русского и языков СНГ, иначе английский.
+/// Системный выбор iOS так не умеет (казахскому телефону без русского в списке дал бы английский), поэтому язык
+/// определяем сами и строки берём из `<язык>.lproj` явно.
+public enum AppLocale: String, Sendable {
     case ru, en
-    /// Интерфейс пока только русский — каталог тоже показываем по-русски.
-    public static func current() -> AppLocale { .ru }
+
+    /// Языки, для которых показываем русский.
+    public static let russianSpeaking: Set<String> = ["ru", "be", "uk", "kk", "ky", "uz", "tg", "tk", "hy", "az", "ka"]
+
+    /// По первому предпочитаемому языку телефона (`ru-RU`, `kk-KZ`, `uz-Cyrl-UZ`…).
+    public static func resolve(preferredLanguages: [String]) -> AppLocale {
+        guard let first = preferredLanguages.first else { return .en }
+        let code = first.split(whereSeparator: { $0 == "-" || $0 == "_" }).first.map(String.init)?.lowercased() ?? ""
+        return russianSpeaking.contains(code) ? .ru : .en
+    }
+
+    /// Текущий язык (вычисляется один раз за запуск: язык телефона меняется только с перезапуском приложения).
+    public static func current() -> AppLocale { cached }
+    private static let cached = resolve(preferredLanguages: Locale.preferredLanguages)
 }
 
 public struct Category: Hashable, Sendable, Identifiable {

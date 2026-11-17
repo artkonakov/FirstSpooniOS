@@ -19,10 +19,10 @@ enum DiaryPdfExporter {
         let today: LocalDate
     }
 
-    /// Имя файла: «Дневник прикорма — <Имя> — yyyy-MM-dd.pdf».
+    /// Имя файла: «Дневник прикорма — <Имя> — yyyy-MM-dd.pdf» / «Baby food diary — <Name> — yyyy-MM-dd.pdf».
     static func fileName(child: Child, today: LocalDate) -> String {
         let safeName = child.name.replacingOccurrences(of: "/", with: "-").replacingOccurrences(of: ":", with: "-")
-        return "\(L.s("pdf_title")) — \(safeName) — \(today.iso).pdf"
+        return L.s("export_file_name", safeName, today.iso)
     }
 
     /// Готовый файл во временной папке (для «Поделиться» / «Сохранить в Файлы»).
@@ -89,7 +89,7 @@ enum DiaryPdfExporter {
                     block.text.draw(with: CGRect(x: margin, y: top, width: width, height: block.height),
                                     options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
                 }
-                let footer = NSAttributedString(string: L.s("pdf_page_of", n + 1, pages.count), attributes: style(10, 400, muted: true, center: true))
+                let footer = NSAttributedString(string: L.s("export_page", n + 1, pages.count), attributes: style(10, 400, muted: true, center: true))
                 footer.draw(in: CGRect(x: margin, y: pageSize.height - margin - 12, width: width, height: 16))
             }
         }
@@ -101,27 +101,26 @@ enum DiaryPdfExporter {
         var out: [Block] = []
 
         // Шапка
-        out.append(Block(text: text(L.s("pdf_title"), style(24, 800))))
+        out.append(Block(text: text(L.s("export_title"), style(24, 800))))
         out.append(Block(text: text(child.name, style(18, 700)), spaceBefore: 6))
-        let birth = child.birthDate.map { L.s("pdf_birth_date", UiLocale.dayMonthYear($0), Labels.ageText(child, today: input.today)) }
+        let birth = child.birthDate.map { L.s("export_birth", UiLocale.dayMonthYear($0), Labels.ageText(child, today: input.today)) }
             ?? L.s("age_unknown")
         out.append(Block(text: text(birth, style(12, 400, muted: true)), spaceBefore: 4))
-        out.append(Block(text: text(L.s("pdf_exported_at", UiLocale.dayMonthYear(input.today)), style(12, 400, muted: true)), spaceBefore: 2))
+        out.append(Block(text: text(L.s("export_generated", UiLocale.dayMonthYear(input.today)), style(12, 400, muted: true)), spaceBefore: 2))
 
         // Сводка
         let progress = FeedingRules.progressByProduct(input.entries, marks: input.marks)
         let introduced = progress.values.filter { $0.status == .introduced }.count
         let inProgress = progress.values.filter { $0.status == .inProgress }.count
-        out.append(Block(text: text(L.s("pdf_summary", introduced, FeedingRules.introductionGoal, inProgress), style(13, 600)),
+        out.append(Block(text: text(L.s("export_summary", introduced, FeedingRules.introductionGoal, inProgress, input.entries.count), style(13, 600)),
                          spaceBefore: 16))
 
         // Списки по статусам — названия по алфавиту.
-        for (status, title) in [(ProductStatus.allergy, "status_allergy"), (.excluded, "pdf_excluded"), (.reaction, "status_reaction")] {
+        // Ключи как в Android: «Аллергия: %1$@» и т.д.; пустые списки — «—».
+        for (status, key) in [(ProductStatus.allergy, "export_allergy"), (.excluded, "export_excluded"), (.reaction, "export_reaction")] {
             let names = progress.values.filter { $0.status == status }.map { name($0.productId) }
                 .sorted { $0.compare($1, locale: UiLocale.locale) == .orderedAscending }
-            let line = NSMutableAttributedString(string: L.s(title) + ": ", attributes: style(12, 700))
-            line.append(NSAttributedString(string: names.isEmpty ? "—" : names.joined(separator: ", "), attributes: style(12, 400)))
-            out.append(Block(text: line, spaceBefore: 6))
+            out.append(Block(text: text(L.s(key, names.isEmpty ? "—" : names.joined(separator: ", ")), style(12, 400)), spaceBefore: 6))
         }
 
         // Пробы по дням, по возрастанию даты и времени.
@@ -135,7 +134,7 @@ enum DiaryPdfExporter {
             return a.offset > b.offset
         }.map(\.element)
         if sorted.isEmpty {
-            out.append(Block(text: text(L.s("pdf_no_entries"), style(12, 400, muted: true)), spaceBefore: 6))
+            out.append(Block(text: text(L.s("export_empty"), style(12, 400, muted: true)), spaceBefore: 6))
         }
         var day: LocalDate?
         for e in sorted {
@@ -143,16 +142,16 @@ enum DiaryPdfExporter {
                 day = e.date
                 out.append(Block(text: text(UiLocale.dayMonthYear(e.date), style(14, 700)), spaceBefore: 12, keepWithNext: true))
             }
-            let line = NSMutableAttributedString(string: (e.time.map { "\($0)  " } ?? ""), attributes: style(12, 400, muted: true))
+            let line = NSMutableAttributedString(string: (e.time.map { UiLocale.time($0) + "  " } ?? ""), attributes: style(12, 400, muted: true))
             line.append(NSAttributedString(string: name(e.productId), attributes: style(12, 700)))
-            let details = [e.amount.map(Labels.label), e.meal.map(Labels.label), Labels.label(e.reaction)].compactMap { $0 }
+            let details = [e.amount.map(Labels.label), e.meal.map(Labels.label), L.s("export_reaction_value", Labels.label(e.reaction))].compactMap { $0 }
             line.append(NSAttributedString(string: " — " + details.joined(separator: ", "), attributes: style(12, 400)))
             if !e.symptoms.isEmpty {
-                line.append(NSAttributedString(string: "\n" + L.s("pdf_symptoms", e.symptoms.map(Labels.label).joined(separator: ", ")),
+                line.append(NSAttributedString(string: "\n" + L.s("export_symptoms", e.symptoms.map(Labels.label).joined(separator: ", ")),
                                                attributes: style(11, 400, muted: true)))
             }
             if let note = e.note, !note.isEmpty {
-                line.append(NSAttributedString(string: "\n" + L.s("pdf_note", note), attributes: style(11, 400, muted: true)))
+                line.append(NSAttributedString(string: "\n" + L.s("export_note", note), attributes: style(11, 400, muted: true)))
             }
             out.append(Block(text: line, spaceBefore: 4))
         }

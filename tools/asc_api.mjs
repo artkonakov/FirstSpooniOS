@@ -8,10 +8,15 @@
 //   node tools/asc_api.mjs add-to-group <номер> <группа> выдать сборку группе тестировщиков (имя или id)
 //   node tools/asc_api.mjs versions                     версии App Store и их состояние
 //   node tools/asc_api.mjs listing                      тексты страницы App Store (по языкам)
-//   node tools/asc_api.mjs listing-set [store/appstore.ru.json]   залить тексты: имя, подзаголовок, описание,
-//                                                       промо-текст, ключевые слова, ссылки (версия в подготовке)
-//   node tools/asc_api.mjs screenshots [store/screenshots]  заменить скриншоты версии: папки iphone/ (6.9") и ipad/ (13"),
-//                                                       PNG по порядку имён (01-…, 02-…)
+//   node tools/asc_api.mjs version-create <1.1>         новая версия App Store (в подготовке), если её ещё нет
+//   node tools/asc_api.mjs listing-set [store/appstore.ru.json] [--version 1.1]   залить тексты: имя, подзаголовок,
+//                                                       описание, промо-текст, ключевые слова, ссылки. Язык — поле
+//                                                       locale в файле (ru, en-US — store/appstore.en.json); нет такой
+//                                                       локализации — создаётся. Если имя занято — пробует nameFallback.
+//   node tools/asc_api.mjs screenshots [store/screenshots] [--locale ru|en-US] [--version 1.1]
+//                                                       заменить скриншоты версии: папки iphone/ (6.9") и ipad/ (13"),
+//                                                       PNG по порядку имён (01-…, 02-…); en — store/screenshots-en
+//   Без --version берётся версия в подготовке (а если её нет — ожидающая проверки).
 //
 // Загрузка сборки — tools/upload_testflight.sh (xcodebuild archive + export с destination=upload, тот же ключ).
 //   node tools/asc_api.mjs submit <номер сборки> --yes  привязать сборку к версии в подготовке и отправить на проверку
@@ -78,10 +83,19 @@ async function buildByNumber(app, number) {
 /** Версия App Store, которую ещё можно править (в подготовке / отклонена разработчиком). */
 async function editableVersion(app) {
   const r = await get(`/v1/apps/${app}/appStoreVersions?filter[platform]=IOS&limit=10`)
-  const ok = ['PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED', 'WAITING_FOR_REVIEW']
-  const v = r.data.find((x) => ok.includes(x.attributes.appStoreState ?? x.attributes.appVersionState))
-  if (!v) throw new Error('Нет версии в подготовке — создайте её в App Store Connect')
-  return v
+  const state = (x) => x.attributes.appStoreState ?? x.attributes.appVersionState
+  const wanted = arg('--version')
+  if (wanted) {
+    const v = r.data.find((x) => x.attributes.versionString === wanted)
+    if (!v) throw new Error(`Версии ${wanted} нет — создайте: version-create ${wanted}`)
+    return v
+  }
+  // Сначала то, что точно можно править, и только потом — ожидающая проверки.
+  for (const ok of [['PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED'], ['WAITING_FOR_REVIEW']]) {
+    const v = r.data.find((x) => ok.includes(state(x)))
+    if (v) return v
+  }
+  throw new Error('Нет версии в подготовке — создайте её: version-create <номер>')
 }
 
 async function versionLocalization(version, locale) {
@@ -174,17 +188,44 @@ const commands = {
     // Имя, подзаголовок, политика — appInfo (редактируемый, если их несколько).
     const infos = (await get(`/v1/apps/${app}/appInfos`)).data
     const info = infos.find((i) => i.attributes.appStoreState !== 'READY_FOR_SALE') ?? infos[0]
-    const infoLoc = (await get(`/v1/appInfos/${info.id}/appInfoLocalizations`)).data.find((l) => l.attributes.locale === t.locale)
-    if (!infoLoc) throw new Error(`Нет локализации ${t.locale} в appInfo — основной язык приложения другой?`)
-    await api('PATCH', `/v1/appInfoLocalizations/${infoLoc.id}`, { data: { type: 'appInfoLocalizations', id: infoLoc.id,
-      attributes: { name: t.name, subtitle: t.subtitle, privacyPolicyUrl: t.privacyPolicyUrl } } })
-    console.log(`appInfo [${t.locale}]: имя, подзаголовок, политика конфиденциальности`)
+    const attrs = (name) => ({ name, subtitle: t.subtitle, privacyPolicyUrl: t.privacyPolicyUrl })
+    let infoLoc = (await get(`/v1/appInfos/${info.id}/appInfoLocalizations`)).data.find((l) => l.attributes.locale === t.locale)
+    // Имя может быть занято другим приложением — тогда запасное (nameFallback).
+    for (const name of [t.name, t.nameFallback].filter(Boolean)) {
+      try {
+        if (infoLoc) {
+          await api('PATCH', `/v1/appInfoLocalizations/${infoLoc.id}`, { data: { type: 'appInfoLocalizations', id: infoLoc.id, attributes: attrs(name) } })
+        } else {
+          infoLoc = (await api('POST', '/v1/appInfoLocalizations', { data: { type: 'appInfoLocalizations',
+            attributes: { locale: t.locale, ...attrs(name) }, relationships: { appInfo: { data: { type: 'appInfos', id: info.id } } } } })).data
+        }
+        console.log(`appInfo [${t.locale}]: имя «${name}», подзаголовок, политика конфиденциальности`)
+        break
+      } catch (e) {
+        if (name === t.nameFallback || !t.nameFallback || !/name|NAME/.test(e.message)) throw e
+        console.log(`имя «${name}» не принято (${e.message.split('\n').pop()}) — пробую «${t.nameFallback}»`)
+      }
+    }
     const version = await editableVersion(app)
     const loc = await versionLocalization(version, t.locale)
     await api('PATCH', `/v1/appStoreVersionLocalizations/${loc.id}`, { data: { type: 'appStoreVersionLocalizations', id: loc.id,
       attributes: { description: t.description, keywords: t.keywords, promotionalText: t.promotionalText,
         supportUrl: t.supportUrl, marketingUrl: t.marketingUrl } } })
     console.log(`версия ${version.attributes.versionString} [${t.locale}]: описание ${t.description.length} симв., ключевые слова ${t.keywords.length}/100`)
+  },
+
+  async 'version-create'(versionString) {
+    if (!versionString) throw new Error('version-create <номер версии, например 1.1>')
+    const app = await appId()
+    const r = await get(`/v1/apps/${app}/appStoreVersions?filter[platform]=IOS&limit=20`)
+    const existing = r.data.find((x) => x.attributes.versionString === versionString)
+    if (existing) {
+      console.log(`версия ${versionString} уже есть: ${existing.attributes.appStoreState ?? existing.attributes.appVersionState}`)
+      return
+    }
+    const v = (await api('POST', '/v1/appStoreVersions', { data: { type: 'appStoreVersions',
+      attributes: { platform: 'IOS', versionString }, relationships: { app: { data: { type: 'apps', id: app } } } } })).data
+    console.log(`создана версия ${versionString}: ${v.attributes.appStoreState ?? v.attributes.appVersionState}`)
   },
 
   async screenshots(dir = 'store/screenshots') {

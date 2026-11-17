@@ -1,0 +1,21 @@
+{
+  "sourceLanguage" : "ru",
+  "strings" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Название приложения на экране «Домой». Язык выбирает система (не наше правило ru/СНГ).",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "LittleBite" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ложку за маму" } }
+      }
+    },
+    "CFBundleName" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "LittleBite" } },
+        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Ложку за маму" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

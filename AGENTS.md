@@ -40,6 +40,8 @@
 | Фото ребёнка: PhotosPicker без разрешений, квадрат 512 px JPEG, только локально; редактор ребёнка и шаг с именем в онбординге; аватар на главной, в меню выбора ребёнка, в Профиле | ✅ проверено в симуляторе (редактор, сохранение, показ) | `Data/Local/PhotoStore.swift`, `UI/Components/PhotoPicker.swift` |
 | Фото своего продукта: создание и **новое** редактирование своего продукта (карандаш на его странице); вместо буквы в карточках, на странице, в выборе продукта | ✅ проверено (создание с фото, удаление фото → файл стёрт) | `CustomProductView(editId:)`, `ProductThumb` |
 | Блокирующий экран «Нет доступа к интернету» при запрете сети для приложения (не авиарежим, не сбой сети), «Открыть настройки», снимается сам | ✅ экран проверен через debug-флаг; реальный запрет в симуляторе не воспроизвести | `Core/Network/NetworkAccessMonitor.swift` |
+| Локализация ru / en по языку телефона (ru + СНГ → русский, иначе английский): интерфейс, каталог, даты, время, plurals, PDF; название «Ложку за маму» / «LittleBite» | ✅ тесты `AppLocaleTests`; проверено в симуляторе на en (iPhone, iPad) | `AppLocale` (Core), `UI/Common/Strings.swift`, `Resources/*.xcstrings` |
+| Скриншоты App Store ru и en (iPhone 6.9", iPad 13") — без касаний: `-demo_data YES -debug_offline YES`, затем `-demo_screen home_progress\|diary\|catalog\|product:broccoli\|entry` (только debug) | ✅ | `store/screenshots`, `store/screenshots-en`, `App/DemoData.swift` |
 | Подписка «Плюс» (StoreKit), синхронизация дневника | ❌ не делаем на первом этапе (логика Entitlement уже в Core) | — |
 | Debug-экраны рекомендаций/уведомлений, витрина компонентов, демо-данные, тап по уведомлению → экран | ❌ ещё нет | — |
 
@@ -64,7 +66,8 @@ FirstSpoon/
   UI/Common                   L (строки), UiLocale (даты, plurals), Labels (подписи перечислений и вопросов)
   UI/<feature>/               экраны; UI/Navigation/MainFlow — вкладки и маршруты
   Resources/                  catalog.json, Assets.xcassets (иконка, Products/product_*), Fonts/Onest.ttf,
-                              ru.lproj/Localizable.strings (генерируется), ru.lproj/IOS.strings (руками)
+                              Localizable.xcstrings (ru+en, генерируется), IOS.xcstrings (ru+en, руками),
+                              InfoPlist.xcstrings (название: «Ложку за маму» / «LittleBite»)
 tools/import_android_assets.py   импорт каталога, картинок, строк, шрифта и иконки из Android
 docs/screenshots/             скриншоты из симулятора
 ```
@@ -123,10 +126,20 @@ docs/screenshots/             скриншоты из симулятора
   где действие точно произошло → строка в docs/analytics.md → то же в Android. `AnalyticsCatalogTests` сверяет всё это.
 - Никаких личных данных в параметрах. Состав данных меняется → обновить «Конфиденциальность приложения» в App Store Connect до выпуска.
 
-**Тексты**
-- Только русские, только из `ru.lproj`: `Localizable.strings` генерируется из Android `strings.xml` (те же ключи, руками не править),
-  iOS-только строки — `IOS.strings`. В коде — `L.s("key", args…)`, plurals — `L.plural("key", n, args…)` (русские правила
-  независимо от языка телефона), даты — `UiLocale`.
+**Тексты и язык (ru / en)** — решение пользователя 2026-11-16, то же правило в Android
+- Язык — по **первому** языку телефона, переключателя в приложении нет: ru и языки СНГ (be, uk, kk, ky, uz, tg, tk, hy, az, ka) →
+  русский, всё остальное → английский. Правило — `AppLocale.resolve` в Core (тесты `AppLocaleTests`). Системный выбор iOS так не
+  умеет, поэтому `L` читает строки из `<язык>.lproj` явно. Название на экране «Домой» (`InfoPlist.xcstrings`) выбирает система —
+  там правило не действует (казахский телефон без русского в списке покажет «LittleBite»).
+- Все тексты — по ключам из String Catalog, хардкода во View нет:
+  - `Localizable.xcstrings` — генерирует `tools/import_android_assets.py` из Android `values/strings.xml` (ru) и
+    `values-en/strings.xml` (en); ключи те же, что в Android, руками не править. Если английского ключа в Android нет —
+    берётся из `tools/strings.en.json`, нет и там — скрипт падает со списком ключей;
+  - `IOS.xcstrings` — только строки, которых нет в Android (сейчас `catalog_custom_category`, `custom_edit`), правится руками.
+- В коде — `L.s("key", args…)`, plurals — `L.plural("key", n, args…)` (ключи `<name>#one|few|many` в ru, `#one|other` в en;
+  категория — по выбранному языку), даты и время — `UiLocale` (`dayMonth`, `dayMonthYear`, `time`: «13:00» / «1:00 PM»),
+  форматтеры с явной локалью, не системной. Каталог (названия, описания, первая порция, категории, аллергены) — из
+  `catalog.json` на выбранном языке (`CatalogPayload.toCatalog`). PDF — тоже на выбранном языке (ключи `export_*` как в Android).
 
 **UI**
 - Внутри экранов — «крупно и мягко», как в Android: Onest (вариативный, вес через ось `wght` — `AppFont`), белые карточки 28
@@ -160,7 +173,12 @@ node tools/asc_api.mjs builds                           # статус обра�
   не читать и не печатать). Key ID и Issuer ID — в скрипте, не секреты.
 - `node tools/asc_api.mjs listing-set` / `screenshots` — тексты (`store/appstore.ru.json`) и скриншоты (`store/screenshots/{iphone,ipad}`,
   снимаются в debug с `-demo_data YES -debug_offline YES -demo_screen …`); `submit <сборка> --yes` — на проверку App Store.
-  1.0 (2) отправлена на проверку 2026-11-16.
+  1.0 (2) отправлена на проверку 2026-11-16; на 2026-11-17 API показывает её как `REJECTED`.
+- Английская страница (en-US): тексты `store/appstore.en.json` (из Android `store/listing.en.json`; имя «LittleBite», запасное —
+  `nameFallback`; ссылки на `littlebite.app/en/…`), скриншоты `store/screenshots-en`:
+  `node tools/asc_api.mjs listing-set store/appstore.en.json [--version X]` и
+  `node tools/asc_api.mjs screenshots store/screenshots-en --locale en-US [--version X]`. Локализация создаётся сама.
+  Новая версия — `version-create <номер>` (пока предыдущая не одобрена/отклонена-открыта, App Store Connect её не даст).
 - Загрузка в TestFlight и выдача внутренним тестировщикам — по просьбе пользователя. Отправка версии на проверку
   в App Store и публикация — только с его подтверждения.
 - Анкета App Privacy — по факту сборки: AppMetrica (взаимодействие с приложением, сбои, диагностика, идентификатор

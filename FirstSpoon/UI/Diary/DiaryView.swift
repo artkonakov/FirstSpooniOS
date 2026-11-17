@@ -42,7 +42,7 @@ private struct EntryCard: View {
     let name: String
     let onTap: () -> Void
     var body: some View {
-        let meta = [entry.time?.description, entry.meal.map(Labels.label), entry.amount.map(Labels.label)].compactMap { $0 }.joined(separator: " · ")
+        let meta = [entry.time.map(UiLocale.time), entry.meal.map(Labels.label), entry.amount.map(Labels.label)].compactMap { $0 }.joined(separator: " · ")
         ProductCard(productId: entry.productId, name: name, onTap: onTap,
                     supporting: {
                         if !meta.isEmpty { Text(meta).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted) }

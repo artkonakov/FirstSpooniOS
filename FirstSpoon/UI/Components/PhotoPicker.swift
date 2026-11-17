@@ -68,7 +68,7 @@ struct PhotoPickerField: View {
 
             VStack(alignment: .leading, spacing: 4) {
                 PhotosPicker(selection: $item, matching: .images, photoLibrary: .shared()) {
-                    Text(L.s(draft.current == nil ? "photo_choose" : "photo_change"))
+                    Text(L.s(draft.current == nil ? "photo_pick" : "photo_change"))
                         .font(AppFont.labelLarge).foregroundStyle(AppColors.primary)
                         .frame(minHeight: 44)
                 }
@@ -79,7 +79,7 @@ struct PhotoPickerField: View {
                     .buttonStyle(.plain)
                 }
                 if failed {
-                    Text(L.s("photo_failed")).font(AppFont.bodyMedium).foregroundStyle(AppColors.alert)
+                    Text(L.s("photo_error")).font(AppFont.bodyMedium).foregroundStyle(AppColors.alert)
                 }
             }
             Spacer(minLength: 0)

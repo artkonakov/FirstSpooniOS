@@ -7,8 +7,10 @@
 Что делает:
 - `app/src/main/assets/catalog.json`          → FirstSpoon/Resources/catalog.json
 - `res/drawable-nodpi/product_*.webp`          → FirstSpoon/Resources/Assets.xcassets/Products/product_*.imageset (PNG, @3x, через sips)
-- `res/values/strings.xml`                     → FirstSpoon/Resources/ru.lproj/Localizable.strings
-  (те же ключи, что в Android; `%1$s` → `%1$@`; plurals → ключи `<name>#one|few|many|other`)
+- `res/values/strings.xml` (ru) + `res/values-en/strings.xml` (en; пока его нет — `tools/strings.en.json`)
+                                               → FirstSpoon/Resources/Localizable.xcstrings (String Catalog)
+  (те же ключи, что в Android; `%1$s` → `%1$@`; plurals → ключи `<name>#one|few|many|other`, в en — `#one|other`)
+  Строки только для iOS — FirstSpoon/Resources/IOS.xcstrings, правится руками (в Xcode или как JSON).
 - `res/font/onest.ttf`                         → FirstSpoon/Resources/Fonts/Onest.ttf
 - иконка 1024×1024 (RN `assets/icon.png`)      → AppIcon.appiconset
 """
@@ -74,10 +76,26 @@ def main():
             "info": {"author": "xcode", "version": 1},
         })
 
-    strings = convert_strings(main_src / "res/values/strings.xml")
-    lproj = APP / "ru.lproj"
-    lproj.mkdir(exist_ok=True)
-    (lproj / "Localizable.strings").write_text(strings, encoding="utf-8")
+    ru = read_strings(main_src / "res/values/strings.xml")
+    en_xml = main_src / "res/values-en/strings.xml"
+    en = read_strings(en_xml) if en_xml.exists() else {}
+    fallback = json.loads((ROOT / "tools/strings.en.json").read_text(encoding="utf-8"))
+    missing = []
+    for key in ru:
+        if key not in en:
+            base = key.split("#")[0]
+            if key in fallback:
+                en[key] = fallback[key]
+            elif key.endswith(("#few", "#many")):
+                continue  # в английском только one/other
+            else:
+                missing.append(key)
+    for key, value in fallback.items():  # английские plurals (#other), которых нет в русском наборе ключей
+        if key.split("#")[0] in {k.split("#")[0] for k in ru} and key not in en:
+            en[key] = value
+    if missing:
+        sys.exit(f"Нет английского перевода: {', '.join(missing)} — добавьте в tools/strings.en.json")
+    write_xcstrings(APP / "Localizable.xcstrings", ru, en)
     print(f"catalog.json, {count} product images, strings, font{', icon' if icon else ''} → {APP}")
 
 
@@ -95,21 +113,32 @@ def android_text(el) -> str:
     return re.sub(r"%(\d+\$)?s", lambda m: "%" + (m.group(1) or "") + "@", text)
 
 
-def escape(s: str) -> str:
-    return s.replace("\\", "\\\\").replace('"', '\\"').replace("\n", "\\n")
-
-
-def convert_strings(xml_path: Path) -> str:
-    root = ET.parse(xml_path).getroot()
-    out = ["/* Сгенерировано tools/import_android_assets.py из Android res/values/strings.xml — руками не править. */", ""]
-    for el in root:
+def read_strings(xml_path: Path) -> dict:
+    """Android strings.xml → {ключ: текст}; plurals → `<name>#<quantity>`."""
+    out = {}
+    for el in ET.parse(xml_path).getroot():
         name = el.get("name")
         if el.tag == "string":
-            out.append(f'"{name}" = "{escape(android_text(el))}";')
+            out[name] = android_text(el)
         elif el.tag == "plurals":
             for item in el.findall("item"):
-                out.append(f'"{name}#{item.get("quantity")}" = "{escape(android_text(item))}";')
-    return "\n".join(out) + "\n"
+                out[f"{name}#{item.get('quantity')}"] = android_text(item)
+    return out
+
+
+def write_xcstrings(path: Path, ru: dict, en: dict):
+    """String Catalog: исходный язык ru, перевод en. Xcode компилирует его в ru.lproj / en.lproj."""
+    unit = lambda v: {"stringUnit": {"state": "translated", "value": v}}
+    strings = {}
+    for key in sorted(set(ru) | set(en)):
+        loc = {}
+        if key in ru:
+            loc["ru"] = unit(ru[key])
+        if key in en:
+            loc["en"] = unit(en[key])
+        strings[key] = {"extractionState": "manual", "localizations": loc}
+    data = {"sourceLanguage": "ru", "strings": strings, "version": "1.0"}
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ struct ProfileView: View {
                 AppButton(L.s("child_add"), kind: .soft, icon: "plus") { nav.open(.child(nil)) }
                 Spacer().frame(height: 12)
                 if app.diary.activeChild != nil {
-                    ActionRow(title: L.s("export_pdf"), icon: "doc.richtext") { exportDiary() }
+                    ActionRow(title: L.s("export_row"), icon: "doc.richtext") { exportDiary() }
                 }
                 ActionRow(title: L.s("settings"), icon: "gearshape.fill") { nav.open(.settings) }
             }

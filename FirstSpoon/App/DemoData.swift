@@ -16,7 +16,7 @@ enum DemoData {
         let diary = app.diary
         let today = LocalDate.today()
         do {
-            let childId = try diary.saveChild(id: nil, name: "Маша", birthDate: today.minusMonths(7).minusDays(5),
+            let childId = try diary.saveChild(id: nil, name: AppLocale.current() == .ru ? "Маша" : "Mia", birthDate: today.minusMonths(7).minusDays(5),
                                               sex: .female, profile: ChildProfile())
             diary.selectChild(childId)
 

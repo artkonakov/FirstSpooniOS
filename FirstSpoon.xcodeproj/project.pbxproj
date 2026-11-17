@@ -105,6 +105,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				ru,
+				en,
 				Base,
 			);
 			mainGroup = A10000000000000000000601;
