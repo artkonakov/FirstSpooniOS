@@ -55,7 +55,8 @@
 | `custom_product_added` | Добавлен свой продукт | — | `CatalogRepository.addCustomProduct` |
 | `recommendation_record` | «Записать пробу» на карточке рекомендации | — | `HomeView` → `RecommendationCard.onRecord` |
 | `recommendation_other` | «Другой» на карточке рекомендации | — | `RecommendationRepository.skip` |
-| `diary_exported` | Дневник выгружен в PDF (файл готов, открыт лист «Поделиться») | — | `ProfileView.exportDiary` |
+| `diary_exported` | Дневник выгружен в PDF (файл готов, открыт лист «Поделиться») | `photos`: `none` / `reactions` / `all` — какие фото проб в отчёте (`none` и когда фото нет) | `ProfileView.exportDiary` |
+| `entry_photo_added` | К пробе прикреплено фото (из галереи) — по событию на фото, при сохранении пробы (брошенный черновик не считается) | — | `EntryViewModel.save` |
 | `child_photo_set` | Ребёнку поставлено новое фото (редактор или онбординг) | — | `DiaryRepository.saveChild` |
 | `custom_product_photo_set` | Своему продукту поставлено новое фото | — | `CatalogRepository.add/updateCustomProduct` |
 | `network_blocked_shown` | Показан блокирующий экран «Нет доступа к интернету» (запрет сети для приложения) | — | `NetworkAccessMonitor` |

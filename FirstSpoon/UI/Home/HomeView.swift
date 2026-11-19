@@ -120,7 +120,7 @@ struct HomeView: View {
 }
 
 /// Выбор активного ребёнка — системное меню в навбаре: аватар активного, список детей, «Добавить ребёнка».
-private struct ChildMenu: View {
+struct ChildMenu: View {
     @Environment(AppContainer.self) private var app
     let onAdd: () -> Void
     var body: some View {

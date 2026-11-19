@@ -32,6 +32,8 @@ final class AppContainer {
         self.tokens = tokens
         self.db = db ?? (try! AppDatabase.makeShared())
         photos = PhotoStore()
+        // Файлы фото без ссылки в БД — брошенные черновики (приложение закрыли посреди редактирования).
+        photos.retainOnly(self.db.referencedPhotos())
         session = SessionManager(tokens: tokens)
         api = ApiClient(tokens: tokens)
         auth = AuthRepository(api: api, tokens: tokens, session: session, db: self.db, photos: photos, defaults: defaults)

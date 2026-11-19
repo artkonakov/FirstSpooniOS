@@ -15,17 +15,21 @@ final class EntryViewModel {
     var symptoms: Set<Symptom> = []
     var note = ""
     var saving = false
+    /// Фото пробы (черновик: в пробу попадают только при «Сохранить»).
+    let photos: EntryPhotosDraft
 
     @ObservationIgnored private let diary: DiaryRepository
 
     init(diary: DiaryRepository, entryId: String?, productId: String?) {
         self.diary = diary
         self.productId = productId
-        if let entryId, let e = diary.getEntry(entryId) {
+        let existing = entryId.flatMap { diary.getEntry($0) }
+        if let e = existing {
             self.entryId = e.id; date = e.date; time = e.time ?? LocalTime(12, 0); self.productId = e.productId
             meal = e.meal; amount = e.amount; reaction = e.reaction == .unknown ? nil : e.reaction
             symptoms = Set(e.symptoms); note = e.note ?? ""
         }
+        photos = EntryPhotosDraft(store: diary.photos, original: existing?.photos ?? [])
     }
 
     var isEditing: Bool { entryId != nil }
@@ -42,14 +46,17 @@ final class EntryViewModel {
         let r = reaction ?? .unknown
         // Симптомы имеют смысл только при «Сомнительно»/«Плохо»: при смене реакции не храним старые.
         let s = Labels.asksSymptoms(r) ? Symptom.allCases.filter(symptoms.contains) : []
+        let (files, added) = photos.commit()
         do {
             if let entryId {
                 try diary.updateEntry(DiaryEntry(id: entryId, productId: productId, date: date, time: time, meal: meal,
-                                                 amount: amount, reaction: r, symptoms: s, note: note))
+                                                 amount: amount, reaction: r, symptoms: s, note: note, photos: files))
             } else {
                 try diary.addEntry(productId: productId, date: date, time: time, meal: meal, amount: amount,
-                                   reaction: r, symptoms: s, note: note)
+                                   reaction: r, symptoms: s, note: note, photos: files)
             }
+            // По событию на каждое новое фото — только сохранённые (брошенные черновики не считаются).
+            for _ in 0..<added { Analytics.track(.entryPhotoAdded) }
             return true
         } catch {
             saving = false
@@ -96,10 +103,12 @@ struct EntryView: View {
             let m = EntryViewModel(diary: app.diary, entryId: entryId, productId: productId)
             #if DEBUG
             // Скриншоты (`-demo_screen entry`): дневное время и «Обед», как в Android, а не текущее время.
-            if DemoScreen.current == "entry" { m.time = LocalTime(12, 30); m.meal = .lunch }
+            if DemoScreen.current == "entry" && entryId == nil { m.time = LocalTime(12, 30); m.meal = .lunch }
             #endif
             model = m
         }
+        // Ушли без «Сохранить» — снимки, выбранные на этом экране, не нужны.
+        .onDisappear { model?.photos.discard() }
         .sheet(isPresented: $pickProduct) {
             ProductPicker { id in model?.productId = id; pickProduct = false } onClose: { pickProduct = false }
         }
@@ -147,11 +156,16 @@ struct EntryView: View {
                                 AppChip(label: Labels.label(s), selected: model.symptoms.contains(s)) { model.toggleSymptom(s) }
                             }
                         }
+                        Text(L.s("entry_photos_reaction_hint")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted)
+                            .padding(.leading, 6)
                     }
                 }
-                section("entry_note") {
+                section(L.s("entry_note") + " " + L.s("entry_optional"), raw: true) {
                     AppTextField(text: Binding(get: { model.note }, set: { model.note = String($0.prefix(500)) }),
                                  placeholder: L.s("entry_note_hint"), multiline: true)
+                }
+                section(L.s("entry_photos") + " " + L.s("entry_optional"), raw: true) {
+                    EntryPhotosSection(draft: model.photos)
                 }
                 if model.isEditing {
                     AppButton(L.s("entry_delete"), kind: .danger) { confirmDelete = true }.padding(.top, 12)
@@ -163,9 +177,10 @@ struct EntryView: View {
         .scrollDismissesKeyboard(.interactively)
     }
 
-    private func section<C: View>(_ title: String, @ViewBuilder _ content: () -> C) -> some View {
+    /// `raw` — заголовок уже готовым текстом, иначе это ключ строки.
+    private func section<C: View>(_ title: String, raw: Bool = false, @ViewBuilder _ content: () -> C) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            FieldLabel(L.s(title))
+            FieldLabel(raw ? title : L.s(title))
             content()
         }
         .padding(.top, 8)

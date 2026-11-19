@@ -11,13 +11,33 @@ enum DiaryPdfExporter {
     static let margin: CGFloat = 48
     static let footerHeight: CGFloat = 24
 
+    /// Какие фото проб класть в отчёт (выбор «Фото в отчёте»); `rawValue` — параметр аналитики `photos`.
+    enum PhotoMode: String, CaseIterable {
+        case none, reactions, all
+
+        func includes(_ e: DiaryEntry) -> Bool {
+            switch self {
+            case .none: return false
+            case .reactions: return e.hasReaction
+            case .all: return true
+            }
+        }
+    }
+
     struct Input {
         let child: Child
         let entries: [DiaryEntry]
         let marks: [String: ProductMark]
         let catalog: Catalog
         let today: LocalDate
+        var photoMode: PhotoMode = .none
+        var photos: PhotoStore?
     }
+
+    /// Миниатюры фото в PDF: высота ~4 см, пропорции сохраняются, уменьшены до ~1000 px JPEG, чтобы файл был в пределах МБ.
+    static let photoHeight: CGFloat = 113
+    static let photoGap: CGFloat = 6
+    static let photoPixels: CGFloat = 1000
 
     /// Имя файла: «Дневник прикорма — <Имя> — yyyy-MM-dd.pdf» / «Baby food diary — <Name> — yyyy-MM-dd.pdf».
     static func fileName(child: Child, today: LocalDate) -> String {
@@ -38,7 +58,9 @@ enum DiaryPdfExporter {
     // MARK: - Вёрстка
 
     private struct Block {
-        let text: NSAttributedString
+        var text = NSAttributedString()
+        /// Ряд миниатюр фото (вместо текста): картинка и её ширина при высоте `photoHeight`.
+        var images: [(UIImage, CGFloat)] = []
         var spaceBefore: CGFloat = 0
         /// Не отрывать от следующего блока (заголовок дня/раздела).
         var keepWithNext = false
@@ -49,8 +71,10 @@ enum DiaryPdfExporter {
         let width = pageSize.width - margin * 2
         var blocks = content(input).map { b -> Block in
             var b = b
-            b.height = ceil(b.text.boundingRect(with: CGSize(width: width, height: .greatestFiniteMagnitude),
-                                                options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).height)
+            b.height = b.images.isEmpty
+                ? ceil(b.text.boundingRect(with: CGSize(width: width, height: .greatestFiniteMagnitude),
+                                           options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil).height)
+                : photoHeight
             return b
         }
         // Проход 1: раскладка по страницам.
@@ -86,8 +110,16 @@ enum DiaryPdfExporter {
             for (n, page) in pages.enumerated() {
                 ctx.beginPage()
                 for (block, top) in page {
-                    block.text.draw(with: CGRect(x: margin, y: top, width: width, height: block.height),
-                                    options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
+                    if block.images.isEmpty {
+                        block.text.draw(with: CGRect(x: margin, y: top, width: width, height: block.height),
+                                        options: [.usesLineFragmentOrigin, .usesFontLeading], context: nil)
+                    } else {
+                        var x = margin
+                        for (image, w) in block.images {
+                            image.draw(in: CGRect(x: x, y: top, width: w, height: photoHeight))
+                            x += w + photoGap
+                        }
+                    }
                 }
                 let footer = NSAttributedString(string: L.s("export_page", n + 1, pages.count), attributes: style(10, 400, muted: true, center: true))
                 footer.draw(in: CGRect(x: margin, y: pageSize.height - margin - 12, width: width, height: 16))
@@ -154,8 +186,33 @@ enum DiaryPdfExporter {
                 line.append(NSAttributedString(string: "\n" + L.s("export_note", note), attributes: style(11, 400, muted: true)))
             }
             out.append(Block(text: line, spaceBefore: 4))
+            if input.photoMode.includes(e), let store = input.photos {
+                out += photoRows(e.photos.compactMap { store.image($0) })
+            }
         }
         return out
+    }
+
+    /// Миниатюры фото пробы рядами: пропорции сохраняются, не влезает в строку — переносится на следующую (и страницу).
+    private static func photoRows(_ images: [UIImage]) -> [Block] {
+        let width = pageSize.width - margin * 2
+        var rows: [Block] = []
+        var row: [(UIImage, CGFloat)] = []
+        var used: CGFloat = 0
+        for original in images {
+            // Уменьшаем до ~1000 px и пережимаем в JPEG — в PDF уходит сжатая картинка, а не исходник.
+            guard let data = PhotoStore.scaledJPEG(original, longest: photoPixels, quality: 0.75),
+                  let image = UIImage(data: data), image.size.height > 0 else { continue }
+            let w = min(width, photoHeight * image.size.width / image.size.height)
+            if !row.isEmpty && used + photoGap + w > width {
+                rows.append(Block(images: row, spaceBefore: 6))
+                row = []; used = 0
+            }
+            used += (row.isEmpty ? 0 : photoGap) + w
+            row.append((image, w))
+        }
+        if !row.isEmpty { rows.append(Block(images: row, spaceBefore: 6)) }
+        return rows
     }
 
     private static func text(_ s: String, _ attrs: [NSAttributedString.Key: Any]) -> NSAttributedString {

@@ -97,8 +97,12 @@ final class DiaryRepository {
     /// Мягкое удаление ребёнка; его пробы остаются в базе, но больше не показываются.
     func deleteChild(_ id: String) throws {
         let now = nowMillis()
-        // Фото живёт только на устройстве — при удалении ребёнка стираем файл сразу.
+        // Фото живут только на устройстве — при удалении ребёнка стираем его фото и фото его проб сразу.
         photos.delete(getChild(id)?.photo)
+        let entryPhotos = (try? db.dbQueue.read { db in
+            try EntryRecord.filter(sql: "child_id = ?", arguments: [id]).fetchAll(db).flatMap(\.photos)
+        }) ?? []
+        entryPhotos.forEach(photos.delete)
         try db.dbQueue.write { try $0.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id]) }
         if activeStore.id == id { activeStore.set(nil) }
         reload()
@@ -106,12 +110,14 @@ final class DiaryRepository {
 
     @discardableResult
     func addEntry(productId: String, date: LocalDate = .today(), time: LocalTime? = nil, meal: Meal? = nil,
-                  amount: Amount? = nil, reaction: Reaction = .unknown, symptoms: [Symptom] = [], note: String? = nil) throws -> String {
+                  amount: Amount? = nil, reaction: Reaction = .unknown, symptoms: [Symptom] = [], note: String? = nil,
+                  photos: [String] = []) throws -> String {
         guard let childId = activeChild?.id else { throw RepositoryError.noActiveChild }
         let now = nowMillis()
         let record = EntryRecord(id: newId(), childId: childId, productId: productId, date: date.iso, time: time?.description,
                                  meal: meal?.rawValue, amount: amount?.rawValue, reaction: reaction.rawValue,
-                                 symptoms: symptoms.map(\.rawValue), note: Self.clean(note), createdAt: now, updatedAt: now)
+                                 symptoms: symptoms.map(\.rawValue), note: Self.clean(note),
+                                 photos: Array(photos.prefix(DiaryEntry.maxPhotos)), createdAt: now, updatedAt: now)
         try db.dbQueue.write { try record.insert($0) }
         Analytics.track(.entryAdded)
         reload()
@@ -140,8 +146,12 @@ final class DiaryRepository {
         old.reaction = entry.reaction.rawValue
         old.symptoms = entry.symptoms.map(\.rawValue)
         old.note = Self.clean(entry.note)
+        let removed = Set(old.photos).subtracting(entry.photos)
+        old.photos = Array(entry.photos.prefix(DiaryEntry.maxPhotos))
         old.updatedAt = nowMillis()
         try db.dbQueue.write { try old.update($0) }
+        // Убранные из пробы фото — стираем файлы (сначала БД, потом файл).
+        removed.forEach(photos.delete)
         reload()
     }
 
@@ -156,7 +166,10 @@ final class DiaryRepository {
     /// Мягкое удаление: запись скрывается, но остаётся для будущей синхронизации.
     func deleteEntry(_ entryId: String) throws {
         let now = nowMillis()
-        try db.dbQueue.write { try $0.execute(sql: "UPDATE entries SET deleted_at = ?, updated_at = ? WHERE id = ?", arguments: [now, now, entryId]) }
+        let files = (try? db.dbQueue.read { try EntryRecord.fetchOne($0, key: entryId) })??.photos ?? []
+        try db.dbQueue.write { try $0.execute(sql: "UPDATE entries SET deleted_at = ?, updated_at = ?, photos = '[]' WHERE id = ?", arguments: [now, now, entryId]) }
+        // Мягкое удаление записи, но фото живут только на устройстве — стираем их сразу.
+        files.forEach(photos.delete)
         reload()
     }
 

@@ -25,7 +25,10 @@ public enum AnalyticsEvent: Hashable, Sendable {
     case recommendationRecord
     case recommendationOther
     // Профиль и фото
-    case diaryExported
+    /// `photos`: `none` | `reactions` | `all` — какие фото проб попали в PDF (`none` и когда фото у ребёнка нет).
+    case diaryExported(photos: String)
+    /// Фото прикреплено к пробе (из галереи). По событию на фото, при сохранении пробы.
+    case entryPhotoAdded
     case childPhotoSet
     case customProductPhotoSet
     // Сеть
@@ -42,7 +45,7 @@ public enum AnalyticsEvent: Hashable, Sendable {
         "guest_started", "login", "email_linked", "logout", "account_deleted",
         "onboarding_completed", "child_added", "entry_added", "product_marked", "custom_product_added",
         "recommendation_record", "recommendation_other",
-        "diary_exported", "child_photo_set", "custom_product_photo_set", "network_blocked_shown",
+        "diary_exported", "entry_photo_added", "child_photo_set", "custom_product_photo_set", "network_blocked_shown",
         "paywall_opened", "purchase_started", "purchase_completed", "purchase_failed", "restore_tapped",
     ]
 
@@ -61,6 +64,7 @@ public enum AnalyticsEvent: Hashable, Sendable {
         case .recommendationRecord: return "recommendation_record"
         case .recommendationOther: return "recommendation_other"
         case .diaryExported: return "diary_exported"
+        case .entryPhotoAdded: return "entry_photo_added"
         case .childPhotoSet: return "child_photo_set"
         case .customProductPhotoSet: return "custom_product_photo_set"
         case .networkBlockedShown: return "network_blocked_shown"
@@ -76,6 +80,7 @@ public enum AnalyticsEvent: Hashable, Sendable {
         switch self {
         case .login(let fromGuest): return ["from_guest": .bool(fromGuest)]
         case .productMarked(let mark): return ["mark": .string(mark.rawValue)]
+        case .diaryExported(let photos): return ["photos": .string(photos)]
         case .purchaseStarted(let p), .purchaseCompleted(let p), .purchaseFailed(let p): return ["product": .string(p)]
         default: return [:]
         }

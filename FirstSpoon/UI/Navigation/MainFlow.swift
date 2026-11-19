@@ -24,7 +24,9 @@ final class Navigator {
 
 private enum Tab: Hashable { case home, diary, products, profile }
 
-/// Основной граф: системный таб-бар (`TabView`), у каждой вкладки свой `NavigationStack` с системным навбаром.
+/// Основной граф — стандартный iOS: системный `TabView`, у каждой вкладки свой `NavigationStack` (`TabStack`).
+/// Заголовок, кнопки навбара и поиск задаёт сам экран; таб-бар виден и на вложенных экранах.
+/// Переключение вкладок сохраняет стек каждой (решение пользователя 2026-11-19, «вариант 1»).
 struct MainFlow: View {
     @Environment(AppContainer.self) private var app
     @State private var tab = MainFlow.initialTab
@@ -54,7 +56,7 @@ struct MainFlow: View {
     }
 }
 
-/// `NavigationStack` вкладки: свой `Navigator` и общие маршруты.
+/// Стек одной вкладки: свой `Navigator` в окружении, все маршруты `Route`.
 struct TabStack<Root: View>: View {
     @State private var nav: Navigator
     @ViewBuilder let root: () -> Root
@@ -67,17 +69,19 @@ struct TabStack<Root: View>: View {
     }
 
     var body: some View {
-        NavigationStack(path: $nav.path) {
-            root().routes()
-        }
-        .environment(nav)
+        NavigationStack(path: $nav.path) { root().routes() }
+            .environment(nav)
     }
 }
 
 extension View {
-    /// Все экраны, которые можно открыть из вкладки.
+    /// Все экраны, которые открываются в стеке вкладки (таб-бар остаётся; нижняя кнопка — над ним).
     func routes() -> some View {
-        navigationDestination(for: Route.self) { route in
+        navigationDestination(for: Route.self) { route in destination(route) }
+    }
+
+    @ViewBuilder
+    private func destination(_ route: Route) -> some View {
             switch route {
             case .product(let id): ProductView(productId: id)
             case .entry(let entryId, let productId): EntryView(entryId: entryId, productId: productId)
@@ -88,7 +92,6 @@ extension View {
             case .linkEmail: LinkEmailFlow()
             case .authCode(let m): AuthCodeView(model: m)
             }
-        }
     }
 }
 

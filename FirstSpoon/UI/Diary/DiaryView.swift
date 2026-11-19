@@ -38,6 +38,7 @@ struct DiaryView: View {
 }
 
 private struct EntryCard: View {
+    @Environment(AppContainer.self) private var app
     let entry: DiaryEntry
     let name: String
     let onTap: () -> Void
@@ -46,6 +47,7 @@ private struct EntryCard: View {
         ProductCard(productId: entry.productId, name: name, onTap: onTap,
                     supporting: {
                         if !meta.isEmpty { Text(meta).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted) }
+                        EntryPhotoBadge(store: app.photos, photos: entry.photos)
                     },
                     trailing: { Text(Labels.emoji(entry.reaction)).font(.system(size: 30)).padding(.trailing, 4) },
                     footer: { EmptyView() })

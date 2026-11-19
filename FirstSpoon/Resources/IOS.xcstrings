@@ -1,22 +1,204 @@
 {
-  "sourceLanguage" : "ru",
-  "strings" : {
-    "catalog_custom_category" : {
-      "comment" : "Только iOS (в Android — категория из CatalogRepository). Группа своих продуктов без категории.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "My products" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Свои продукты" } }
+  "sourceLanguage": "ru",
+  "strings": {
+    "catalog_custom_category": {
+      "comment": "Только iOS (в Android — категория из CatalogRepository). Группа своих продуктов без категории.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My products"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Свои продукты"
+          }
+        }
       }
     },
-    "custom_edit" : {
-      "comment" : "Только iOS: кнопка-карандаш на странице своего продукта.",
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Edit food" } },
-        "ru" : { "stringUnit" : { "state" : "translated", "value" : "Изменить продукт" } }
+    "custom_edit": {
+      "comment": "Только iOS: кнопка-карандаш на странице своего продукта.",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit food"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменить продукт"
+          }
+        }
+      }
+    },
+    "entry_photo_remove": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove photo"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить фото"
+          }
+        }
+      }
+    },
+    "entry_photos": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото"
+          }
+        }
+      }
+    },
+    "entry_photos_hint": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rash, redness — or just mealtime. Handy for your pediatrician and a nice keepsake."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыпь, покраснение — или просто как малыш ест. Пригодится врачу и на память."
+          }
+        }
+      }
+    },
+    "entry_photos_reaction_hint": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a photo of the rash or redness — it helps your pediatrician."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавьте фото сыпи или покраснения — врачу будет проще оценить."
+          }
+        }
+      }
+    },
+    "export_photos_all": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "export_photos_none": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без фото"
+          }
+        }
+      }
+    },
+    "export_photos_note": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos will be included in the file you share."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото попадут в файл, который вы отправите."
+          }
+        }
+      }
+    },
+    "export_photos_reactions": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reactions only"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "При реакции"
+          }
+        }
+      }
+    },
+    "export_photos_title": {
+      "comment": "Фото в пробах (то же в Android, ключи совпадают).",
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos in report"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото в отчёте"
+          }
+        }
       }
     }
   },
-  "version" : "1.0"
+  "version": "1.0"
 }

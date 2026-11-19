@@ -79,7 +79,6 @@ struct CatalogView: View {
             if let onBack {
                 ToolbarItem(placement: .cancellationAction) { Button(L.s("cancel"), action: onBack) }
             }
-            // «Свой продукт» — всегда справа в навбаре (и во вкладке, и при выборе продукта для пробы).
             ToolbarItem(placement: .primaryAction) {
                 Button(action: addCustom) { Image(systemName: "plus") }.accessibilityLabel(L.s("custom_add"))
             }

@@ -96,7 +96,23 @@ final class AppDatabase {
             try db.alter(table: "children") { t in t.add(column: "photo", .text) }
             try db.alter(table: "custom_products") { t in t.add(column: "photo", .text) }
         }
+        // Фото пробы: JSON-список имён файлов по порядку (только на устройстве, не синхронизируются).
+        m.registerMigration("v3_entry_photos") { db in
+            try db.alter(table: "entries") { t in t.add(column: "photos", .text).notNull().defaults(to: "[]") }
+        }
         return m
+    }
+
+    /// Все имена файлов фото, на которые ссылается БД (дети, свои продукты, пробы).
+    func referencedPhotos() -> Set<String> {
+        (try? dbQueue.read { db -> Set<String> in
+            var names = Set(try String.fetchAll(db, sql: "SELECT photo FROM children WHERE photo IS NOT NULL"))
+            names.formUnion(try String.fetchAll(db, sql: "SELECT photo FROM custom_products WHERE photo IS NOT NULL"))
+            for json in try String.fetchAll(db, sql: "SELECT photos FROM entries WHERE photos != '[]'") {
+                names.formUnion((try? JSONDecoder().decode([String].self, from: Data(json.utf8))) ?? [])
+            }
+            return names
+        }) ?? []
     }
 
     /// Жёстко стереть данные пользователя (выход, удаление аккаунта, вход в чужой аккаунт).

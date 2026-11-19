@@ -48,6 +48,49 @@ final class PhotoStore: @unchecked Sendable {
         try? FileManager.default.removeItem(at: dir.appendingPathComponent(name))
     }
 
+    /// Фото пробы: **без обрезки** — пропорции сохраняются, длинная сторона до `entrySide` px, JPEG 0.85.
+    static let entrySide: CGFloat = 1280
+
+    func saveEntryPhoto(_ data: Data) -> String? {
+        guard let image = UIImage(data: data) else { return nil }
+        return saveEntryPhoto(image)
+    }
+
+    func saveEntryPhoto(_ image: UIImage) -> String? {
+        guard let jpeg = Self.scaledJPEG(image, longest: Self.entrySide, quality: 0.85) else { return nil }
+        let name = UUID().uuidString.lowercased() + ".jpg"
+        do {
+            try jpeg.write(to: dir.appendingPathComponent(name), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
+            return name
+        } catch {
+            return nil
+        }
+    }
+
+    /// Пропорциональное уменьшение до `longest` по длинной стороне (не увеличиваем) → JPEG.
+    static func scaledJPEG(_ image: UIImage, longest: CGFloat, quality: CGFloat) -> Data? {
+        let px = CGSize(width: image.size.width * image.scale, height: image.size.height * image.scale)
+        guard px.width > 0, px.height > 0 else { return nil }
+        let k = min(1, longest / max(px.width, px.height))
+        let target = CGSize(width: (px.width * k).rounded(), height: (px.height * k).rounded())
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        format.opaque = true
+        let result = UIGraphicsImageRenderer(size: target, format: format).image { _ in
+            image.draw(in: CGRect(origin: .zero, size: target))
+        }
+        return result.jpegData(compressionQuality: quality)
+    }
+
+    /// Удалить файлы, на которые нет ссылок в БД (черновики, оставшиеся после закрытия приложения посреди редактирования).
+    /// Вызывать при запуске, пока ни один экран редактирования не открыт.
+    func retainOnly(_ names: Set<String>) {
+        for url in (try? FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil)) ?? []
+        where !names.contains(url.lastPathComponent) {
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
+
     /// Стереть все фото (выход из аккаунта, удаление данных).
     func deleteAll() {
         cache.removeAllObjects()

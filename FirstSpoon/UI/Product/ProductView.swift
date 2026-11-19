@@ -135,6 +135,7 @@ private struct InfoCard: View {
 
 /// Одна проба: дата и время, количество, реакция эмодзи. Тап — редактирование.
 private struct TryRow: View {
+    @Environment(AppContainer.self) private var app
     let entry: DiaryEntry
     let onTap: () -> Void
     var body: some View {
@@ -146,6 +147,7 @@ private struct TryRow: View {
                     if !meta.isEmpty { Text(meta.joined(separator: " · ")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted) }
                 }
                 Spacer()
+                EntryPhotoBadge(store: app.photos, photos: entry.photos)
                 Text(Labels.emoji(entry.reaction)).font(.system(size: 28))
             }
         }

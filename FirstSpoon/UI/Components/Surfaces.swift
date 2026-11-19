@@ -222,9 +222,11 @@ extension View {
     /// Главная кнопка экрана внизу (над таб-баром / home indicator) на мягкой подложке цвета фона.
     func bottomAction<C: View>(@ViewBuilder _ content: () -> C) -> some View {
         safeAreaInset(edge: .bottom, spacing: 0) {
+            // Подложка уходит и под home indicator — иначе ниже кнопки просвечивает прокручиваемое содержимое.
             content().background {
                 LinearGradient(colors: [AppColors.background.opacity(0), AppColors.background, AppColors.background],
                                startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea(edges: .bottom)
             }
         }
     }

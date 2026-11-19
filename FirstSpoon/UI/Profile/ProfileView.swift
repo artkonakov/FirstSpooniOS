@@ -8,6 +8,9 @@ struct ProfileView: View {
     @Environment(Navigator.self) private var nav
     @State private var exported: URL?
     @State private var exportFailed = false
+    @State private var askPhotos = false
+    /// Последний выбор «Фото в отчёте» (по умолчанию «При реакции»).
+    @AppStorage("export_photos") private var photoChoice = DiaryPdfExporter.PhotoMode.reactions.rawValue
 
     var body: some View {
         ScrollView {
@@ -20,7 +23,10 @@ struct ProfileView: View {
                 AppButton(L.s("child_add"), kind: .soft, icon: "plus") { nav.open(.child(nil)) }
                 Spacer().frame(height: 12)
                 if app.diary.activeChild != nil {
-                    ActionRow(title: L.s("export_row"), icon: "doc.richtext") { exportDiary() }
+                    ActionRow(title: L.s("export_row"), icon: "doc.richtext") {
+                        // Есть фото проб — сначала спрашиваем, какие класть в отчёт; нет — сразу без фото.
+                        if app.diary.entries.contains(where: { !$0.photos.isEmpty }) { askPhotos = true } else { exportDiary(.none) }
+                    }
                 }
                 ActionRow(title: L.s("settings"), icon: "gearshape.fill") { nav.open(.settings) }
             }
@@ -30,17 +36,26 @@ struct ProfileView: View {
         .appScreen()
         .navigationTitle(L.s("profile_title"))
         .sheet(item: $exported) { ShareSheet(items: [$0]).ignoresSafeArea() }
+        .sheet(isPresented: $askPhotos) {
+            ExportPhotosSheet(choice: $photoChoice) { mode in
+                askPhotos = false
+                // Лист «Поделиться» — после того как закроется этот.
+                Task { try? await Task.sleep(for: .milliseconds(450)); exportDiary(mode) }
+            }
+            .presentationDetents([.medium, .large])
+            .presentationBackground(AppColors.background)
+        }
         .alert(L.s("export_failed"), isPresented: $exportFailed) { Button(L.s("ok"), role: .cancel) {} }
     }
 
     /// PDF дневника активного ребёнка → системный лист «Поделиться» (в нём же «Сохранить в Файлы»).
-    private func exportDiary() {
+    private func exportDiary(_ mode: DiaryPdfExporter.PhotoMode) {
         guard let child = app.diary.activeChild else { return }
         let input = DiaryPdfExporter.Input(child: child, entries: app.diary.entries, marks: app.diary.marks,
-                                           catalog: app.catalog.catalog, today: .today())
+                                           catalog: app.catalog.catalog, today: .today(), photoMode: mode, photos: app.photos)
         do {
             exported = try DiaryPdfExporter.export(input)
-            Analytics.track(.diaryExported)
+            Analytics.track(.diaryExported(photos: mode.rawValue))
         } catch {
             exportFailed = true
         }
@@ -163,6 +178,32 @@ struct ChildEditView: View {
                 nav.back()
             }
             Button(L.s("cancel"), role: .cancel) {}
+        }
+    }
+}
+
+/// «Фото в отчёте»: без фото / при реакции / все. Фото попадут в файл, который пользователь отправит сам.
+private struct ExportPhotosSheet: View {
+    @Binding var choice: String
+    let onExport: (DiaryPdfExporter.PhotoMode) -> Void
+
+    private let options: [(DiaryPdfExporter.PhotoMode, String, String)] = [
+        (.none, "export_photos_none", "🚫"), (.reactions, "export_photos_reactions", "🤔"), (.all, "export_photos_all", "📷"),
+    ]
+
+    var body: some View {
+        let current = DiaryPdfExporter.PhotoMode(rawValue: choice) ?? .reactions
+        ScrollView {
+            VStack(alignment: .leading, spacing: 12) {
+                Text(L.s("export_photos_title")).font(AppFont.headlineSmall).foregroundStyle(AppColors.ink).padding(.top, 24)
+                ForEach(options, id: \.0) { mode, key, emoji in
+                    ChoiceRow(label: L.s(key), selected: current == mode, emoji: emoji) { choice = mode.rawValue }
+                }
+                Text(L.s("export_photos_note")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted).padding(.leading, 6)
+                AppButton(L.s("export_row"), icon: "doc.richtext") { onExport(current) }.padding(.top, 8)
+            }
+            .padding(.horizontal, screenPadding)
+            .padding(.bottom, 24)
         }
     }
 }

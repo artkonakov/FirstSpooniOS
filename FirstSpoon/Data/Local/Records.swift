@@ -54,6 +54,8 @@ struct EntryRecord: SnakeCaseRecord, Equatable {
     var reaction: String
     var symptoms: [String]
     var note: String?
+    /// Фото пробы — имена файлов PhotoStore по порядку.
+    var photos: [String]
     var createdAt: Int64
     var updatedAt: Int64
     var deletedAt: Int64?
@@ -62,7 +64,7 @@ struct EntryRecord: SnakeCaseRecord, Equatable {
         DiaryEntry(id: id, productId: productId, date: LocalDate.parse(date) ?? LocalDate(epochDay: 0),
                    time: time.flatMap(LocalTime.parse), meal: meal.flatMap(Meal.init(rawValue:)),
                    amount: amount.flatMap(Amount.init(rawValue:)), reaction: Reaction(rawValue: reaction) ?? .unknown,
-                   symptoms: symptoms.compactMap(Symptom.init(rawValue:)), note: note, createdAt: createdAt)
+                   symptoms: symptoms.compactMap(Symptom.init(rawValue:)), note: note, photos: photos, createdAt: createdAt)
     }
 }
 

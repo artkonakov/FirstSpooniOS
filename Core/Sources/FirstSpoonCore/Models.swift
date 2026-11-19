@@ -148,14 +148,23 @@ public struct DiaryEntry: Hashable, Sendable, Identifiable {
     public var reaction: Reaction
     public var symptoms: [Symptom]
     public var note: String?
+    /// Фото пробы (имена файлов в локальном хранилище фото), по порядку; не больше `DiaryEntry.maxPhotos`.
+    public var photos: [String]
     public var createdAt: Int64
+
+    /// Сколько фото можно прикрепить к пробе.
+    public static let maxPhotos = 5
 
     public init(id: String, productId: String, date: LocalDate, time: LocalTime? = nil, meal: Meal? = nil,
                 amount: Amount? = nil, reaction: Reaction = .unknown, symptoms: [Symptom] = [], note: String? = nil,
-                createdAt: Int64 = 0) {
+                photos: [String] = [], createdAt: Int64 = 0) {
         self.id = id; self.productId = productId; self.date = date; self.time = time; self.meal = meal
-        self.amount = amount; self.reaction = reaction; self.symptoms = symptoms; self.note = note; self.createdAt = createdAt
+        self.amount = amount; self.reaction = reaction; self.symptoms = symptoms; self.note = note; self.photos = photos
+        self.createdAt = createdAt
     }
+
+    /// «Сомнительно» / «Плохо» — для фото в отчёте «При реакции».
+    public var hasReaction: Bool { reaction == .unsure || reaction == .reaction }
 }
 
 /// Новый id для пользовательских данных: UUID-строка в нижнем регистре (как `newId()` в Android).

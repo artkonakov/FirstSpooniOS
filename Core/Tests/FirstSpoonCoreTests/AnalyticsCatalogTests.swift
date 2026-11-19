@@ -30,7 +30,7 @@ final class AnalyticsCatalogTests: XCTestCase {
             .guestStarted, .login(fromGuest: true), .emailLinked, .logout, .accountDeleted,
             .onboardingCompleted, .childAdded, .entryAdded, .productMarked(mark: .known), .customProductAdded,
             .recommendationRecord, .recommendationOther,
-            .diaryExported, .childPhotoSet, .customProductPhotoSet, .networkBlockedShown,
+            .diaryExported(photos: "none"), .entryPhotoAdded, .childPhotoSet, .customProductPhotoSet, .networkBlockedShown,
             .paywallOpened, .purchaseStarted(product: "p"), .purchaseCompleted(product: "p"), .purchaseFailed(product: "p"), .restoreTapped,
         ]
         XCTAssertEqual(samples.map(\.name), AnalyticsEvent.allNames)
