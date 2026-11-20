@@ -1,0 +1,40 @@
+{
+  "id": "steps",
+  "title": { "ru": "Шаг за шагом", "en": "Step by step" },
+  "description": {
+    "ru": "Понятный план: овощи, каша, мясо, фрукты, желток — по одному шагу. Если что-то не подходит, план идёт дальше",
+    "en": "A clear plan: vegetables, cereal, meat, fruit, egg yolk — one step at a time. If something doesn't fit, the plan moves on"
+  },
+  "status": "experiment",
+  "_sources": "iOS docs/complementary-feeding: knowledge-base.md (CF-02, CF-03, CF-05, CF-07), source-plan.md (порядок таблиц «Мама Ника» и «Росмед»), recommendation-draft.md («Понятные шаги»). Этапы и их порядок — черновик, нужна сверка с педиатром",
+  "scorers": {
+    "stages": {
+      "weight": 60,
+      "stepPenalty": 8,
+      "list": [
+        { "id": "first-vegetables", "products": ["zucchini", "cauliflower", "broccoli"], "need": 3,
+          "reason": { "ru": "С мягких овощей удобно начинать: по одному и понемногу", "en": "Mild vegetables are an easy start: one at a time, a little at first" } },
+        { "id": "first-cereal", "products": ["buckwheat-groats", "rice", "corn-grits"], "need": 1,
+          "reason": { "ru": "Следующий шаг — каша из одной крупы", "en": "Next step: a single-grain cereal" } },
+        { "id": "iron", "products": ["rabbit", "turkey", "beef", "veal"], "need": 1,
+          "reason": { "ru": "Пора мясо: с ним в меню появляется железо", "en": "Time for meat: it brings iron to the menu" } },
+        { "id": "more-cereals", "products": ["rice", "corn-grits", "oat-groats"], "need": 2,
+          "reason": { "ru": "Ещё одна каша — так меню становится разнообразнее", "en": "One more cereal for a more varied menu" } },
+        { "id": "fruit", "products": ["apple", "pear", "plum"], "need": 1,
+          "reason": { "ru": "Пора первый фрукт", "en": "Time for the first fruit" } },
+        { "id": "egg", "products": ["egg-yolk"], "need": 1,
+          "reason": { "ru": "Знакомим с яйцом: сначала желток, хорошо сваренный и понемногу", "en": "Introducing egg: yolk first, well cooked, a little at a time" } },
+        { "id": "more-vegetables", "products": ["pumpkin", "carrot"], "need": 1,
+          "reason": { "ru": "Ещё один овощ — для разнообразия", "en": "Another vegetable for variety" } },
+        { "id": "fish", "products": ["white-fish"], "need": 1,
+          "reason": { "ru": "Пора рыбу: белая рыба без костей, понемногу", "en": "Time for fish: boneless white fish, a little at first" } },
+        { "id": "dairy", "products": ["yogurt"], "need": 1,
+          "reason": { "ru": "Знакомим с молочными продуктами", "en": "Introducing dairy" } }
+      ]
+    },
+    "introOrder": { "weight": 10 },
+    "newCategory": { "weight": 4, "afterIntroduced": 3 },
+    "allergenDue": { "weight": 2, "afterIntroduced": 5 },
+    "favorite": { "weight": 2 }
+  }
+}

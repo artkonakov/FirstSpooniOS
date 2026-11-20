@@ -8,13 +8,15 @@ public enum Series {
 
     /// Активная — больше всего проб, при равенстве начатая раньше (затем id). Исключение: продукт давали два дня подряд
     /// (сегодня+вчера или вчера+позавчера) — родитель выбрал его сам, активен он.
-    public static func split(_ entries: [DiaryEntry], marks: [String: ProductMark], today: LocalDate) -> Split {
+    /// `blocked` — начатые, но запрещённые продукты (аллерген из профиля): ни в активную, ни в очередь.
+    public static func split(_ entries: [DiaryEntry], marks: [String: ProductMark], today: LocalDate,
+                             blocked: Set<String> = []) -> Split {
         let progress = FeedingRules.progressByProduct(entries, marks: marks)
         // Порядок как у LinkedHashMap в Android: по первому появлению в пробах, затем отметки.
         var order: [String] = []
         var seen = Set<String>()
         for id in entries.map(\.productId) + marks.keys.sorted() where seen.insert(id).inserted { order.append(id) }
-        let inSeries = order.filter { progress[$0]?.status == .inProgress }
+        let inSeries = order.filter { progress[$0]?.status == .inProgress && !blocked.contains($0) }
         guard !inSeries.isEmpty else { return Split(active: nil, queued: []) }
 
         var days: [String: Set<LocalDate>] = [:]

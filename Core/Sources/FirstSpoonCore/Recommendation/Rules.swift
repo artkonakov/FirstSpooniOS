@@ -134,4 +134,20 @@ public enum Rules {
         guard let age = f.ageMonths else { return nil }
         return p.minAgeMonths >= age - 1 ? Contribution(reason: Reason(.AGE_FITS), score: c.weightAgeFits) : nil
     }
+
+    /// План «шаг за шагом»: продукт из первого незакрытого этапа получает `weightStage`, каждый следующий незакрытый
+    /// этап — на `stageStepPenalty` меньше, внутри этапа — минус позиция в списке. Этап закрыт, когда введено `need`
+    /// его продуктов. Безопасность — фильтры выше: заблокированный продукт сюда не доходит, и план идёт к следующему
+    /// допустимому. Все этапы закрыты — решают остальные баллы (общий подбор).
+    public static let stagePlan = Scorer("StagePlan") { p, f, c in
+        guard !c.stages.isEmpty, c.weightStage != 0 else { return nil }
+        let introducedIds = Set(f.introduced.map(\.id))
+        let open = c.stages.filter { st in st.products.filter { introducedIds.contains($0) }.count < st.need }
+        for (rank, st) in open.enumerated() {
+            if let pos = st.products.firstIndex(of: p.id) {
+                return Contribution(reason: Reason(.STAGE, [st.id]), score: c.weightStage - Double(rank) * c.stageStepPenalty - Double(pos))
+            }
+        }
+        return nil
+    }
 }

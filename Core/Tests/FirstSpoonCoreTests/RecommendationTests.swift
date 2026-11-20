@@ -96,6 +96,32 @@ final class RulesTests: XCTestCase {
         XCTAssertNil(next, "введён — завтра нечего продолжать")
     }
 
+    func testSeriesIsNotContinuedWhenTheAllergenWasAddedToTheProfileLater() {
+        // Яичный желток начали, потом в профиль добавили аллергию на яйцо — «Дайте ещё раз» желток не предлагаем.
+        let entries = K.introduced("zucchini", 20) + K.introduced("broccoli", 15) + K.introduced("cauliflower", 12)
+            + K.introduced("pumpkin", 9) + K.introduced("carrot", 6) + [K.entry("egg-yolk", 2)]
+        let r = RecommendationEngine.recommend(K.ctx(ageMonths: 9, profile: ["known_allergens": "egg"], entries: entries))
+        XCTAssertNotEqual(r.recommendation.productId, "egg-yolk", "\(r.recommendation)")
+        XCTAssertNotEqual(r.activeSeries, "egg-yolk")
+        XCTAssertFalse(r.queued.contains("egg-yolk"))
+    }
+
+    func testStepsPlanGoesStageByStageAndSkipsWhatIsBlocked() {
+        let steps = Strategies.config(Strategies.byId("steps"))
+        func rec(_ entries: [DiaryEntry], age: Int = 7) -> Recommendation {
+            RecommendationEngine.recommend(K.ctx(ageMonths: age, entries: entries), config: steps).recommendation
+        }
+        XCTAssertEqual(rec([]).productId, "zucchini")
+        XCTAssertEqual(rec(K.introduced("zucchini", 10)).productId, "cauliflower")
+        let veg = K.introduced("zucchini", 20) + K.introduced("cauliflower", 15) + K.introduced("broccoli", 10)
+        XCTAssertEqual(rec(veg).productId, "buckwheat-groats")
+        XCTAssertEqual(rec(veg + K.introduced("buckwheat-groats", 5)).productId, "rabbit")
+        // Старт в 8 месяцев без истории — тоже кабачок, а не «самый взрослый» продукт.
+        XCTAssertEqual(rec([], age: 8).productId, "zucchini")
+        // Причина — текст этапа.
+        XCTAssertEqual(rec([]).reasons.first?.code, .STAGE)
+    }
+
     func testPauseWinsOverDone() {
         let r = RecommendationEngine.recommend(K.ctx(entries: [K.entry("broccoli", 0, .reaction)])).recommendation
         guard case .wait = r else { return XCTFail("expected wait, got \(r)") }
@@ -404,6 +430,9 @@ final class StrategiesTests: XCTestCase {
         XCTAssertEqual(c.weightAllergenDue, d.weightAllergenDue)
         XCTAssertEqual(c.weightFavorite, d.weightFavorite)
         XCTAssertEqual(c.weightAgeFits, d.weightAgeFits)
+        XCTAssertEqual(c.stages, d.stages)
+        XCTAssertEqual(c.weightStage, d.weightStage)
+        XCTAssertEqual(c.stageStepPenalty, d.stageStepPenalty)
         XCTAssertEqual(c.rules.map(\.name), d.rules.map(\.name))
     }
 
@@ -416,6 +445,11 @@ final class StrategiesTests: XCTestCase {
             XCTAssertTrue(unknown.isEmpty, "\(s.id): неизвестные виды баллов \(unknown) — сначала код на обеих платформах")
             XCTAssertTrue([s.title, s.description].allSatisfy { $0["ru"] != nil && $0["en"] != nil }, "\(s.id): нужны title/description ru и en")
             XCTAssertTrue(["default", "experiment", "available"].contains(s.status), "\(s.id): статус")
+            for st in s.scorers["stages"]?.stages ?? [] {
+                XCTAssertTrue(st.reason["ru"] != nil && st.reason["en"] != nil, "\(s.id)/\(st.id): причина ru и en")
+                for id in st.products { XCTAssertNotNil(RecTestKit.byId[id], "\(s.id)/\(st.id): нет продукта \(id) в каталоге") }
+                XCTAssertTrue((1...max(st.products.count, 1)).contains(st.need) && !st.products.isEmpty, "\(s.id)/\(st.id): need в пределах списка")
+            }
             XCTAssertGreaterThanOrEqual(Strategies.config(s).allergensAfterIntroduced, Strategies.safety.minIntroducedBeforeAllergens,
                                         "\(s.id): слой безопасности не опускается")
         }

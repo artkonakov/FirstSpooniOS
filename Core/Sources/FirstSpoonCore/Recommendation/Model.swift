@@ -17,6 +17,18 @@ public struct RecommendationContext: Sendable {
     }
 }
 
+/// Этап плана «шаг за шагом» (`stages` в JSON алгоритма): этап закрыт, когда введено `need` продуктов из `products`.
+/// Порядок `products` — порядок предложения внутри этапа. `reason` — текст причины для родителя (ru/en).
+public struct Stage: Hashable, Sendable {
+    public let id: String
+    public let products: [String]
+    public let need: Int
+    public let reason: [String: String]
+    public init(id: String, products: [String], need: Int = 1, reason: [String: String] = [:]) {
+        self.id = id; self.products = products; self.need = need; self.reason = reason
+    }
+}
+
 /// Почему продукт рекомендован / исключён / пауза. UI превращает код в текст.
 public struct Reason: Hashable, Sendable, CustomStringConvertible {
     public let code: ReasonCode
@@ -33,6 +45,8 @@ public enum ReasonCode: String, CaseIterable, Sendable {
     case BASE_PRODUCTS_FIRST, ALLERGEN_GAP, DOCTOR_FIRST, SKIPPED
     // Оценки
     case INTRO_ORDER, NEW_CATEGORY, ALLERGEN_DUE, FAVORITE, AGE_FITS
+    /// Следующий этап плана «шаг за шагом»; args[0] — id этапа (текст причины — в JSON алгоритма).
+    case STAGE
     // Нечего рекомендовать
     case NOTHING_LEFT
 }
@@ -128,6 +142,9 @@ public final class Facts: @unchecked Sendable {
     /// Последняя проба с реакцией «Плохо» / «Сомнительно» (при равенстве дат — первая в списке).
     public let lastReaction: DiaryEntry?
     public let inSeries: [String]
+    /// Начатые продукты с аллергеном из профиля (аллерген добавили после первой пробы) — серию не продолжаем:
+    /// фильтры безопасности действуют и на продолжение, а не только на новый продукт.
+    public let blockedSeries: Set<String>
     /// Активная серия — одна за раз (`Series.split`).
     public let activeSeries: String?
     /// Начатые, но не активные — ждут очереди.
@@ -171,9 +188,12 @@ public final class Facts: @unchecked Sendable {
         var order: [String] = []
         var seen = Set<String>()
         for id in ctx.entries.map(\.productId) + ctx.marks.keys.sorted() where seen.insert(id).inserted { order.append(id) }
-        inSeries = order.filter { progress[$0]?.status == .inProgress }
+        let known = knownAllergens
+        let hasKnownAllergen: (String) -> Bool = { id in byId[id]?.allergenIds.contains { known.contains($0) } == true }
+        inSeries = order.filter { progress[$0]?.status == .inProgress && !hasKnownAllergen($0) }
+        blockedSeries = Set(order.filter { progress[$0]?.status == .inProgress && hasKnownAllergen($0) })
 
-        let split = Series.split(ctx.entries, marks: ctx.marks, today: ctx.today)
+        let split = Series.split(ctx.entries, marks: ctx.marks, today: ctx.today, blocked: blockedSeries)
         activeSeries = split.active
         queued = split.queued
         let todayIds = Set(ctx.entries.filter { $0.date == ctx.today }.map(\.productId))

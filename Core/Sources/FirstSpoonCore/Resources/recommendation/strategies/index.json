@@ -1,4 +1,9 @@
 {
   "_comment": "Список алгоритмов (порядок показа). Новый алгоритм — файл <id>.json рядом и id здесь. Первый со статусом default — по умолчанию.",
-  "strategies": ["classic", "variety", "early-allergens"]
+  "strategies": [
+    "classic",
+    "variety",
+    "early-allergens",
+    "steps"
+  ]
 }

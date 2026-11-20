@@ -25,6 +25,11 @@ public struct RecommendationConfig: Sendable {
     public var weightAllergenDue = 6.0
     public var weightFavorite = 2.0
     public var weightAgeFits = 1.0
+    /// Этапы алгоритма «шаг за шагом» (`Stage`); пусто — балл `stagePlan` не работает.
+    public var stages: [Stage] = []
+    public var weightStage = 0.0
+    /// На сколько меньше баллов у каждого следующего незакрытого этапа.
+    public var stageStepPenalty = 8.0
     public var rules: [Rule] = RecommendationConfig.defaultRules
 
     public init() {}
@@ -36,7 +41,7 @@ public struct RecommendationConfig: Sendable {
         .filter(Rules.knownAllergen), .filter(Rules.doctorFirstForHighRisk), .filter(Rules.baseProductsFirst),
         .filter(Rules.allergenGap), .filter(Rules.skipped),
         .scorer(Rules.introOrder), .scorer(Rules.newCategory), .scorer(Rules.allergenDue), .scorer(Rules.favorite),
-        .scorer(Rules.ageFits),
+        .scorer(Rules.ageFits), .scorer(Rules.stagePlan),
     ]
 }
 

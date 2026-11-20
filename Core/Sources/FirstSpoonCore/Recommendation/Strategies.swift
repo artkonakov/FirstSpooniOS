@@ -15,6 +15,9 @@ public struct Safety: Sendable {
 public struct ScorerParams: Sendable {
     public let weight: Double
     public let afterIntroduced: Int?
+    /// Только для `stages`.
+    public var stepPenalty: Double?
+    public var stages: [Stage] = []
 }
 
 /// Алгоритм подбора нового продукта (`Resources/recommendation/strategies/<id>.json`).
@@ -32,7 +35,7 @@ public enum Strategies {
     public static let classic = "classic"
 
     /// Виды баллов, которые умеет движок. Неизвестный вид в JSON — ошибка (ловит `StrategiesTests`).
-    public static let scorerKinds: Set<String> = ["introOrder", "newCategory", "allergenDue", "favorite", "ageFits"]
+    public static let scorerKinds: Set<String> = ["introOrder", "newCategory", "allergenDue", "favorite", "ageFits", "stages"]
 
     public static let safety: Safety = {
         let o = read("safety")
@@ -72,13 +75,32 @@ public enum Strategies {
         c.weightAllergenDue = w("allergenDue")
         c.weightFavorite = w("favorite")
         c.weightAgeFits = w("ageFits")
+        c.stages = strategy.scorers["stages"]?.stages ?? []
+        c.weightStage = w("stages")
+        c.stageStepPenalty = strategy.scorers["stages"]?.stepPenalty ?? defaults.stageStepPenalty
         return c
+    }
+
+    /// Текст причины этапа для родителя (ищем по всем алгоритмам; id этапов уникальны в пределах алгоритма).
+    public static func stageReason(_ stageId: String, lang: String) -> String? {
+        for s in all {
+            if let st = s.scorers["stages"]?.stages.first(where: { $0.id == stageId }) { return st.reason[lang] ?? st.reason["ru"] }
+        }
+        return nil
     }
 
     private static func parse(_ o: [String: Any]) -> Strategy {
         func texts(_ key: String) -> [String: String] { o[key] as? [String: String] ?? [:] }
         let scorers = (o["scorers"] as? [String: [String: Any]] ?? [:]).mapValues { p in
-            ScorerParams(weight: (p["weight"] as? NSNumber)?.doubleValue ?? 0, afterIntroduced: (p["afterIntroduced"] as? NSNumber)?.intValue)
+            ScorerParams(
+                weight: (p["weight"] as? NSNumber)?.doubleValue ?? 0,
+                afterIntroduced: (p["afterIntroduced"] as? NSNumber)?.intValue,
+                stepPenalty: (p["stepPenalty"] as? NSNumber)?.doubleValue,
+                stages: (p["list"] as? [[String: Any]] ?? []).map { st in
+                    Stage(id: st["id"] as? String ?? "", products: st["products"] as? [String] ?? [],
+                          need: (st["need"] as? NSNumber)?.intValue ?? 1, reason: st["reason"] as? [String: String] ?? [:])
+                }
+            )
         }
         return Strategy(id: o["id"] as! String, title: texts("title"), description: texts("description"),
                         status: o["status"] as? String ?? "experiment", scorers: scorers)

@@ -74,6 +74,7 @@ func reasonText(_ r: Reason, _ catalog: Catalog) -> String {
     case .AGE_FITS: return L.s("rec_reason_age")
     case .NOTHING_LEFT: return L.s("rec_reason_nothing")
     case .DONE_TODAY: return L.s("rec_reason_done")
+    case .STAGE: return Strategies.stageReason(a0, lang: AppLocale.current().rawValue) ?? L.s("rec_reason_basic")
     default: return L.s("rec_reason_basic")
     }
 }
