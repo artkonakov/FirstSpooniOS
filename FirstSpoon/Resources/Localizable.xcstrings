@@ -7,13 +7,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d mo"
+            "value": "%1$d mo"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d мес"
+            "value": "%1$d мес"
           }
         }
       }
@@ -30,7 +30,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Возраст не указан"
+            "value": "Возраст не указан"
           }
         }
       }
@@ -41,13 +41,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d y %2$d mo"
+            "value": "%1$d y %2$d mo"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d г. %2$d мес"
+            "value": "%1$d г. %2$d мес"
           }
         }
       }
@@ -75,13 +75,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 tbsp"
+            "value": "1 tbsp"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 ст. л."
+            "value": "1 ст. л."
           }
         }
       }
@@ -92,13 +92,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 tsp"
+            "value": "1 tsp"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 ч. л."
+            "value": "1 ч. л."
           }
         }
       }
@@ -109,13 +109,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "2 tsp"
+            "value": "2 tsp"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "2 ч. л."
+            "value": "2 ч. л."
           }
         }
       }
@@ -149,7 +149,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не уверены"
+            "value": "Не уверены"
           }
         }
       }
@@ -200,7 +200,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Изменить email"
+            "value": "Изменить почту"
           }
         }
       }
@@ -251,7 +251,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Email"
+            "value": "Почта"
           }
         }
       }
@@ -268,7 +268,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Код из письма"
+            "value": "Код из письма"
           }
         }
       }
@@ -285,7 +285,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Мы отправили 6-значный код на %1$@"
+            "value": "Отправили код из 6 цифр на %1$@"
           }
         }
       }
@@ -330,13 +330,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Resend in %1$d s"
+            "value": "Resend in %1$d s"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Повторно через %1$d с"
+            "value": "Отправить ещё раз через %1$d с"
           }
         }
       }
@@ -347,13 +347,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign in with email — we'll send you a code"
+            "value": "We'll email you a code — no password needed"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Войдите по email — пришлём код подтверждения"
+            "value": "Пришлём код на почту — пароль не нужен"
           }
         }
       }
@@ -432,13 +432,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "from %1$d mo"
+            "value": "from %1$d mo"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "с %1$d мес"
+            "value": "с %1$d мес"
           }
         }
       }
@@ -489,7 +489,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ничего не нашлось"
+            "value": "Ничего не нашлось"
           }
         }
       }
@@ -540,7 +540,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавить ребёнка"
+            "value": "Добавить малыша"
           }
         }
       }
@@ -608,7 +608,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Удалить профиль ребёнка"
+            "value": "Удалить профиль малыша"
           }
         }
       }
@@ -619,13 +619,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Delete %1$@'s profile? Their tries will no longer be shown."
+            "value": "Delete %1$@'s profile? Their tries will disappear from the diary"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Удалить профиль %1$@? Его пробы перестанут показываться."
+            "value": "Удалить профиль %1$@? Пробы исчезнут из дневника"
           }
         }
       }
@@ -659,7 +659,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ребёнок"
+            "value": "Малыш"
           }
         }
       }
@@ -676,7 +676,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Аллергия в семье"
+            "value": "Аллергия в семье"
           }
         }
       }
@@ -715,6 +715,23 @@
         }
       }
     },
+    "child_name_fallback_gen": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "малыша"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your little one"
+          }
+        }
+      }
+    },
     "child_new_title": {
       "extractionState": "manual",
       "localizations": {
@@ -727,7 +744,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Новый ребёнок"
+            "value": "Новый малыш"
           }
         }
       }
@@ -745,6 +762,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Фото"
+          }
+        }
+      }
+    },
+    "child_profile_fallback": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "этого малыша"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "this child"
           }
         }
       }
@@ -778,7 +812,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выбрать ребёнка"
+            "value": "Выбрать малыша"
           }
         }
       }
@@ -863,7 +897,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Такой продукт уже есть в каталоге"
+            "value": "Такой продукт уже есть в каталоге"
           }
         }
       }
@@ -874,13 +908,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "If a food is not in the catalog, add it and it will appear in the list"
+            "value": "Can't find a food? Add your own — it will appear in the catalog"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Если продукта нет в каталоге — добавьте его, и он появится в списке"
+            "value": "Нет нужного продукта? Добавьте свой — он появится в каталоге"
           }
         }
       }
@@ -1016,7 +1050,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сбросить дату и «Другой»"
+            "value": "Сбросить дату и «Другой»"
           }
         }
       }
@@ -1067,7 +1101,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сейчас ничего не запланировано"
+            "value": "Сейчас ничего не запланировано"
           }
         }
       }
@@ -1101,7 +1135,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Нет разрешения на уведомления"
+            "value": "Нет разрешения на уведомления"
           }
         }
       }
@@ -1265,7 +1299,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · %2$d пробы"
+            "value": "%1$@ · %2$d пробы"
           }
         }
       }
@@ -1276,7 +1310,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · %2$d проб"
+            "value": "%1$@ · %2$d проб"
           }
         }
       }
@@ -1287,13 +1321,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · %2$d try"
+            "value": "%1$@ · %2$d try"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · %2$d проба"
+            "value": "%1$@ · %2$d проба"
           }
         }
       }
@@ -1304,13 +1338,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · %2$d tries"
+            "value": "%1$@ · %2$d tries"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ · %2$d пробы"
+            "value": "%1$@ · %2$d пробы"
           }
         }
       }
@@ -1378,7 +1412,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дата и время"
+            "value": "Дата и время"
           }
         }
       }
@@ -1412,7 +1446,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Удалить эту пробу из дневника?"
+            "value": "Удалить эту пробу из дневника?"
           }
         }
       }
@@ -1480,7 +1514,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не отмечено"
+            "value": "Не отмечено"
           }
         }
       }
@@ -1508,13 +1542,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "For example, liked it, no reaction, etc."
+            "value": "For example: ate eagerly, spat it out, mixed with porridge"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Например, понравилось, не было реакции и т.д."
+            "value": "Например: ел с аппетитом, выплёвывал, давали с кашей"
           }
         }
       }
@@ -1633,7 +1667,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Что заметили"
+            "value": "Что заметили"
           }
         }
       }
@@ -1695,13 +1729,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The account is blocked"
+            "value": "The account is blocked. Write to us: support@littlebite.app"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Аккаунт заблокирован"
+            "value": "Аккаунт заблокирован. Напишите нам: support@littlebite.app"
           }
         }
       }
@@ -1712,13 +1746,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The code has expired — request a new one"
+            "value": "The code has expired. Request a new one"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Код истёк — запросите новый"
+            "value": "Код устарел. Запросите новый"
           }
         }
       }
@@ -1735,7 +1769,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Эта почта уже привязана к другому аккаунту"
+            "value": "Эта почта уже привязана к другому аккаунту"
           }
         }
       }
@@ -1746,13 +1780,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Something went wrong. Please try again"
+            "value": "That didn't work. Please try again"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Что-то пошло не так. Попробуйте ещё раз"
+            "value": "Не получилось. Попробуйте ещё раз"
           }
         }
       }
@@ -1763,13 +1797,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wrong code"
+            "value": "The code didn't work. Check the digits or request a new one"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Неверный код"
+            "value": "Код не подошёл. Проверьте цифры или запросите новый"
           }
         }
       }
@@ -1786,7 +1820,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Проверьте адрес email"
+            "value": "Проверьте адрес почты"
           }
         }
       }
@@ -1803,7 +1837,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Нет соединения. Проверьте интернет и попробуйте снова"
+            "value": "Нет соединения. Проверьте интернет и попробуйте снова"
           }
         }
       }
@@ -1820,7 +1854,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подождите минуту и отправьте код ещё раз"
+            "value": "Подождите минуту и отправьте код ещё раз"
           }
         }
       }
@@ -1837,7 +1871,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Слишком много попыток — запросите новый код"
+            "value": "Слишком много попыток — запросите новый код"
           }
         }
       }
@@ -1848,13 +1882,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d y %2$d mo"
+            "value": "%1$d y %2$d mo"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d г. %2$d мес."
+            "value": "%1$d г. %2$d мес."
           }
         }
       }
@@ -1899,13 +1933,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No tries yet."
+            "value": "No tries yet"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Проб пока нет."
+            "value": "Проб пока нет"
           }
         }
       }
@@ -1939,7 +1973,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не удалось создать PDF"
+            "value": "Не удалось создать PDF"
           }
         }
       }
@@ -1956,7 +1990,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дневник прикорма — %1$@ — %2$@.pdf"
+            "value": "Дневник прикорма — %1$@ — %2$@.pdf"
           }
         }
       }
@@ -1967,13 +2001,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exported %1$@"
+            "value": "Created %1$@"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выгружено %1$@"
+            "value": "Создан %1$@"
           }
         }
       }
@@ -2001,13 +2035,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "page %1$d of %2$d"
+            "value": "page %1$d of %2$d"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "стр. %1$d из %2$d"
+            "value": "стр. %1$d из %2$d"
           }
         }
       }
@@ -2052,13 +2086,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Diary: %1$@. Save the file to your phone or send it to your doctor."
+            "value": "Diary: %1$@. Save the file to your phone or send it to your doctor"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дневник: %1$@. Сохраните файл на телефон или отправьте врачу."
+            "value": "Дневник: %1$@. Сохраните файл на телефон или отправьте врачу"
           }
         }
       }
@@ -2092,7 +2126,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Экспорт дневника в PDF"
+            "value": "Экспорт дневника в PDF"
           }
         }
       }
@@ -2109,7 +2143,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Для врача: все пробы, реакции и статусы продуктов"
+            "value": "Для врача: все пробы, реакции и статусы продуктов"
           }
         }
       }
@@ -2126,7 +2160,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сохранить в файлы"
+            "value": "Сохранить в файлы"
           }
         }
       }
@@ -2171,13 +2205,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d of %2$d foods introduced · %3$d in progress · %4$d tries in total"
+            "value": "%1$d of %2$d foods introduced · %3$d in progress · %4$d tries in total"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Введено %1$d из %2$d продуктов · в процессе %3$d · всего проб %4$d"
+            "value": "Введено %1$d из %2$d продуктов · в процессе введения %3$d · всего проб %4$d"
           }
         }
       }
@@ -2290,13 +2324,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Attention"
+            "value": "Careful"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Внимание"
+            "value": "Осторожно"
           }
         }
       }
@@ -2324,13 +2358,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Introducing"
+            "value": "Getting to know"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Вводим"
+            "value": "Знакомимся"
           }
         }
       }
@@ -2364,7 +2398,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не пробовали"
+            "value": "Не пробовали"
           }
         }
       }
@@ -2409,13 +2443,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Needs attention"
+            "value": "Careful"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Требуют внимания"
+            "value": "Осторожно"
           }
         }
       }
@@ -2426,13 +2460,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add the first try — tap \"New entry\" or pick a food in the catalog"
+            "value": "Try the food suggested above or tap \"Log a try\""
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавьте первую пробу — нажмите «Новая запись» или выберите продукт в каталоге"
+            "value": "Попробуйте продукт из рекомендации выше или нажмите «Записать пробу»"
           }
         }
       }
@@ -2443,13 +2477,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nothing here yet"
+            "value": "Let's start with the first spoon"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пока пусто"
+            "value": "Начнём с первой ложки"
           }
         }
       }
@@ -2460,13 +2494,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Introducing now"
+            "value": "Getting to know now"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Вводим сейчас"
+            "value": "Знакомимся сейчас"
           }
         }
       }
@@ -2477,13 +2511,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New entry"
+            "value": "Log a try"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Новая запись"
+            "value": "Записать пробу"
           }
         }
       }
@@ -2494,13 +2528,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d of %2$d foods introduced"
+            "value": "%1$d of %2$d foods introduced"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Введено %1$d из %2$d продуктов"
+            "value": "Введено %1$d из %2$d продуктов"
           }
         }
       }
@@ -2511,13 +2545,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "foods introduced"
+            "value": "foods on the menu"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "продуктов введено"
+            "value": "продуктов уже в меню"
           }
         }
       }
@@ -2534,7 +2568,58 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "из %1$d"
+            "value": "из %1$d"
+          }
+        }
+      }
+    },
+    "home_queue": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ждут очереди"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Waiting their turn"
+          }
+        }
+      }
+    },
+    "home_queue_after": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжим, когда введём текущий продукт — по одному за раз"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll continue once the current food is introduced — one at a time"
+          }
+        }
+      }
+    },
+    "home_queue_pause": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжим после паузы, с %1$@"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll continue after the pause, from %1$@"
           }
         }
       }
@@ -2573,19 +2658,53 @@
         }
       }
     },
+    "home_today_next": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завтра — %1$d-я проба"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tomorrow — try %1$d"
+          }
+        }
+      }
+    },
+    "home_today_question": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как прошло?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How did it go?"
+          }
+        }
+      }
+    },
     "home_tries": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d of %2$d tries"
+            "value": "%1$d of %2$d tries"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d из %2$d проб"
+            "value": "%1$d из %2$d проб"
           }
         }
       }
@@ -2602,7 +2721,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "У этой почты уже есть аккаунт"
+            "value": "У этой почты уже есть аккаунт"
           }
         }
       }
@@ -2619,7 +2738,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Войти в этот аккаунт"
+            "value": "Войти в этот аккаунт"
           }
         }
       }
@@ -2636,7 +2755,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Записи с этого телефона сохранятся"
+            "value": "Записи с этого телефона сохранятся"
           }
         }
       }
@@ -2653,7 +2772,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пришлём код подтверждения. Дневник останется с вами при смене телефона"
+            "value": "Пришлём код подтверждения. Дневник останется с вами при смене телефона"
           }
         }
       }
@@ -2817,7 +2936,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяца"
+            "value": "%1$d месяца"
           }
         }
       }
@@ -2828,7 +2947,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяцев"
+            "value": "%1$d месяцев"
           }
         }
       }
@@ -2839,13 +2958,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d month"
+            "value": "%1$d month"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяц"
+            "value": "%1$d месяц"
           }
         }
       }
@@ -2856,13 +2975,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d months"
+            "value": "%1$d months"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяца"
+            "value": "%1$d месяца"
           }
         }
       }
@@ -2873,7 +2992,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяца"
+            "value": "%1$d месяца"
           }
         }
       }
@@ -2884,7 +3003,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяцев"
+            "value": "%1$d месяцев"
           }
         }
       }
@@ -2895,13 +3014,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d month"
+            "value": "%1$d month"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяц"
+            "value": "%1$d месяц"
           }
         }
       }
@@ -2912,13 +3031,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d months"
+            "value": "%1$d months"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d месяца"
+            "value": "%1$d месяца"
           }
         }
       }
@@ -2963,13 +3082,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The app is not allowed to use the internet in your phone settings. Without it, sign-in, account sync and subscription don't work.\n\nOpen the app settings and allow data usage: \"Mobile data & Wi‑Fi\" or \"Data usage\"."
+            "value": "The app is not allowed to use the internet in your phone settings. Without it, sign-in, your account and subscription don't work.\n\nOpen the app settings and allow data usage: \"Mobile data & Wi‑Fi\" or \"Data usage\""
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Приложению запрещено пользоваться интернетом в настройках телефона. Без него не работают вход, сохранение аккаунта и подписка.\n\nОткройте настройки приложения и разрешите передачу данных: «Мобильные данные и Wi‑Fi» или «Передача данных»."
+            "value": "Приложению запрещено пользоваться интернетом в настройках телефона. Без него не работают вход, сохранение аккаунта и подписка.\n\nОткройте настройки приложения и разрешите передачу данных: «Мобильные данные и Wi‑Fi» или «Передача данных»"
           }
         }
       }
@@ -2986,7 +3105,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Нет доступа к интернету"
+            "value": "Нет доступа к интернету"
           }
         }
       }
@@ -3037,7 +3156,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Напоминания о пробах и сериях прикорма"
+            "value": "Напоминания о пробах и сериях прикорма"
           }
         }
       }
@@ -3054,7 +3173,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Запишите первую пробу в дневник — это пара секунд"
+            "value": "Запишите первую пробу в дневник — это пара секунд"
           }
         }
       }
@@ -3082,13 +3201,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continue the series: %1$@"
+            "value": "You can continue today: %1$@"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Продолжите серию: %1$@"
+            "value": "Сегодня можно продолжить: %1$@"
           }
         }
       }
@@ -3099,13 +3218,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Give %1$@ again — then the food will be introduced"
+            "value": "%1$@: you can give it again. After three tries with no reaction, the food is introduced"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дайте %1$@ ещё раз — так продукт будет введён"
+            "value": "%1$@: можно дать ещё раз. После трёх проб без реакции продукт введён"
           }
         }
       }
@@ -3116,13 +3235,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Time to continue the series"
+            "value": "Today — the next try"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пора продолжить серию"
+            "value": "Сегодня — следующая проба"
           }
         }
       }
@@ -3150,13 +3269,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mark allergens confirmed by a doctor. If none, just tap \"Next\""
+            "value": "Mark allergens confirmed by a doctor. If there are none, tap \"Next\""
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отметьте аллергены, подтверждённые врачом. Если нет — просто нажмите «Далее»"
+            "value": "Отметьте аллергены, подтверждённые врачом. Если таких нет, нажмите «Далее»"
           }
         }
       }
@@ -3190,7 +3309,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "По возрасту подскажем, какие продукты уже можно вводить"
+            "value": "По возрасту подскажем, какие продукты уже можно вводить"
           }
         }
       }
@@ -3241,7 +3360,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "При экземе выше риск пищевой аллергии — будем внимательнее к аллергенам"
+            "value": "При экземе выше риск пищевой аллергии — будем внимательнее к аллергенам"
           }
         }
       }
@@ -3258,7 +3377,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Есть ли экзема?"
+            "value": "Есть экзема?"
           }
         }
       }
@@ -3275,7 +3394,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пищевая аллергия, астма или атопический дерматит в семье повышают риск — учтём в рекомендациях"
+            "value": "Пищевая аллергия, астма или атопический дерматит в семье повышают риск — учтём в рекомендациях"
           }
         }
       }
@@ -3292,7 +3411,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Есть аллергия у родителей, братьев или сестёр?"
+            "value": "Есть аллергия у родителей, братьев или сестёр?"
           }
         }
       }
@@ -3343,7 +3462,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Имя будет на главном экране и в дневнике"
+            "value": "Имя будет на главном экране и в дневнике"
           }
         }
       }
@@ -3360,7 +3479,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Как зовут малыша?"
+            "value": "Как зовут малыша?"
           }
         }
       }
@@ -3388,13 +3507,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Only used for how the app addresses your child"
+            "value": "So we can talk about your baby correctly"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Нужно только для обращений в приложении"
+            "value": "Чтобы писать о малыше правильно: «попробовал» или «попробовала»"
           }
         }
       }
@@ -3462,7 +3581,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пробный период до %1$@"
+            "value": "Пробный период до %1$@"
           }
         }
       }
@@ -3479,7 +3598,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оплачено до %1$@"
+            "value": "Оплачено до %1$@"
           }
         }
       }
@@ -3496,7 +3615,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "План введения аллергенов по шагам"
+            "value": "План введения аллергенов по шагам"
           }
         }
       }
@@ -3513,7 +3632,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Резервная копия дневника и перенос на новый телефон"
+            "value": "Резервная копия дневника и перенос на новый телефон"
           }
         }
       }
@@ -3547,7 +3666,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отчёт для педиатра: все пробы и реакции в одном файле"
+            "value": "Отчёт для педиатра: все пробы и реакции в одном файле"
           }
         }
       }
@@ -3598,7 +3717,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Начать за %1$@"
+            "value": "Начать за %1$@"
           }
         }
       }
@@ -3632,7 +3751,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оплата не прошла. Попробуйте ещё раз"
+            "value": "Оплата не прошла. Попробуйте ещё раз"
           }
         }
       }
@@ -3649,7 +3768,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не удалось связаться с магазином. Проверьте интернет и попробуйте снова"
+            "value": "Не удалось связаться с магазином. Проверьте интернет и попробуйте снова"
           }
         }
       }
@@ -3666,7 +3785,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "RuStore не смог списать оплату за следующий период. Плюс пока работает — обновите способ оплаты в RuStore → Профиль → Подписки и платежи, чтобы он не отключился"
+            "value": "RuStore не смог списать оплату за следующий период. Плюс пока работает — обновите способ оплаты в RuStore → Профиль → Подписки и платежи, чтобы он не отключился"
           }
         }
       }
@@ -3683,7 +3802,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оплата не прошла"
+            "value": "Оплата не прошла"
           }
         }
       }
@@ -3700,7 +3819,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "RuStore не смог списать оплату, поэтому подписка на паузе. Обновите способ оплаты в RuStore → Профиль → Подписки и платежи — оплата спишется, и Плюс вернётся сам"
+            "value": "RuStore не смог списать оплату, поэтому подписка на паузе. Обновите способ оплаты в RuStore → Профиль → Подписки и платежи — оплата спишется, и Плюс вернётся сам"
           }
         }
       }
@@ -3734,7 +3853,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подписка продлевается автоматически. Отменить её можно в любой момент в приложении RuStore — доступ сохранится до конца оплаченного периода. Оформляя подписку, вы принимаете"
+            "value": "Подписка продлевается автоматически. Отменить её можно в любой момент в приложении RuStore — доступ сохранится до конца оплаченного периода. Оформляя подписку, вы принимаете"
           }
         }
       }
@@ -3751,7 +3870,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Управлять подпиской и отменить её можно в приложении RuStore → Профиль → Подписки и платежи"
+            "value": "Управлять подпиской и отменить её можно в приложении RuStore → Профиль → Подписки и платежи"
           }
         }
       }
@@ -3768,7 +3887,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подписка оформлена не в RuStore — управлять ею и отменить можно там, где вы её оформили"
+            "value": "Подписка оформлена не в RuStore — управлять ею и отменить можно там, где вы её оформили"
           }
         }
       }
@@ -3785,7 +3904,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Первый месяц — %1$@"
+            "value": "Первый месяц — %1$@"
           }
         }
       }
@@ -3813,13 +3932,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No active subscriptions found"
+            "value": "No active subscriptions"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Активных подписок не найдено"
+            "value": "Активных подписок нет"
           }
         }
       }
@@ -3853,7 +3972,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ в месяц"
+            "value": "%1$@ в месяц"
           }
         }
       }
@@ -3870,7 +3989,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "≈ %1$d ₽ в месяц"
+            "value": "≈ %1$d ₽ в месяц"
           }
         }
       }
@@ -3887,7 +4006,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ за %2$@"
+            "value": "%1$@ за %2$@"
           }
         }
       }
@@ -3898,13 +4017,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 month"
+            "value": "1 month"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "1 месяц"
+            "value": "1 месяц"
           }
         }
       }
@@ -3972,7 +4091,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Откройте приложение RuStore → Профиль → Подписки и платежи"
+            "value": "Откройте приложение RuStore → Профиль → Подписки и платежи"
           }
         }
       }
@@ -4006,7 +4125,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оплата пока не прошла. Если вы уже обновили способ оплаты, RuStore спишет её в течение нескольких минут"
+            "value": "Оплата пока не прошла. Если вы уже обновили способ оплаты, RuStore спишет её в течение нескольких минут"
           }
         }
       }
@@ -4023,7 +4142,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Всё, что уже есть в дневнике, остаётся бесплатным. Плюс — для тех, кому нужно больше"
+            "value": "Всё, что уже есть в дневнике, остаётся бесплатным. Плюс — для тех, кому нужно больше"
           }
         }
       }
@@ -4040,7 +4159,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ за %2$@"
+            "value": "%1$@ за %2$@"
           }
         }
       }
@@ -4057,7 +4176,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ за первый месяц"
+            "value": "%1$@ за первый месяц"
           }
         }
       }
@@ -4125,7 +4244,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ложку за маму Плюс"
+            "value": "Ложку за маму Плюс"
           }
         }
       }
@@ -4136,7 +4255,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d дня"
+            "value": "%1$d дня"
           }
         }
       }
@@ -4147,7 +4266,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d дней"
+            "value": "%1$d дней"
           }
         }
       }
@@ -4158,13 +4277,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d day"
+            "value": "%1$d day"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d день"
+            "value": "%1$d день"
           }
         }
       }
@@ -4175,13 +4294,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d days"
+            "value": "%1$d days"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d дня"
+            "value": "%1$d дня"
           }
         }
       }
@@ -4198,7 +4317,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оформить подписку в вашей стране пока нельзя"
+            "value": "Оформить подписку в вашей стране пока нельзя"
           }
         }
       }
@@ -4232,7 +4351,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не удалось открыть фото"
+            "value": "Не удалось открыть фото"
           }
         }
       }
@@ -4300,7 +4419,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "О продукте"
+            "value": "О продукте"
           }
         }
       }
@@ -4317,7 +4436,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "У %1$@ аллергия на: %2$@. Посоветуйтесь с врачом, прежде чем давать этот продукт"
+            "value": "У %1$@ аллергия: %2$@. Прежде чем давать этот продукт, посоветуйтесь с врачом"
           }
         }
       }
@@ -4368,7 +4487,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Удалить «%1$@» из каталога?"
+            "value": "Удалить «%1$@» из каталога?"
           }
         }
       }
@@ -4402,7 +4521,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "В избранное"
+            "value": "В избранное"
           }
         }
       }
@@ -4430,13 +4549,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "If you already gave this food before, or there is an allergy, mark it — no tries needed"
+            "value": "If you already gave this food before or there's an allergy, mark it — no tries needed"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Если продукт уже давали раньше, или есть аллергия — отметьте, пробы для этого не нужны"
+            "value": "Если продукт уже давали раньше или на него есть аллергия, отметьте — записывать пробы не нужно"
           }
         }
       }
@@ -4453,7 +4572,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пока не пробовали"
+            "value": "Пока не пробовали"
           }
         }
       }
@@ -4504,7 +4623,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Убрать из избранного"
+            "value": "Убрать из избранного"
           }
         }
       }
@@ -4538,7 +4657,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дети"
+            "value": "Малыши"
           }
         }
       }
@@ -4555,7 +4674,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подключён · оплата не прошла"
+            "value": "Подключён · оплата не прошла"
           }
         }
       }
@@ -4572,7 +4691,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отчёты, резервная копия и новые функции"
+            "value": "Отчёты, резервная копия и новые функции"
           }
         }
       }
@@ -4589,7 +4708,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Приостановлен · оплата не прошла"
+            "value": "Приостановлен · оплата не прошла"
           }
         }
       }
@@ -4657,7 +4776,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Без изменений"
+            "value": "Без изменений"
           }
         }
       }
@@ -4668,13 +4787,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No reaction"
+            "value": "All good"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Без реакции"
+            "value": "Всё хорошо"
           }
         }
       }
@@ -4725,7 +4844,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Реакция"
+            "value": "Есть реакция"
           }
         }
       }
@@ -4736,13 +4855,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Another"
+            "value": "Suggest another"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Другой"
+            "value": "Предложить другой"
           }
         }
       }
@@ -4753,13 +4872,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Just right for the age"
+            "value": "Right for the age"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Как раз по возрасту"
+            "value": "Подходит по возрасту"
           }
         }
       }
@@ -4776,7 +4895,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пора знакомить с аллергенами — по одному и понемногу"
+            "value": "Пора знакомить с аллергенами — по одному и понемногу"
           }
         }
       }
@@ -4787,13 +4906,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Next in the introduction order"
+            "value": "A good next step"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Следующий по порядку введения"
+            "value": "Хороший следующий шаг в прикорме"
           }
         }
       }
@@ -4804,13 +4923,30 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Try %1$@ of 3 is done — give it again so the food counts as introduced"
+            "value": "Tries so far: %1$@ of 3. After the third with no reaction, the food counts as introduced"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Проба %1$@ из 3 уже была — дайте ещё раз, чтобы продукт считался введённым"
+            "value": "Проб уже: %1$@ из 3. После третьей без реакции продукт считается введённым"
+          }
+        }
+      }
+    },
+    "rec_reason_done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одна проба в день: если появится реакция, будет понятно, на что. Завтра продолжим"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One try a day: if a reaction shows up, you'll know what caused it. We'll continue tomorrow"
           }
         }
       }
@@ -4821,13 +4957,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "In favorites"
+            "value": "You marked it ♥"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "В избранном"
+            "value": "Вы отметили его ♥"
           }
         }
       }
@@ -4838,13 +4974,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "New category: %1$@"
+            "value": "Nothing from \"%1$@\" yet — time to try"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Новая категория: %1$@"
+            "value": "Из группы «%1$@» малыш ещё ничего не пробовал — пора познакомиться"
           }
         }
       }
@@ -4855,13 +4991,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "All age-appropriate foods are already started or introduced 🎉"
+            "value": "Everything right for the age has been tried 🎉 New foods will open up as your baby grows — meanwhile, give the ones they already love"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Все подходящие по возрасту продукты уже начаты или введены 🎉"
+            "value": "Всё, что подходит по возрасту, уже попробовали 🎉 Новые продукты появятся с возрастом, а пока давайте то, что малыш уже любит"
           }
         }
       }
@@ -4872,30 +5008,30 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "After a reaction to \"%1$@\", better not introduce new foods until %2$@. If the reaction is severe, see a doctor"
+            "value": "There was a reaction to \"%1$@\". Until %2$@, give only familiar foods"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "После реакции на «%1$@» новые продукты лучше не вводить до %2$@. Если реакция сильная — обратитесь к врачу"
+            "value": "На «%1$@» была реакция. До %2$@ давайте только знакомые продукты"
           }
         }
       }
     },
-    "rec_record": {
+    "rec_reason_pause_doctor": {
       "extractionState": "manual",
       "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Log a try"
-          }
-        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Записать пробу"
+            "value": "Если реакция сильная или не проходит — покажитесь врачу"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If the reaction is strong or doesn't go away, see a doctor"
           }
         }
       }
@@ -4906,13 +5042,47 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continue the series"
+            "value": "Give it again"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Продолжите серию"
+            "value": "Дайте ещё раз"
+          }
+        }
+      }
+    },
+    "rec_title_done": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На сегодня всё"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "That's it for today"
+          }
+        }
+      }
+    },
+    "rec_title_nothing": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новых продуктов пока нет"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No new foods for now"
           }
         }
       }
@@ -4923,13 +5093,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Today's suggestion"
+            "value": "What to try today"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Рекомендация на сегодня"
+            "value": "Что попробовать сегодня"
           }
         }
       }
@@ -4940,13 +5110,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pause new foods"
+            "value": "A pause on new foods"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пауза с новыми продуктами"
+            "value": "Пауза в новых продуктах"
           }
         }
       }
@@ -4991,13 +5161,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d of %2$d"
+            "value": "try %1$d of %2$d"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$d из %2$d"
+            "value": "проба %1$d из %2$d"
           }
         }
       }
@@ -5076,13 +5246,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The account and all diary data will be deleted permanently."
+            "value": "We'll delete the account and the whole diary. This can't be undone"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Аккаунт и все данные дневника будут удалены без возможности восстановления."
+            "value": "Удалим аккаунт и весь дневник. Восстановить их не получится"
           }
         }
       }
@@ -5110,13 +5280,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Children and all diary entries will be deleted permanently."
+            "value": "We'll delete the children's profiles and the whole diary. This can't be undone"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дети и все записи дневника будут удалены без возможности восстановления."
+            "value": "Удалим профили малышей и весь дневник. Восстановить их не получится"
           }
         }
       }
@@ -5150,7 +5320,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сейчас вы без аккаунта. Привяжите почту, чтобы не потерять дневник"
+            "value": "Сейчас вы без аккаунта. Привяжите почту, чтобы не потерять дневник"
           }
         }
       }
@@ -5178,13 +5348,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sign out? The diary on this device will be cleared."
+            "value": "Sign out? The diary on this device will be cleared"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Выйти из аккаунта? Дневник на этом устройстве будет очищен."
+            "value": "Выйти из аккаунта? Дневник на этом устройстве будет очищен"
           }
         }
       }
@@ -5201,7 +5371,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Показать «Нет доступа к интернету»"
+            "value": "Показать «Нет доступа к интернету»"
           }
         }
       }
@@ -5235,7 +5405,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Уведомления запрещены в системе"
+            "value": "Уведомления запрещены в системе"
           }
         }
       }
@@ -5252,7 +5422,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Разрешить в настройках"
+            "value": "Разрешить в настройках"
           }
         }
       }
@@ -5269,7 +5439,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ложку за маму Плюс"
+            "value": "Ложку за маму Плюс"
           }
         }
       }
@@ -5303,7 +5473,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оплата не прошла: нет → льготный → пауза (debug)"
+            "value": "Оплата не прошла: нет → льготный → пауза (debug)"
           }
         }
       }
@@ -5337,7 +5507,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Напоминания о пробах"
+            "value": "Напоминания о пробах"
           }
         }
       }
@@ -5348,13 +5518,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "We'll tell you when it's time to give a food again"
+            "value": "We'll tell you when to give a food again"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подскажем, когда пора дать продукт ещё раз"
+            "value": "Подскажем, когда дать продукт ещё раз"
           }
         }
       }
@@ -5762,7 +5932,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "У меня уже есть аккаунт"
+            "value": "У меня уже есть аккаунт"
           }
         }
       }
@@ -5841,13 +6011,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tries, reactions and the path to 100 foods — all in one place"
+            "value": "Log tries and reactions — we'll suggest what to give next"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пробы, реакции и путь к 100 продуктам — всё в одном месте"
+            "value": "Записывайте пробы и реакции — подскажем, что дать следующим"
           }
         }
       }

@@ -78,3 +78,12 @@ enum UiLocale {
     /// «14 нояб.» / «Nov 14».
     static func dayMonthShort(_ d: LocalDate) -> String { dayMonthShort.string(from: date(d)) }
 }
+
+/// Имя ребёнка для подстановки в строку (Android `docs/copy-rules.md`, «Как называем ребёнка»; порт `ChildNameText.kt`).
+/// ru — в нужном падеже (`NameCases`); если склонить надёжно нельзя — `fallback` («малыша» и т. п.).
+/// en — имя как есть; `fallback` только для пустого имени.
+func childName(_ name: String, sex: Sex?, case nameCase: NameCase, fallback: String) -> String {
+    let n = name.trimmingCharacters(in: .whitespacesAndNewlines)
+    let inflected: String? = n.isEmpty ? nil : (UiLocale.language == .ru ? NameCases.inflect(n, sex: sex, case: nameCase) : n)
+    return inflected ?? L.s(fallback)
+}

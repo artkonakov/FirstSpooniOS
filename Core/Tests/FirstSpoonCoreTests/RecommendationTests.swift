@@ -56,9 +56,49 @@ final class RulesTests: XCTestCase {
         XCTAssertNil(Rules.pauseAfterReaction.decide(Facts(K.ctx(entries: [K.entry("broccoli", 3, .reaction)])), c))
     }
 
-    func testSeriesContinuesTheOneTriedLongestAgo() {
+    func testOneSeriesAtATimeTieGoesToTheOneStartedEarlier() {
         let f = Facts(K.ctx(entries: [K.entry("zucchini", 1), K.entry("broccoli", 2)]))
         XCTAssertEqual(Rules.continueSeries.decide(f, c)?.productId, "broccoli")
+        XCTAssertEqual(f.queued, ["zucchini"])
+    }
+
+    func testOneSeriesAtATimeTheOneCloserToIntroducedWins() {
+        let f = Facts(K.ctx(entries: [K.entry("zucchini", 5), K.entry("broccoli", 4), K.entry("broccoli", 2)]))
+        XCTAssertEqual(f.activeSeries, "broccoli")
+        XCTAssertEqual(Rules.continueSeries.decide(f, c)?.productId, "broccoli")
+    }
+
+    func testQueuedProductGivenTwoDaysInARowBecomesActive() {
+        // Брокколи ближе к введению, но родитель два дня подряд давал кабачок — продолжаем кабачок.
+        let f = Facts(K.ctx(entries: [K.entry("broccoli", 6), K.entry("broccoli", 5), K.entry("zucchini", 2), K.entry("zucchini", 1)]))
+        XCTAssertEqual(f.activeSeries, "zucchini")
+        XCTAssertEqual(f.queued, ["broccoli"])
+    }
+
+    func testOneTryPerDayAfterATryOfANewProductTodayNothingElseIsOffered() {
+        let f = Facts(K.ctx(entries: [K.entry("broccoli", 0)]))
+        guard case .done(let next, _) = Rules.oneTryPerDay.decide(f, c) else { return XCTFail("expected done") }
+        XCTAssertEqual(next, "broccoli")
+        // Весь движок: «на сегодня всё», а не «дайте ещё раз» брокколи.
+        guard case .done = RecommendationEngine.recommend(K.ctx(entries: [K.entry("broccoli", 0)])).recommendation else {
+            return XCTFail("expected done")
+        }
+    }
+
+    func testOneTryPerDayIntroducedFoodTodayDoesNotTakeTheDay() {
+        let f = Facts(K.ctx(entries: K.introduced("zucchini", 10) + [K.entry("zucchini", 0)]))
+        XCTAssertNil(Rules.oneTryPerDay.decide(f, c))
+    }
+
+    func testOneTryPerDayThirdTryTodayStillTakesTheDay() {
+        let f = Facts(K.ctx(entries: [K.entry("broccoli", 2), K.entry("broccoli", 1), K.entry("broccoli", 0)]))
+        guard case .done(let next, _) = Rules.oneTryPerDay.decide(f, c) else { return XCTFail("expected done") }
+        XCTAssertNil(next, "введён — завтра нечего продолжать")
+    }
+
+    func testPauseWinsOverDone() {
+        let r = RecommendationEngine.recommend(K.ctx(entries: [K.entry("broccoli", 0, .reaction)])).recommendation
+        guard case .wait = r else { return XCTFail("expected wait, got \(r)") }
     }
 
     func testTooYoungFilterUsesAgeAndDefaultAge() {
@@ -168,6 +208,7 @@ final class ScenarioTests: XCTestCase {
         case .tryNew: type = "try"
         case .continueSeries: type = "continue"
         case .wait: type = "wait"
+        case .done: type = "done"
         case .nothing: type = "nothing"
         }
         if type != s.expect.type { return "type \(s.expect.type) ≠ \(type)\(dump)" }
@@ -243,13 +284,24 @@ final class InvariantsTests: XCTestCase {
                     XCTAssertFalse(f.highRisk, "high risk -> no allergens \(msg)")
                 }
                 XCTAssertNil(Rules.pauseAfterReaction.decide(f, config), "no pause active \(msg)")
+                // Одна серия за раз: новый продукт — только когда ничего не начато.
+                XCTAssertTrue(f.inSeries.isEmpty, "no new product while a series is open \(msg)")
+                XCTAssertFalse(f.todayBusy, "one try per day \(msg)")
             case .continueSeries(let id, _, _):
                 XCTAssertEqual(f.progress[id]?.status, .inProgress, msg)
+                XCTAssertEqual(f.activeSeries, id, "continue only the active series \(msg)")
+                XCTAssertFalse(f.todayBusy, "one try per day \(msg)")
+            case .done(let next, _):
+                XCTAssertTrue(f.todayBusy, "done only when today is busy \(msg)")
+                XCTAssertEqual(f.activeSeries, next, "next = active series \(msg)")
             case .wait(let until, _, _):
                 XCTAssertTrue(until.isAfter(ctx.today), msg)
             case .nothing:
                 break
             }
+            // Очередь и активная серия не пересекаются и вместе — все начатые.
+            XCTAssertEqual(Set(f.inSeries), Set([result.activeSeries].compactMap { $0 } + result.queued), "series split \(msg)")
+            XCTAssertEqual([result.activeSeries].compactMap { $0 }.count + result.queued.count, f.inSeries.count, "no overlap \(msg)")
         }
     }
 }
@@ -332,5 +384,45 @@ final class SimulationTests: XCTestCase {
         let run = simulate(badOn: ["carrot"], days: 40)
         try golden("simulation_reaction", run)
         XCTAssertTrue(run.log.contains { $0.contains("Wait") })
+    }
+}
+
+/// Алгоритмы из `Resources/recommendation/` (копия Android `shared/recommendation/`). Порт `StrategiesTest`.
+final class StrategiesTests: XCTestCase {
+    func testClassicJsonEqualsEngineDefaults() {
+        // Значения по умолчанию в RecommendationConfig — это classic: эталон симуляции не должен поменяться.
+        let d = RecommendationConfig(), c = Strategies.config(Strategies.byId(Strategies.classic))
+        XCTAssertEqual(c.strategyId, d.strategyId)
+        XCTAssertEqual(c.reactionPauseDays, d.reactionPauseDays)
+        XCTAssertEqual(c.allergenGapDays, d.allergenGapDays)
+        XCTAssertEqual(c.allergensAfterIntroduced, d.allergensAfterIntroduced)
+        XCTAssertEqual(c.assumedAgeMonths, d.assumedAgeMonths)
+        XCTAssertEqual(c.newCategoryAfterIntroduced, d.newCategoryAfterIntroduced)
+        XCTAssertEqual(c.highRiskAllergens, d.highRiskAllergens)
+        XCTAssertEqual(c.weightIntroOrder, d.weightIntroOrder)
+        XCTAssertEqual(c.weightNewCategory, d.weightNewCategory)
+        XCTAssertEqual(c.weightAllergenDue, d.weightAllergenDue)
+        XCTAssertEqual(c.weightFavorite, d.weightFavorite)
+        XCTAssertEqual(c.weightAgeFits, d.weightAgeFits)
+        XCTAssertEqual(c.rules.map(\.name), d.rules.map(\.name))
+    }
+
+    func testAllStrategiesAreValid() {
+        let ids = Strategies.all.map(\.id)
+        XCTAssertEqual(ids.count, Set(ids).count, "id уникальны")
+        XCTAssertTrue(ids.contains(Strategies.classic), "есть classic")
+        for s in Strategies.all {
+            let unknown = Set(s.scorers.keys).subtracting(Strategies.scorerKinds)
+            XCTAssertTrue(unknown.isEmpty, "\(s.id): неизвестные виды баллов \(unknown) — сначала код на обеих платформах")
+            XCTAssertTrue([s.title, s.description].allSatisfy { $0["ru"] != nil && $0["en"] != nil }, "\(s.id): нужны title/description ru и en")
+            XCTAssertTrue(["default", "experiment", "available"].contains(s.status), "\(s.id): статус")
+            XCTAssertGreaterThanOrEqual(Strategies.config(s).allergensAfterIntroduced, Strategies.safety.minIntroducedBeforeAllergens,
+                                        "\(s.id): слой безопасности не опускается")
+        }
+        XCTAssertEqual(Strategies.all.filter { $0.status == "default" }.count, 1, "ровно один default")
+    }
+
+    func testUnknownIdFallsBackToClassic() {
+        XCTAssertEqual(Strategies.byId("removed-in-new-version").id, Strategies.classic)
     }
 }

@@ -1,0 +1,17 @@
+{
+  "id": "early-allergens",
+  "title": { "ru": "Аллергены пораньше", "en": "Allergens earlier" },
+  "description": {
+    "ru": "Знакомим с основными аллергенами раньше — по одному и понемногу. Перед стартом посоветуйтесь с врачом",
+    "en": "Introduces common allergens earlier — one at a time, in small amounts. Check with your doctor first"
+  },
+  "status": "experiment",
+  "_medical": "Нужна сверка с педиатрическими рекомендациями до показа пользователям",
+  "scorers": {
+    "introOrder": { "weight": 10 },
+    "newCategory": { "weight": 4, "afterIntroduced": 3 },
+    "allergenDue": { "weight": 9, "afterIntroduced": 3 },
+    "favorite": { "weight": 2 },
+    "ageFits": { "weight": 1 }
+  }
+}

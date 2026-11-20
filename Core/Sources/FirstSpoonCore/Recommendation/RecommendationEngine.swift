@@ -6,8 +6,12 @@ public enum HighRiskPolicy: Sendable {
 }
 
 /// Настройки движка: набор правил, пороги и веса. Значения по умолчанию — разумная отправная точка,
-/// **медицинскую часть нужно сверить с педиатрическими рекомендациями**. Позже конфиг можно отдавать с сервера.
+/// **медицинскую часть нужно сверить с педиатрическими рекомендациями**. В приложении конфиг собирает `Strategies.config`
+/// из `Resources/recommendation/` (слой безопасности + алгоритм); значения по умолчанию здесь = алгоритм `classic`
+/// (`StrategiesTests` следит, чтобы они совпадали).
 public struct RecommendationConfig: Sendable {
+    /// Какой алгоритм собрал этот конфиг (`Strategies`); для аналитики и debug.
+    public var strategyId = Strategies.classic
     public var reactionPauseDays = 3
     public var allergenGapDays = 3
     /// Сколько продуктов ввести до первого аллергена.
@@ -27,7 +31,7 @@ public struct RecommendationConfig: Sendable {
 
     /// Порядок важен для Gate (первый сработавший побеждает).
     public static let defaultRules: [Rule] = [
-        .gate(Rules.pauseAfterReaction), .gate(Rules.continueSeries),
+        .gate(Rules.pauseAfterReaction), .gate(Rules.oneTryPerDay), .gate(Rules.continueSeries),
         .filter(Rules.customProducts), .filter(Rules.marked), .filter(Rules.alreadyStarted), .filter(Rules.tooYoung),
         .filter(Rules.knownAllergen), .filter(Rules.doctorFirstForHighRisk), .filter(Rules.baseProductsFirst),
         .filter(Rules.allergenGap), .filter(Rules.skipped),
@@ -42,7 +46,9 @@ public enum RecommendationEngine {
     public static func recommend(_ ctx: RecommendationContext, config: RecommendationConfig = RecommendationConfig()) -> RecommendationResult {
         let facts = Facts(ctx)
         for rule in config.rules {
-            if case .gate(let g) = rule, let r = g.decide(facts, config) { return RecommendationResult(r) }
+            if case .gate(let g) = rule, let r = g.decide(facts, config) {
+                return RecommendationResult(r, activeSeries: facts.activeSeries, queued: facts.queued)
+            }
         }
 
         let filters = config.rules.compactMap { if case .filter(let f) = $0 { return f } else { return nil } }
@@ -75,6 +81,7 @@ public enum RecommendationEngine {
         } else {
             recommendation = .nothing(reasons: [Reason(.NOTHING_LEFT)])
         }
-        return RecommendationResult(recommendation, ranking: ranking, excluded: excluded)
+        return RecommendationResult(recommendation, ranking: ranking, excluded: excluded,
+                                    activeSeries: facts.activeSeries, queued: facts.queued)
     }
 }

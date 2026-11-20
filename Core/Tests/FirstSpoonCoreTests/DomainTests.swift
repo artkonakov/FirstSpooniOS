@@ -140,12 +140,22 @@ final class ReminderRulesTests: XCTestCase {
         XCTAssertTrue(ReminderRules.plan(input(onboardedAt: .some(now.minusDays(15)))).isEmpty)
     }
 
-    func testSeriesReminderNextMorningAfterTheEarliestLastTry() {
+    func testSeriesReminderNextMorningOnlyForTheActiveSeries() {
         let today = now.toLocalDate()
-        let plan = ReminderRules.plan(input([entry("pumpkin", today), entry("broccoli", today)]))
+        // Одна серия за раз: брокколи ближе к введению (2 пробы) — напоминаем только о ней.
+        let plan = ReminderRules.plan(input([entry("pumpkin", today), entry("broccoli", today.minusDays(1)), entry("broccoli", today)]))
         XCTAssertEqual(plan.count, 1)
         XCTAssertEqual(plan[0].fireAt, today.plusDays(1).atTime(10, 0))
-        XCTAssertEqual(Set(plan[0].productNames), ["Брокколи", "Тыква"])
+        XCTAssertEqual(plan[0].productNames, ["Брокколи"])
+    }
+
+    func testNoSeriesReminderDuringThePauseAfterAReaction() {
+        let today = now.toLocalDate()
+        let entries = [entry("broccoli", today.minusDays(1)), DiaryEntry(id: "r", productId: "pumpkin", date: today, reaction: .reaction)]
+        let plan = ReminderRules.plan(input(entries))
+        XCTAssertEqual(plan.count, 1)
+        // Пауза 3 дня от реакции: напомним утром в день, когда она закончится.
+        XCTAssertEqual(plan[0].fireAt, today.plusDays(3).atTime(10, 0))
     }
 
     func testNoSeriesReminderForIntroducedOrMarkedProducts() {

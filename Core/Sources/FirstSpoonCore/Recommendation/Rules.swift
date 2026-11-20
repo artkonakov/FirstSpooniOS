@@ -50,14 +50,15 @@ public enum Rules {
         return .wait(until: until, productId: r.productId, reasons: [Reason(.PAUSE_AFTER_REACTION, [r.productId, until.iso])])
     }
 
-    /// Есть незаконченная серия — сначала её. Самая «старая» (давнее всего пробовали) — первой.
+    /// Одна проба вводимого продукта в день: сегодня уже давали новый / вводимый продукт — больше ничего не предлагаем.
+    /// Если в одной пробе появится реакция, будет понятно, на что. Стоит после паузы (пауза важнее).
+    public static let oneTryPerDay = Gate("OneTryPerDay") { f, _ in
+        f.todayBusy ? .done(nextProductId: f.activeSeries, reasons: [Reason(.DONE_TODAY)]) : nil
+    }
+
+    /// Есть начатые продукты — продолжаем активную серию (одна за раз, `Facts.activeSeries`); новый не предлагаем.
     public static let continueSeries = Gate("ContinueSeries") { f, _ in
-        var best: (String, LocalDate)?
-        for id in f.inSeries {
-            let d = f.lastTry[id] ?? f.ctx.today
-            if best == nil || d < best!.1 { best = (id, d) }
-        }
-        guard let id = best?.0 else { return nil }
+        guard let id = f.activeSeries else { return nil }
         let tries = f.progress[id]?.tries ?? 0
         return .continueSeries(productId: id, tries: tries, reasons: [Reason(.CONTINUE_SERIES, [String(tries)])])
     }

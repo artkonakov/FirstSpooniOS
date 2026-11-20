@@ -1,18 +1,46 @@
 import SwiftUI
 import FirstSpoonCore
 
-struct TodayItem: Identifiable { let id: String; let productId: String; let name: String; let reaction: Reaction }
+/// Проба сегодня. `status`/`tries` — состояние продукта сейчас (бейдж); `nextTry` — «Завтра — N-я проба»,
+/// только для активной серии без реакции (одна серия за раз — обещать можно только её).
+struct TodayItem: Identifiable {
+    let id: String
+    let productId: String
+    let name: String
+    let reaction: Reaction
+    var time: LocalTime?
+    var status: ProductStatus?
+    var tries = 0
+    var nextTry: Int?
+}
 struct ProgressItem: Identifiable { var id: String { productId }; let productId: String; let name: String; let tries: Int; let status: ProductStatus }
 
-/// Состояние главной — чистая функция данных дневника и каталога (как `HomeViewModel.buildState`).
+/// Состояние главной — чистая функция данных дневника, каталога и рекомендации (порт Android `HomeViewModel`).
+/// Один продукт — одна карточка (Android `docs/product-rules.md` «Главный экран»): дали сегодня → только в «Сегодня»;
+/// предложен в рекомендации → только там. Одна серия за раз: активная — «Знакомимся сейчас» (если её не видно выше),
+/// остальные начатые — «Ждут очереди»; во время паузы ждут все.
 struct HomeState {
     var introducedCount = 0
     var today: [TodayItem] = []
     var inProgress: [ProgressItem] = []
     var attention: [ProgressItem] = []
+    /// Начатые, но не активные продукты — ждут очереди, без кнопки записи (одна серия за раз).
+    var queued: [ProgressItem] = []
+    var recommendation: Recommendation?
     var isEmpty: Bool { today.isEmpty && inProgress.isEmpty && attention.isEmpty && introducedCount == 0 }
 
-    @MainActor init(diary: DiaryRepository, catalog: Catalog, date: LocalDate = .today()) {
+    /// Продукт для формы «Записать пробу»: из рекомендации (новый или продолжить серию), иначе пустая форма.
+    var entryProductId: String? {
+        switch recommendation {
+        case .tryNew(let id, _), .continueSeries(let id, _, _): return id
+        default: return nil
+        }
+    }
+
+    /// Пауза после реакции — до какого дня (для подписи в «Ждут очереди»).
+    var pauseUntil: LocalDate? { if case .wait(let until, _, _) = recommendation { return until } else { return nil } }
+
+    @MainActor init(diary: DiaryRepository, catalog: Catalog, result: RecommendationResult?, date: LocalDate = .today()) {
         func name(_ id: String) -> String { catalog.productsById[id]?.name ?? id }
         // Порядок как у Android (LinkedHashMap): по первому появлению в пробах (свежие сверху), затем отметки.
         let map = FeedingRules.progressByProduct(diary.entries, marks: diary.marks)
@@ -20,12 +48,32 @@ struct HomeState {
         var seen = Set<String>()
         for id in diary.entries.map(\.productId) + diary.marks.keys.sorted() where seen.insert(id).inserted { order.append(id) }
         let progress = order.compactMap { map[$0] }
+        func item(_ p: ProductProgress) -> ProgressItem { ProgressItem(productId: p.productId, name: name(p.productId), tries: p.tries, status: p.status) }
         introducedCount = progress.filter { $0.status == .introduced }.count
-        today = diary.entries.filter { $0.date == date }.map { TodayItem(id: $0.id, productId: $0.productId, name: name($0.productId), reaction: $0.reaction) }
-        inProgress = progress.filter { $0.status == .inProgress }
-            .map { ProgressItem(productId: $0.productId, name: name($0.productId), tries: $0.tries, status: $0.status) }
-        attention = progress.filter { $0.status.needsAttention }
-            .map { ProgressItem(productId: $0.productId, name: name($0.productId), tries: $0.tries, status: $0.status) }
+        let started = progress.filter { $0.status == .inProgress }.map(item)
+
+        let r = result?.recommendation
+        recommendation = r
+        let todayEntries = diary.entries.filter { $0.date == date }
+        let todayIds = Set(todayEntries.map(\.productId))
+        let shownInCard = r?.productId
+        let active = result?.activeSeries
+        let paused = pauseUntil != nil
+        attention = progress.filter { $0.status.needsAttention && !todayIds.contains($0.productId) }.map(item)
+        today = todayEntries.map { e in
+            let p = map[e.productId]
+            var t = TodayItem(id: e.id, productId: e.productId, name: name(e.productId), reaction: e.reaction,
+                              time: e.time, status: p?.status, tries: p?.tries ?? 0)
+            if e.productId == active && t.status == .inProgress && t.reaction != .reaction && t.reaction != .unsure && !paused {
+                t.nextTry = t.tries + 1
+            }
+            return t
+        }
+        let activeItem = active.flatMap { id in !todayIds.contains(id) && id != shownInCard ? started.first { $0.productId == id } : nil }
+        let queuedItems = (result?.queued ?? []).filter { !todayIds.contains($0) && $0 != shownInCard }
+            .compactMap { id in started.first { $0.productId == id } }
+        if let activeItem, !paused { inProgress = [activeItem] }
+        queued = (paused ? [activeItem].compactMap { $0 } : []) + queuedItems
     }
 }
 
@@ -34,17 +82,16 @@ struct HomeView: View {
     @Environment(Navigator.self) private var nav
 
     var body: some View {
-        let state = HomeState(diary: app.diary, catalog: app.catalog.catalog)
+        let state = HomeState(diary: app.diary, catalog: app.catalog.catalog, result: app.recommendations.result)
         ScrollViewReader { proxy in
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 14) {
                 if let child = app.diary.activeChild {
                     Text(Labels.ageText(child)).font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted)
                 }
-                if let rec = app.recommendations.result?.recommendation {
+                if let rec = state.recommendation {
                     RecommendationCard(rec: rec, catalog: app.catalog.catalog,
                                        onOpenProduct: { nav.open(.product($0)) },
-                                       onRecord: { Analytics.track(.recommendationRecord); nav.open(.entry(entryId: nil, productId: $0)) },
                                        onOther: { app.recommendations.skip($0) })
                 }
                 ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal).id("progress")
@@ -59,30 +106,28 @@ struct HomeView: View {
                         }
                     }
                 }
+                if !state.today.isEmpty {
+                    SectionTitle(L.s("home_today"))
+                    ForEach(state.today) { item in TodayCard(item: item) { nav.open(.entry(entryId: item.id, productId: nil)) } }
+                }
                 if !state.inProgress.isEmpty {
                     SectionTitle(L.s("home_in_progress"))
+                    // Активная серия, которую не видно выше. Записывают общей кнопкой внизу.
                     ForEach(state.inProgress) { item in
+                        ProductCard(productId: item.productId, name: item.name, onTap: { nav.open(.product(item.productId)) }) {
+                            StatusBadge(status: item.status, tries: item.tries)
+                        }
+                    }
+                }
+                if !state.queued.isEmpty {
+                    SectionTitle(L.s("home_queue"))
+                    let note = state.pauseUntil.map { L.s("home_queue_pause", UiLocale.dayMonth($0).replacingOccurrences(of: " ", with: "\u{00A0}")) }
+                        ?? L.s("home_queue_after")
+                    ForEach(state.queued) { item in
                         ProductCard(productId: item.productId, name: item.name, onTap: { nav.open(.product(item.productId)) },
                                     supporting: { StatusBadge(status: item.status, tries: item.tries) },
                                     trailing: { Chevron() },
-                                    footer: {
-                                        AppButton(L.s("home_record_try", item.tries + 1), kind: .soft, size: .medium, icon: "plus") {
-                                            try? app.diary.addEntry(productId: item.productId)
-                                        }
-                                    })
-                    }
-                }
-                if !state.today.isEmpty {
-                    SectionTitle(L.s("home_today"))
-                    ForEach(state.today) { item in
-                        ProductCard(productId: item.productId, name: item.name, onTap: { nav.open(.entry(entryId: item.id, productId: nil)) },
-                                    supporting: { EmptyView() }, trailing: { Chevron() },
-                                    footer: {
-                                        HStack(spacing: 10) {
-                                            reactionChip(item, .none, "reaction_none")
-                                            reactionChip(item, .reaction, "reaction_yes")
-                                        }
-                                    })
+                                    footer: { Text(note).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted) })
                     }
                 }
             }
@@ -100,7 +145,12 @@ struct HomeView: View {
         #endif
         }
         .bottomAction {
-            AppButton(L.s("home_new_entry"), icon: "plus") { nav.open(.entry(entryId: nil, productId: nil)) }
+            // Общая кнопка записи: форма открывается с продуктом из рекомендации (его можно сменить).
+            AppButton(L.s("home_new_entry"), icon: "plus") {
+                let pid = state.entryProductId
+                if pid != nil { Analytics.track(.recommendationRecord) }
+                nav.open(.entry(entryId: nil, productId: pid))
+            }
                 .padding(.horizontal, screenPadding)
                 .padding(.vertical, 12)
         }
@@ -110,9 +160,38 @@ struct HomeView: View {
             ToolbarItem(placement: .topBarTrailing) { ChildMenu(onAdd: { nav.open(.child(nil)) }) }
         }
     }
+}
+
+/// Проба сегодня: время, бейдж, «Как прошло?», реакция; «Завтра — N-я проба» для активной серии.
+private struct TodayCard: View {
+    @Environment(AppContainer.self) private var app
+    let item: TodayItem
+    let onTap: () -> Void
+    var body: some View {
+        ProductCard(productId: item.productId, name: item.name, onTap: onTap,
+                    supporting: {
+                        VStack(alignment: .leading, spacing: 6) {
+                            if let t = item.time { Text(UiLocale.time(t)).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted) }
+                            if let s = item.status, s != .notTried { StatusBadge(status: s, tries: item.tries) }
+                        }
+                    },
+                    trailing: { Chevron() },
+                    footer: {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text(L.s("home_today_question")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted)
+                            HStack(spacing: 10) {
+                                chip(.none, "reaction_none")
+                                chip(.reaction, "reaction_yes")
+                            }
+                            if let n = item.nextTry {
+                                Text(L.s("home_today_next", n)).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted)
+                            }
+                        }
+                    })
+    }
 
     /// Повторный тап снимает отметку — снова «наблюдаем».
-    private func reactionChip(_ item: TodayItem, _ value: Reaction, _ label: String) -> some View {
+    private func chip(_ value: Reaction, _ label: String) -> some View {
         AppChip(label: L.s(label), selected: item.reaction == value, expand: true) {
             try? app.diary.setReaction(item.id, item.reaction == value ? .unknown : value)
         }

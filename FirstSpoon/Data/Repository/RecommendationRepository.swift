@@ -13,7 +13,7 @@ final class RecommendationRepository {
     /// Только debug: подменить «сегодня», чтобы прожить сценарий.
     var debugToday: LocalDate?
 
-    init(diary: DiaryRepository, catalog: CatalogRepository, config: RecommendationConfig = RecommendationConfig()) {
+    init(diary: DiaryRepository, catalog: CatalogRepository, config: RecommendationConfig = Strategies.config()) {
         self.diary = diary
         self.catalog = catalog
         self.config = config

@@ -10,7 +10,13 @@ let package = Package(
         .library(name: "FirstSpoonCore", targets: ["FirstSpoonCore"]),
     ],
     targets: [
-        .target(name: "FirstSpoonCore"),
+        .target(
+            name: "FirstSpoonCore",
+            // Склонение имён: petrovich-rules (MIT), копия `shared/petrovich/` из репозитория Android.
+            // Алгоритмы рекомендаций: копия `shared/recommendation/` (Android).
+            resources: [.copy("Resources/petrovich-rules.json"), .copy("Resources/PETROVICH-LICENSE"),
+                        .copy("Resources/recommendation")]
+        ),
         .testTarget(
             name: "FirstSpoonCoreTests",
             dependencies: ["FirstSpoonCore"],

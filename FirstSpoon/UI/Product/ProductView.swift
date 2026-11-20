@@ -72,8 +72,10 @@ struct ProductView: View {
     @ViewBuilder
     private func content(_ product: Product, catalog: Catalog, own: [DiaryEntry], mark: ProductMark?, progress: ProductProgress) -> some View {
         let child = app.diary.activeChild
-        let childAllergies = product.allergenIds.filter { child?.profile.knownAllergens.contains($0) == true }
-            .compactMap { id in catalog.allergens.first { $0.id == id }?.name }
+        // Названия аллергенов, на которые у ребёнка аллергия; в середине фразы — со строчной («аллергия: яйцо»).
+        let childAllergies = product.allergenIds
+            .filter { child?.profile.knownAllergens.contains($0) == true }
+            .compactMap { id in catalog.allergens.first { $0.id == id }?.name.lowercased(with: UiLocale.locale) }
         let facts = [product.isCustom ? L.s("product_custom_note") : L.s("catalog_age", product.minAgeMonths),
                      product.isAllergen ? L.s("catalog_allergen", product.allergens.joined(separator: ", ")) : nil].compactMap { $0 }
         VStack(alignment: .leading, spacing: 14) {
@@ -89,7 +91,9 @@ struct ProductView: View {
                 AppCard {
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(AppColors.alert)
-                        Text(L.s("product_allergy_warning", child?.name ?? "", childAllergies.joined(separator: ", ")))
+                        Text(L.s("product_allergy_warning",
+                                 childName(child?.name ?? "", sex: child?.sex, case: .genitive, fallback: "child_name_fallback_gen"),
+                                 childAllergies.joined(separator: ", ")))
                             .font(AppFont.bodyLarge).foregroundStyle(AppColors.alert)
                     }
                 }

@@ -80,13 +80,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rash, redness — or just mealtime. Handy for your pediatrician and a nice keepsake."
+            "value": "Rash, redness — or just mealtime. Handy for your pediatrician and a nice keepsake"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сыпь, покраснение — или просто как малыш ест. Пригодится врачу и на память."
+            "value": "Сыпь, покраснение — или просто как малыш ест. Пригодится врачу и на память"
           }
         }
       }
@@ -98,13 +98,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add a photo of the rash or redness — it helps your pediatrician."
+            "value": "Add a photo of the rash or redness — it helps your pediatrician"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавьте фото сыпи или покраснения — врачу будет проще оценить."
+            "value": "Добавьте фото сыпи или покраснения — врачу будет проще оценить"
           }
         }
       }
@@ -140,7 +140,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Без фото"
+            "value": "Без фото"
           }
         }
       }
@@ -152,13 +152,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Photos will be included in the file you share."
+            "value": "Photos will be included in the file you share"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Фото попадут в файл, который вы отправите."
+            "value": "Фото попадут в файл, который вы отправите"
           }
         }
       }
@@ -176,7 +176,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "При реакции"
+            "value": "При реакции"
           }
         }
       }
@@ -194,7 +194,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Фото в отчёте"
+            "value": "Фото в отчёте"
           }
         }
       }

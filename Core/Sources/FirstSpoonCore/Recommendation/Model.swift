@@ -27,7 +27,7 @@ public struct Reason: Hashable, Sendable, CustomStringConvertible {
 
 public enum ReasonCode: String, CaseIterable, Sendable {
     // Приоритетные ситуации
-    case CONTINUE_SERIES, PAUSE_AFTER_REACTION
+    case CONTINUE_SERIES, PAUSE_AFTER_REACTION, DONE_TODAY
     // Фильтры
     case CUSTOM_PRODUCT, ALREADY_STARTED, MARKED, TOO_YOUNG, KNOWN_ALLERGEN
     case BASE_PRODUCTS_FIRST, ALLERGEN_GAP, DOCTOR_FIRST, SKIPPED
@@ -44,18 +44,21 @@ public enum Recommendation: Hashable, Sendable {
     case continueSeries(productId: String, tries: Int, reasons: [Reason])
     /// Новых продуктов пока не вводим (например, после реакции).
     case wait(until: LocalDate, productId: String, reasons: [Reason])
+    /// Сегодня уже была проба вводимого продукта — больше ничего вводимого не предлагаем (одна проба в день).
+    /// `nextProductId` — активная серия, её продолжим завтра (nil — серии нет).
+    case done(nextProductId: String?, reasons: [Reason])
     case nothing(reasons: [Reason])
 
     public var productId: String? {
         switch self {
         case .tryNew(let id, _), .continueSeries(let id, _, _), .wait(_, let id, _): return id
-        case .nothing: return nil
+        case .done, .nothing: return nil
         }
     }
 
     public var reasons: [Reason] {
         switch self {
-        case .tryNew(_, let r), .continueSeries(_, _, let r), .wait(_, _, let r), .nothing(let r): return r
+        case .tryNew(_, let r), .continueSeries(_, _, let r), .wait(_, _, let r), .done(_, let r), .nothing(let r): return r
         }
     }
 
@@ -65,6 +68,7 @@ public enum Recommendation: Hashable, Sendable {
         case .tryNew: return "Try"
         case .continueSeries: return "Continue"
         case .wait: return "Wait"
+        case .done: return "Done"
         case .nothing: return "Nothing"
         }
     }
@@ -75,9 +79,15 @@ public struct RecommendationResult: Hashable, Sendable {
     public let recommendation: Recommendation
     public let ranking: [Ranked]
     public let excluded: [Excluded]
+    /// Активная серия — продукт, который вводим сейчас (одна серия за раз).
+    public let activeSeries: String?
+    /// Остальные начатые продукты — ждут, пока закончится активная серия.
+    public let queued: [String]
 
-    public init(_ recommendation: Recommendation, ranking: [Ranked] = [], excluded: [Excluded] = []) {
+    public init(_ recommendation: Recommendation, ranking: [Ranked] = [], excluded: [Excluded] = [],
+                activeSeries: String? = nil, queued: [String] = []) {
         self.recommendation = recommendation; self.ranking = ranking; self.excluded = excluded
+        self.activeSeries = activeSeries; self.queued = queued
     }
 }
 
@@ -118,6 +128,13 @@ public final class Facts: @unchecked Sendable {
     /// Последняя проба с реакцией «Плохо» / «Сомнительно» (при равенстве дат — первая в списке).
     public let lastReaction: DiaryEntry?
     public let inSeries: [String]
+    /// Активная серия — одна за раз (`Series.split`).
+    public let activeSeries: String?
+    /// Начатые, но не активные — ждут очереди.
+    public let queued: [String]
+    /// Сегодня уже была проба вводимого продукта — продукта, который до сегодня не был введён
+    /// (новый, в серии или с реакцией). Пробы введённых продуктов день не занимают.
+    public let todayBusy: Bool
 
     public init(_ ctx: RecommendationContext) {
         self.ctx = ctx
@@ -155,5 +172,16 @@ public final class Facts: @unchecked Sendable {
         var seen = Set<String>()
         for id in ctx.entries.map(\.productId) + ctx.marks.keys.sorted() where seen.insert(id).inserted { order.append(id) }
         inSeries = order.filter { progress[$0]?.status == .inProgress }
+
+        let split = Series.split(ctx.entries, marks: ctx.marks, today: ctx.today)
+        activeSeries = split.active
+        queued = split.queued
+        let todayIds = Set(ctx.entries.filter { $0.date == ctx.today }.map(\.productId))
+        if todayIds.isEmpty {
+            todayBusy = false
+        } else {
+            let before = FeedingRules.progressByProduct(ctx.entries.filter { $0.date.isBefore(ctx.today) }, marks: ctx.marks)
+            todayBusy = todayIds.contains { before[$0]?.status != .introduced }
+        }
     }
 }

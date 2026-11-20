@@ -1,0 +1,16 @@
+{
+  "id": "classic",
+  "title": { "ru": "Спокойно, по плану", "en": "Calm, step by step" },
+  "description": {
+    "ru": "Сначала овощи и каши, по одному, потом другие группы. Аллергены — когда освоены первые продукты",
+    "en": "Vegetables and cereals first, one at a time, then other groups. Allergens once the first foods are in"
+  },
+  "status": "default",
+  "scorers": {
+    "introOrder": { "weight": 10 },
+    "newCategory": { "weight": 4, "afterIntroduced": 3 },
+    "allergenDue": { "weight": 6, "afterIntroduced": 5 },
+    "favorite": { "weight": 2 },
+    "ageFits": { "weight": 1 }
+  }
+}

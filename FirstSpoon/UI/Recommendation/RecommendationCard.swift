@@ -1,56 +1,60 @@
 import SwiftUI
 import FirstSpoonCore
 
-/// Карточка «одна рекомендация»: продукт, почему (причины из движка), «Записать пробу» и «Другой».
-/// Для паузы — объяснение без продукта-действия.
+/// Карточка «одна рекомендация» (Android `docs/product-rules.md` «Главный экран»): продукт и одна главная причина абзацем.
+/// Записывают пробу общей кнопкой внизу экрана (форма открывается с этим продуктом), поэтому кнопки записи здесь нет.
+/// «Предложить другой» — только для нового продукта: серию не подменяем. Порт Android `RecommendationCard.kt`.
 struct RecommendationCard: View {
     let rec: Recommendation
     let catalog: Catalog
     let onOpenProduct: (String) -> Void
-    let onRecord: (String) -> Void
     let onOther: (String) -> Void
 
     var body: some View {
-        if case .nothing = rec { EmptyView() } else if let id = rec.productId {
+        switch rec {
+        case .done:
+            TextCard(title: L.s("rec_title_done"), text: L.s("rec_reason_done"))
+        case .nothing:
+            TextCard(title: L.s("rec_title_nothing"), text: L.s("rec_reason_nothing"))
+        case .wait(_, _, let reasons):
+            TextCard(title: L.s("rec_title_wait"), text: reasons.first.map { reasonText($0, catalog) } ?? "",
+                     note: L.s("rec_reason_pause_doctor"), emphasize: true)
+        case .tryNew(let id, let reasons), .continueSeries(let id, _, let reasons):
             AppCard(spacing: 14) {
-                FieldLabel(title, inset: 0)
-                if case .wait = rec {
-                    ForEach(Array(rec.reasons.enumerated()), id: \.offset) { ReasonLine(text: reasonText($0.element, catalog)) }
-                } else {
-                    Button { onOpenProduct(id) } label: {
-                        ProductRow(productId: id, name: catalog.productsById[id]?.name ?? id, supporting: { EmptyView() }, trailing: { Chevron() })
-                    }
-                    .buttonStyle(PressableStyle())
-                    VStack(alignment: .leading, spacing: 6) {
-                        let reasons = rec.reasons.isEmpty ? [Reason(.INTRO_ORDER)] : rec.reasons
-                        ForEach(Array(reasons.enumerated()), id: \.offset) { ReasonLine(text: reasonText($0.element, catalog)) }
-                    }
-                    HStack(spacing: 10) {
-                        AppButton(L.s("rec_record"), size: .medium, icon: "plus") { onRecord(id) }
-                        if case .tryNew = rec {
-                            AppButton(L.s("rec_other"), kind: .ghost, size: .medium, fill: false) { onOther(id) }
-                        }
-                    }
+                FieldLabel(L.s(isContinue ? "rec_title_continue" : "rec_title_try"), inset: 0)
+                // Тап по продукту — его страница.
+                Button { onOpenProduct(id) } label: {
+                    ProductRow(productId: id, name: catalog.productsById[id]?.name ?? id, supporting: { EmptyView() }, trailing: { Chevron() })
+                }
+                .buttonStyle(PressableStyle())
+                // Одна главная причина (самая весомая), законченной фразой — без маркеров списка.
+                Text(reasonText(reasons.first ?? Reason(.INTRO_ORDER), catalog))
+                    .font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                if !isContinue {
+                    AppButton(L.s("rec_other"), kind: .soft, size: .medium, icon: "arrow.clockwise") { onOther(id) }
                 }
             }
         }
     }
 
-    private var title: String {
-        switch rec {
-        case .continueSeries: return L.s("rec_title_continue")
-        case .wait: return L.s("rec_title_wait")
-        default: return L.s("rec_title_try")
-        }
-    }
+    private var isContinue: Bool { if case .continueSeries = rec { return true } else { return false } }
 }
 
-private struct ReasonLine: View {
+/// Карточка без продукта: заголовок и абзац; `note` — второй абзац мельче (например, когда к врачу).
+private struct TextCard: View {
+    let title: String
     let text: String
+    var note: String?
+    var emphasize = false
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 8) {
-            Text("•").font(AppFont.bodyLarge).foregroundStyle(AppColors.primary)
-            Text(text).font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted).fixedSize(horizontal: false, vertical: true)
+        AppCard(spacing: 10) {
+            FieldLabel(title, inset: 0).padding(.bottom, 4)
+            Text(text).font(AppFont.bodyLarge).foregroundStyle(emphasize ? AppColors.ink : AppColors.inkMuted)
+                .fixedSize(horizontal: false, vertical: true)
+            if let note {
+                Text(note).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted).fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 }
@@ -61,7 +65,7 @@ func reasonText(_ r: Reason, _ catalog: Catalog) -> String {
     switch r.code {
     case .CONTINUE_SERIES: return L.s("rec_reason_continue", r.args.first ?? "1")
     case .PAUSE_AFTER_REACTION:
-        let date = r.args.count > 1 ? LocalDate.parse(r.args[1]).map(UiLocale.dayMonth) ?? "" : ""
+        let date = r.args.count > 1 ? LocalDate.parse(r.args[1]).map { UiLocale.dayMonth($0).replacingOccurrences(of: " ", with: "\u{00A0}") } ?? "" : ""
         return L.s("rec_reason_pause", catalog.productsById[a0]?.name ?? a0, date)
     case .NEW_CATEGORY:
         return L.s("rec_reason_new_category", catalog.categories.first { $0.id == a0 }?.name.lowercased(with: UiLocale.locale) ?? a0)
@@ -69,6 +73,7 @@ func reasonText(_ r: Reason, _ catalog: Catalog) -> String {
     case .FAVORITE: return L.s("rec_reason_favorite")
     case .AGE_FITS: return L.s("rec_reason_age")
     case .NOTHING_LEFT: return L.s("rec_reason_nothing")
+    case .DONE_TODAY: return L.s("rec_reason_done")
     default: return L.s("rec_reason_basic")
     }
 }

@@ -172,7 +172,7 @@ struct ChildEditView: View {
             .presentationDetents([.large])
             .presentationBackground(AppColors.background)
         }
-        .alert(L.s("child_delete_confirm", name), isPresented: $confirmDelete) {
+        .alert(L.s("child_delete_confirm", childName(name, sex: sex, case: .genitive, fallback: "child_profile_fallback")), isPresented: $confirmDelete) {
             Button(L.s("delete"), role: .destructive) {
                 if let id = childId { try? app.diary.deleteChild(id) }
                 nav.back()

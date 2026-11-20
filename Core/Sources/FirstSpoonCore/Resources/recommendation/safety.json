@@ -1,0 +1,8 @@
+{
+  "_comment": "Слой безопасности — общий для всех алгоритмов, алгоритм его не меняет. docs/product-rules.md «Алгоритмы рекомендаций». Медицинские значения сверять с педиатрическими рекомендациями.",
+  "reactionPauseDays": 3,
+  "allergenGapDays": 3,
+  "assumedAgeMonths": 6,
+  "highRiskAllergens": "doctor_first",
+  "minIntroducedBeforeAllergens": 3
+}

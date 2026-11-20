@@ -1,0 +1,16 @@
+{
+  "id": "variety",
+  "title": { "ru": "Больше разнообразия", "en": "More variety" },
+  "description": {
+    "ru": "Раньше переходим к новым группам: овощи, фрукты, каши, мясо по очереди",
+    "en": "Moves to new food groups sooner: vegetables, fruit, cereals, meat in turn"
+  },
+  "status": "experiment",
+  "scorers": {
+    "introOrder": { "weight": 6 },
+    "newCategory": { "weight": 8, "afterIntroduced": 1 },
+    "allergenDue": { "weight": 6, "afterIntroduced": 5 },
+    "favorite": { "weight": 2 },
+    "ageFits": { "weight": 1 }
+  }
+}

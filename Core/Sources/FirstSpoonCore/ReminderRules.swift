@@ -29,7 +29,7 @@ public struct PlannedReminder: Hashable, Sendable {
     public let kind: ReminderKind
     public let fireAt: LocalDateTime
     public let childName: String
-    /// Для continueSeries: продукты в серии (первый — самый «просроченный»).
+    /// Для continueSeries: активная серия (один продукт — одна серия за раз).
     public let productIds: [String]
     public let productNames: [String]
 
@@ -68,31 +68,18 @@ public enum ReminderRules {
         return PlannedReminder(kind: .firstEntry, fireAt: at, childName: input.childName)
     }
 
+    /// Напоминание продолжить активную серию — та же логика, что у рекомендаций: одна серия за раз (`Series`),
+    /// во время паузы после реакции не напоминаем (напомним в день, когда пауза закончится).
     private static func continueSeries(_ input: ReminderInput) -> PlannedReminder? {
-        let progress = FeedingRules.progressByProduct(input.entries, marks: input.marks)
-        var lastTry: [String: LocalDate] = [:]
-        for e in input.entries { lastTry[e.productId] = max(lastTry[e.productId] ?? e.date, e.date) }
         let today = input.now.toLocalDate()
-        // Порядок словаря в Swift случайный: как в Android, идём по первому появлению продукта в пробах
-        // и сортируем по дате устойчиво (при равенстве — порядок появления).
-        var order: [String] = []
-        var seen = Set<String>()
-        for e in input.entries where seen.insert(e.productId).inserted { order.append(e.productId) }
-        var candidates: [(id: String, last: LocalDate, order: Int)] = []
-        for (i, id) in order.enumerated() where progress[id]?.status == .inProgress {
-            guard let last = lastTry[id], last.daysUntil(today) < seriesGiveUpDays else { continue }
-            candidates.append((id, last, i))
-        }
-        candidates.sort { a, b in a.last != b.last ? a.last < b.last : a.order < b.order }
-        let inSeries: [(String, LocalDate)] = candidates.map { ($0.id, $0.last) }
-        guard let first = inSeries.first else { return nil }
-        // Следующий день после самой ранней последней пробы, утром.
-        let at = schedule(first.1.plusDays(1).atTime(morning), now: input.now)
-        return PlannedReminder(
-            kind: .continueSeries, fireAt: at, childName: input.childName,
-            productIds: inSeries.map(\.0),
-            productNames: inSeries.map { input.productNames[$0.0] ?? $0.0 }
-        )
+        guard let active = Series.split(input.entries, marks: input.marks, today: today).active,
+              let last = input.entries.filter({ $0.productId == active }).map(\.date).max(),
+              last.daysUntil(today) < seriesGiveUpDays else { return nil }
+        let pauseUntil = Series.pauseUntil(input.entries, today: today, pauseDays: Strategies.safety.reactionPauseDays)
+        let day = max(last.plusDays(1), pauseUntil ?? last.plusDays(1))
+        let at = schedule(day.atTime(morning), now: input.now)
+        return PlannedReminder(kind: .continueSeries, fireAt: at, childName: input.childName,
+                               productIds: [active], productNames: [input.productNames[active] ?? active])
     }
 
     /// Желаемое время → не в прошлом и не в тихие часы. Просроченное — ближайшее утро.
