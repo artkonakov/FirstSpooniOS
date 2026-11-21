@@ -1,6 +1,13 @@
 {
   "sourceLanguage": "ru",
   "strings": {
+    "settings_debug_strategy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": { "stringUnit": { "state": "translated", "value": "Recommendation algorithm" } },
+        "ru": { "stringUnit": { "state": "translated", "value": "Алгоритм рекомендаций" } }
+      }
+    },
     "catalog_custom_category": {
       "comment": "Только iOS (в Android — категория из CatalogRepository). Группа своих продуктов без категории.",
       "extractionState": "manual",

@@ -13,6 +13,9 @@ enum LoginStep { case codeSent, loggedIn }
 final class AuthRepository {
     /// Пользователь выбрал «Продолжить» без входа; держится до выхода/удаления.
     private(set) var guest: Bool
+    /// Гость нажал «Назад» на первом шаге онбординга — показываем приветствие снова. Сессию (анонимный аккаунт,
+    /// если он уже создан) не трогаем: «Продолжить» использует её же, вход по почте переносит гостя как обычно.
+    private(set) var backToWelcome: Bool
 
     @ObservationIgnored private let api: ApiClient
     @ObservationIgnored private let tokens: TokenStore
@@ -28,6 +31,7 @@ final class AuthRepository {
         static let owner = "local_data/owner_user_id"
         static let ownerAnonymous = "local_data/owner_anonymous"
         static let guest = "local_data/guest_started"
+        static let backToWelcome = "local_data/back_to_welcome"
     }
 
     init(api: ApiClient, tokens: TokenStore, session: SessionManager, db: AppDatabase, photos: PhotoStore,
@@ -39,6 +43,17 @@ final class AuthRepository {
         self.db = db
         self.defaults = defaults
         guest = defaults.bool(forKey: Key.guest)
+        backToWelcome = defaults.bool(forKey: Key.backToWelcome)
+    }
+
+    func returnToWelcome() {
+        Analytics.track(.onboardingBackToWelcome)
+        setBackToWelcome(true)
+    }
+
+    private func setBackToWelcome(_ v: Bool) {
+        defaults.set(v, forKey: Key.backToWelcome)
+        backToWelcome = v
     }
 
     /// Анонимный: нет email (в т.ч. пока анонимный аккаунт ещё не создан на сервере).
@@ -46,6 +61,7 @@ final class AuthRepository {
 
     /// «Продолжить» без регистрации: сразу пускаем в приложение, аккаунт создаём в фоне.
     func startAnonymous() {
+        setBackToWelcome(false)
         defaults.set(true, forKey: Key.guest)
         guest = true
         Analytics.track(.guestStarted)
@@ -74,6 +90,7 @@ final class AuthRepository {
         guard case .success(let body) = r else { return r.map { _ in .codeSent } }
         if body.otpRequired == false, let token = body.token {
             completeLogin(access: token, refresh: body.refreshToken, userId: body.userId, email: body.email ?? mail)
+            setBackToWelcome(false)
             return .success(.loggedIn)
         }
         return .success(.codeSent)
@@ -94,6 +111,7 @@ final class AuthRepository {
                                authorized: false, as: TokenResponse.self)
         if case .success(let t) = r {
             completeLogin(access: t.token, refresh: t.refreshToken, userId: t.userId, email: t.email ?? mail)
+            setBackToWelcome(false)
             Analytics.track(.login(fromGuest: anonymousToken != nil))
         }
         return r.map { _ in () }

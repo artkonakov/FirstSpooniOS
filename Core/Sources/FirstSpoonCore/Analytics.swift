@@ -9,13 +9,20 @@ import Foundation
 /// Имя — snake_case, после выпуска не переименовывать.
 public enum AnalyticsEvent: Hashable, Sendable {
     // Аккаунт
+    case welcomeShown
     case guestStarted
     case login(fromGuest: Bool)
     case emailLinked
     case logout
     case accountDeleted
     // Дневник
-    case onboardingCompleted
+    /// `step` — ключ шага онбординга (`OnboardingStep.key`): воронка онбординга.
+    case onboardingStep(step: String)
+    case onboardingBackToWelcome
+    /// `readiness` — итог (`FeedingReadiness.Result.rawValue`); `knownFoods` — сколько основных продуктов отметили.
+    case onboardingCompleted(readiness: FeedingReadiness.Result, knownFoods: Int)
+    /// На главной «Малыш уже держит голову и сидит».
+    case readyMarked
     case childAdded
     case entryAdded
     /// Код отметки (`known` / `excluded` / `allergy`), без продукта.
@@ -42,8 +49,8 @@ public enum AnalyticsEvent: Hashable, Sendable {
 
     /// Все имена каталога (для теста сверки с документом). Новое событие — добавить и сюда.
     public static let allNames: [String] = [
-        "guest_started", "login", "email_linked", "logout", "account_deleted",
-        "onboarding_completed", "child_added", "entry_added", "product_marked", "custom_product_added",
+        "welcome_shown", "guest_started", "login", "email_linked", "logout", "account_deleted",
+        "onboarding_step", "onboarding_back_to_welcome", "onboarding_completed", "ready_marked", "child_added", "entry_added", "product_marked", "custom_product_added",
         "recommendation_record", "recommendation_other",
         "diary_exported", "entry_photo_added", "child_photo_set", "custom_product_photo_set", "network_blocked_shown",
         "paywall_opened", "purchase_started", "purchase_completed", "purchase_failed", "restore_tapped",
@@ -51,12 +58,16 @@ public enum AnalyticsEvent: Hashable, Sendable {
 
     public var name: String {
         switch self {
+        case .welcomeShown: return "welcome_shown"
         case .guestStarted: return "guest_started"
         case .login: return "login"
         case .emailLinked: return "email_linked"
         case .logout: return "logout"
         case .accountDeleted: return "account_deleted"
+        case .onboardingStep: return "onboarding_step"
+        case .onboardingBackToWelcome: return "onboarding_back_to_welcome"
         case .onboardingCompleted: return "onboarding_completed"
+        case .readyMarked: return "ready_marked"
         case .childAdded: return "child_added"
         case .entryAdded: return "entry_added"
         case .productMarked: return "product_marked"
@@ -79,6 +90,8 @@ public enum AnalyticsEvent: Hashable, Sendable {
     public var params: [String: AnalyticsValue] {
         switch self {
         case .login(let fromGuest): return ["from_guest": .bool(fromGuest)]
+        case .onboardingStep(let step): return ["step": .string(step)]
+        case .onboardingCompleted(let r, let n): return ["readiness": .string(r.rawValue), "known_foods": .int(n)]
         case .productMarked(let mark): return ["mark": .string(mark.rawValue)]
         case .diaryExported(let photos): return ["photos": .string(photos)]
         case .purchaseStarted(let p), .purchaseCompleted(let p), .purchaseFailed(let p): return ["product": .string(p)]
@@ -88,9 +101,11 @@ public enum AnalyticsEvent: Hashable, Sendable {
 }
 
 public enum AnalyticsValue: Hashable, Sendable, CustomStringConvertible {
-    case string(String), bool(Bool)
-    public var any: Any { switch self { case .string(let s): return s; case .bool(let b): return b } }
-    public var description: String { switch self { case .string(let s): return s; case .bool(let b): return String(b) } }
+    case string(String), bool(Bool), int(Int)
+    public var any: Any { switch self { case .string(let s): return s; case .bool(let b): return b; case .int(let n): return n } }
+    public var description: String {
+        switch self { case .string(let s): return s; case .bool(let b): return String(b); case .int(let n): return String(n) }
+    }
 }
 
 /// Получатель событий: система аналитики, лог, фейк в тестах.

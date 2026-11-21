@@ -122,6 +122,22 @@ final class RulesTests: XCTestCase {
         XCTAssertEqual(rec([]).reasons.first?.code, .STAGE)
     }
 
+    func testNotReadyNoProductsUntil6MonthsWithHeadControlAndSitting() {
+        func rec(_ age: Int, _ head: String?, _ sits: String?, _ entries: [DiaryEntry] = []) -> Recommendation {
+            var p: [String: String] = [:]
+            p["head_control"] = head; p["sits_with_support"] = sits
+            return RecommendationEngine.recommend(K.ctx(ageMonths: age, profile: p, entries: entries)).recommendation
+        }
+        func isNotReady(_ r: Recommendation) -> Bool { if case .notReady = r { return true }; return false }
+        func isTry(_ r: Recommendation) -> Bool { if case .tryNew = r { return true }; return false }
+        XCTAssertTrue(isNotReady(rec(5, "yes", "yes")), "младше 6 месяцев")
+        XCTAssertTrue(isNotReady(rec(7, "yes", "no")), "не сидит")
+        XCTAssertTrue(isNotReady(rec(7, "not_sure", "yes")), "не уверены")
+        XCTAssertTrue(isTry(rec(6, "yes", "yes")), "6 мес и навыки есть — первые продукты")
+        XCTAssertTrue(isTry(rec(7, nil, nil)), "старый онбординг без вопросов готовности")
+        XCTAssertFalse(isNotReady(rec(7, "no", "no", [K.entry("zucchini", 1)])), "уже ест — не блокируем")
+    }
+
     func testPauseWinsOverDone() {
         let r = RecommendationEngine.recommend(K.ctx(entries: [K.entry("broccoli", 0, .reaction)])).recommendation
         guard case .wait = r else { return XCTFail("expected wait, got \(r)") }
@@ -236,6 +252,7 @@ final class ScenarioTests: XCTestCase {
         case .wait: type = "wait"
         case .done: type = "done"
         case .nothing: type = "nothing"
+        case .notReady: type = "not_ready"
         }
         if type != s.expect.type { return "type \(s.expect.type) ≠ \(type)\(dump)" }
         if let p = s.expect.product, p != rec.productId { return "product \(p)\(dump)" }
@@ -324,6 +341,8 @@ final class InvariantsTests: XCTestCase {
                 XCTAssertTrue(until.isAfter(ctx.today), msg)
             case .nothing:
                 break
+            case .notReady:
+                XCTAssertFalse(FeedingReadiness.canOfferNewFoods(f.readiness), "not ready only when readiness says so \(msg)")
             }
             // Очередь и активная серия не пересекаются и вместе — все начатые.
             XCTAssertEqual(Set(f.inSeries), Set([result.activeSeries].compactMap { $0 } + result.queued), "series split \(msg)")

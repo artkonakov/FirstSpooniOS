@@ -39,7 +39,7 @@ public struct Reason: Hashable, Sendable, CustomStringConvertible {
 
 public enum ReasonCode: String, CaseIterable, Sendable {
     // Приоритетные ситуации
-    case CONTINUE_SERIES, PAUSE_AFTER_REACTION, DONE_TODAY
+    case CONTINUE_SERIES, PAUSE_AFTER_REACTION, DONE_TODAY, NOT_READY
     // Фильтры
     case CUSTOM_PRODUCT, ALREADY_STARTED, MARKED, TOO_YOUNG, KNOWN_ALLERGEN
     case BASE_PRODUCTS_FIRST, ALLERGEN_GAP, DOCTOR_FIRST, SKIPPED
@@ -62,17 +62,19 @@ public enum Recommendation: Hashable, Sendable {
     /// `nextProductId` — активная серия, её продолжим завтра (nil — серии нет).
     case done(nextProductId: String?, reasons: [Reason])
     case nothing(reasons: [Reason])
+    /// Малыш ещё не готов к прикорму (итог онбординга, `FeedingReadiness`): продукт не предлагаем.
+    case notReady(readiness: FeedingReadiness.Result, reasons: [Reason])
 
     public var productId: String? {
         switch self {
         case .tryNew(let id, _), .continueSeries(let id, _, _), .wait(_, let id, _): return id
-        case .done, .nothing: return nil
+        case .done, .nothing, .notReady: return nil
         }
     }
 
     public var reasons: [Reason] {
         switch self {
-        case .tryNew(_, let r), .continueSeries(_, _, let r), .wait(_, _, let r), .done(_, let r), .nothing(let r): return r
+        case .tryNew(_, let r), .continueSeries(_, _, let r), .wait(_, _, let r), .done(_, let r), .nothing(let r), .notReady(_, let r): return r
         }
     }
 
@@ -84,6 +86,7 @@ public enum Recommendation: Hashable, Sendable {
         case .wait: return "Wait"
         case .done: return "Done"
         case .nothing: return "Nothing"
+        case .notReady: return "NotReady"
         }
     }
 }
@@ -149,6 +152,8 @@ public final class Facts: @unchecked Sendable {
     public let activeSeries: String?
     /// Начатые, но не активные — ждут очереди.
     public let queued: [String]
+    /// Готовность к прикорму сейчас; nil — вопросы не задавали (старый онбординг).
+    public let readiness: FeedingReadiness.Result?
     /// Сегодня уже была проба вводимого продукта — продукта, который до сегодня не был введён
     /// (новый, в серии или с реакцией). Пробы введённых продуктов день не занимают.
     public let todayBusy: Bool
@@ -189,13 +194,16 @@ public final class Facts: @unchecked Sendable {
         var seen = Set<String>()
         for id in ctx.entries.map(\.productId) + ctx.marks.keys.sorted() where seen.insert(id).inserted { order.append(id) }
         let known = knownAllergens
-        let hasKnownAllergen: (String) -> Bool = { id in byId[id]?.allergenIds.contains { known.contains($0) } == true }
+        let hasKnownAllergen: (String) -> Bool = { id in byId[id]?.containsKnownAllergen(known) == true }
         inSeries = order.filter { progress[$0]?.status == .inProgress && !hasKnownAllergen($0) }
         blockedSeries = Set(order.filter { progress[$0]?.status == .inProgress && hasKnownAllergen($0) })
 
         let split = Series.split(ctx.entries, marks: ctx.marks, today: ctx.today, blocked: blockedSeries)
         activeSeries = split.active
         queued = split.queued
+        readiness = FeedingReadiness.current(birthDate: ctx.child.birthDate, profile: ctx.child.profile,
+                                             started: FeedingReadiness.started(entries: ctx.entries, marks: ctx.marks),
+                                             today: ctx.today)
         let todayIds = Set(ctx.entries.filter { $0.date == ctx.today }.map(\.productId))
         if todayIds.isEmpty {
             todayBusy = false

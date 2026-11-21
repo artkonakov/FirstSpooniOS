@@ -78,6 +78,10 @@ public struct Allergen: Hashable, Sendable, Identifiable {
 }
 
 public struct Product: Hashable, Sendable, Identifiable {
+    public func containsKnownAllergen(_ known: Set<String>) -> Bool {
+        !known.isDisjoint(with: allergenIds)
+    }
+
     public let id: String
     public let categoryId: String
     public let name: String

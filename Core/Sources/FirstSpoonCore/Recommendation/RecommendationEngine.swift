@@ -36,7 +36,7 @@ public struct RecommendationConfig: Sendable {
 
     /// Порядок важен для Gate (первый сработавший побеждает).
     public static let defaultRules: [Rule] = [
-        .gate(Rules.pauseAfterReaction), .gate(Rules.oneTryPerDay), .gate(Rules.continueSeries),
+        .gate(Rules.notReadyForSolids), .gate(Rules.pauseAfterReaction), .gate(Rules.oneTryPerDay), .gate(Rules.continueSeries),
         .filter(Rules.customProducts), .filter(Rules.marked), .filter(Rules.alreadyStarted), .filter(Rules.tooYoung),
         .filter(Rules.knownAllergen), .filter(Rules.doctorFirstForHighRisk), .filter(Rules.baseProductsFirst),
         .filter(Rules.allergenGap), .filter(Rules.skipped),

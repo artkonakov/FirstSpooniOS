@@ -16,11 +16,18 @@ public struct ReminderInput: Sendable {
     public var entries: [DiaryEntry]
     public var marks: [String: ProductMark]
     public var productNames: [String: String]
+    /// Продукты, содержащие известные аллергены активного ребёнка.
+    public var blockedProducts: Set<String>
+    /// Малыш готов к прикорму (`FeedingReadiness.canOfferNewFoods`) — иначе «Начнём прикорм?» не шлём.
+    public var readyForNewFoods: Bool
 
     public init(now: LocalDateTime, enabled: Bool, onboardedAt: LocalDateTime?, childName: String,
-                entries: [DiaryEntry], marks: [String: ProductMark], productNames: [String: String]) {
+                entries: [DiaryEntry], marks: [String: ProductMark], productNames: [String: String],
+                readyForNewFoods: Bool = true, blockedProducts: Set<String> = []) {
+        self.blockedProducts = blockedProducts
         self.now = now; self.enabled = enabled; self.onboardedAt = onboardedAt; self.childName = childName
         self.entries = entries; self.marks = marks; self.productNames = productNames
+        self.readyForNewFoods = readyForNewFoods
     }
 }
 
@@ -62,7 +69,7 @@ public enum ReminderRules {
     }
 
     private static func firstEntry(_ input: ReminderInput) -> PlannedReminder? {
-        guard let onboarded = input.onboardedAt, input.entries.isEmpty else { return nil }
+        guard let onboarded = input.onboardedAt, input.entries.isEmpty, input.readyForNewFoods else { return nil }
         if onboarded.daysUntil(input.now) >= firstEntryGiveUpDays { return nil }
         let at = schedule(onboarded.plusHours(firstEntryDelayHours), now: input.now)
         return PlannedReminder(kind: .firstEntry, fireAt: at, childName: input.childName)
@@ -72,7 +79,7 @@ public enum ReminderRules {
     /// во время паузы после реакции не напоминаем (напомним в день, когда пауза закончится).
     private static func continueSeries(_ input: ReminderInput) -> PlannedReminder? {
         let today = input.now.toLocalDate()
-        guard let active = Series.split(input.entries, marks: input.marks, today: today).active,
+        guard let active = Series.split(input.entries, marks: input.marks, today: today, blocked: input.blockedProducts).active,
               let last = input.entries.filter({ $0.productId == active }).map(\.date).max(),
               last.daysUntil(today) < seriesGiveUpDays else { return nil }
         let pauseUntil = Series.pauseUntil(input.entries, today: today, pauseDays: Strategies.safety.reactionPauseDays)

@@ -63,6 +63,7 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.2), value: app.networkAccess.blocked)
         .animation(.easeInOut(duration: 0.25), value: app.rootGraph)
         // Пересчёт напоминаний на любое изменение данных и настроек.
+        .onChange(of: app.catalog.catalog.products) { app.reminders.refresh() }
         .onChange(of: app.diary.version) { app.reminders.refresh() }
         .onChange(of: app.reminderSettings.enabled) { app.reminders.refresh() }
         .onChange(of: app.onboarding.done) { app.reminders.refresh() }

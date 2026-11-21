@@ -67,9 +67,14 @@ final class AppContainer {
 
     /// Пользователь начал пользоваться приложением: вошёл по email или нажал «Продолжить» (гость).
     var accountStarted: Bool {
+        if auth.backToWelcome { return false }
         if case .loggedIn = session.state { return true }
         return auth.guest
     }
+
+    /// «Назад» на первом шаге онбординга: только для гостя (без почты) при первом знакомстве — детей ещё нет.
+    /// При повторном онбординге и у аккаунта с почтой возвращаться на приветствие незачем.
+    var canReturnToWelcome: Bool { auth.isAnonymous && !onboarding.done && diary.children.isEmpty }
 
     /// Какой корневой граф показывать: вход → онбординг ребёнка → приложение.
     /// Экраны не делают переходов после входа/выхода/онбординга — граф выбирается только здесь.

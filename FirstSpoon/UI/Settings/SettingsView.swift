@@ -28,6 +28,13 @@ struct SettingsView: View {
                         hint(L.s("settings_notifications_off"))
                     }
 
+                    // Язык: своего переключателя нет (решение 2026-11-16) — открываем настройки приложения в «Настройках»
+                    // iOS, там пункт «Язык». Новый язык iOS применяет, перезапуская приложение.
+                    ActionRow(title: L.s("settings_language"),
+                              value: L.s(AppLocale.current() == .ru ? "language_ru" : "language_en")) {
+                        if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
+                    }
+
                     SectionTitle(L.s("settings_account"))
                     if busy { ProgressView().frame(maxWidth: .infinity) }
                     if anonymous {
@@ -45,6 +52,14 @@ struct SettingsView: View {
 
                     #if DEBUG
                     SectionTitle(L.s("settings_debug"))
+                    Picker(L.s("settings_debug_strategy"), selection: Binding(
+                        get: { app.recommendations.debugStrategy }, set: { app.recommendations.debugStrategy = $0 }
+                    )) {
+                        ForEach(Strategies.all, id: \.id) { strategy in
+                            Text(strategy.title[UiLocale.language.rawValue] ?? strategy.id).tag(strategy.id)
+                        }
+                    }
+                    .pickerStyle(.menu)
                     ActionRow(title: L.s("settings_rerun_onboarding")) { app.onboarding.set(false) }
                     #endif
                 }

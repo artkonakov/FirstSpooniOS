@@ -9,9 +9,23 @@ struct RecommendationCard: View {
     let catalog: Catalog
     let onOpenProduct: (String) -> Void
     let onOther: (String) -> Void
+    /// «Малыш уже держит голову и сидит» на карточке «Пока готовимся»; nil — кнопку не показываем.
+    var onMarkReady: (() -> Void)?
 
     var body: some View {
         switch rec {
+        case .notReady(let readiness, _):
+            let tooEarly = readiness == .tooEarly
+            AppCard(spacing: 10) {
+                FieldLabel(L.s("rec_title_not_ready"), inset: 0).padding(.bottom, 4)
+                Text(L.s(tooEarly ? "rec_not_ready_too_early" : "rec_not_ready_skills"))
+                    .font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted)
+                    .fixedSize(horizontal: false, vertical: true)
+                // Младше 6 месяцев кнопки нет: дело в возрасте, навыки не помогут.
+                if !tooEarly, let onMarkReady {
+                    AppButton(L.s("rec_mark_ready"), kind: .soft, size: .medium, action: onMarkReady)
+                }
+            }
         case .done:
             TextCard(title: L.s("rec_title_done"), text: L.s("rec_reason_done"))
         case .nothing:

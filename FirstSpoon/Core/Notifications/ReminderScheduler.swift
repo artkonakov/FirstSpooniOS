@@ -31,7 +31,12 @@ final class ReminderScheduler {
         return ReminderRules.plan(ReminderInput(
             now: now, enabled: settings.enabled, onboardedAt: onboardedAt, childName: child.name,
             entries: diary.entries, marks: diary.marks,
-            productNames: Dictionary(catalog.catalog.products.map { ($0.id, $0.name) }, uniquingKeysWith: { a, _ in a })
+            productNames: Dictionary(catalog.catalog.products.map { ($0.id, $0.name) }, uniquingKeysWith: { a, _ in a }),
+            // Пока малыш не готов к прикорму, «Начнём прикорм?» не шлём.
+            readyForNewFoods: FeedingReadiness.canOfferNewFoods(FeedingReadiness.current(
+                birthDate: child.birthDate, profile: child.profile,
+                started: FeedingReadiness.started(entries: diary.entries, marks: diary.marks), today: now.toLocalDate())),
+            blockedProducts: Set(catalog.catalog.products.filter { $0.containsKnownAllergen(child.profile.knownAllergens) }.map(\.id))
         ))
     }
 

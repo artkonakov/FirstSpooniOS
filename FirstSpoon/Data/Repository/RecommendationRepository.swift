@@ -8,7 +8,16 @@ import FirstSpoonCore
 final class RecommendationRepository {
     @ObservationIgnored private let diary: DiaryRepository
     @ObservationIgnored private let catalog: CatalogRepository
-    @ObservationIgnored private let config: RecommendationConfig
+    private var config: RecommendationConfig
+    #if DEBUG
+    var debugStrategy: String {
+        get { config.strategyId }
+        set {
+            config = Strategies.config(Strategies.byId(newValue))
+            resetSkips()
+        }
+    }
+    #endif
     private var skipped: (day: LocalDate, ids: Set<String>) = (.today(), [])
     /// Только debug: подменить «сегодня», чтобы прожить сценарий.
     var debugToday: LocalDate?

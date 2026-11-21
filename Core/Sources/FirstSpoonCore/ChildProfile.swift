@@ -8,6 +8,9 @@ public enum ProfileQuestion: String, CaseIterable, Sendable {
     case eczema
     case familyAllergy = "family_allergy"
     case milkFeeding = "milk_feeding"
+    /// Готовность к прикорму (Android docs/product-rules.md «Онбординг»): держит голову, сидит с поддержкой.
+    case headControl = "head_control"
+    case sits = "sits_with_support"
 
     public enum Kind: Sendable { case single, multi }
 
@@ -31,10 +34,14 @@ public enum ProfileQuestion: String, CaseIterable, Sendable {
         case .knownAllergens: return []
         case .eczema, .familyAllergy: return [Answer.no, Answer.yes, Answer.notSure]
         case .milkFeeding: return [Answer.breast, Answer.formula, Answer.mixed]
+        case .headControl, .sits: return [Answer.yes, Answer.no, Answer.notSure]
         }
     }
 
     public var inOnboarding: Bool { true }
+
+    /// Задавать в онбординге, только если прикорм ещё не начали (ничего не отмечено в «Что малыш уже ест?»).
+    public var onlyBeforeStart: Bool { self == .headControl || self == .sits }
 }
 
 /// Ответы на вопросы профиля. Хранится как словарь ключ → значение (MULTI — значения через запятую).
@@ -79,6 +86,17 @@ public struct ChildProfile: Hashable, Sendable {
     public var knownAllergens: Set<String> { multi(.knownAllergens) }
     public var hasEczema: Bool { single(.eczema) == ProfileQuestion.Answer.yes }
     public var familyAllergy: Bool { single(.familyAllergy) == ProfileQuestion.Answer.yes }
+
+    /// Итог онбординга (`FeedingReadiness.Result.rawValue`); nil — онбординг по старой схеме.
+    public var feedingReadiness: String? { answers[ChildProfile.readinessKey] }
+    public func withReadiness(_ code: String) -> ChildProfile {
+        var a = answers; a[ChildProfile.readinessKey] = code; return ChildProfile(a)
+    }
+    public func without(_ qs: ProfileQuestion...) -> ChildProfile {
+        var a = answers; for q in qs { a[q.key] = nil }; return ChildProfile(a)
+    }
+    public func with(_ q: ProfileQuestion, answer: String) -> ChildProfile { with(q, answer) }
+    public static let readinessKey = "feeding_readiness"
 
     public func toMap() -> [String: String] { answers }
     public static func fromMap(_ map: [String: String]) -> ChildProfile { ChildProfile(map) }

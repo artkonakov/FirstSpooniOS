@@ -65,7 +65,7 @@ final class DiaryRepository {
     /// Прежний файл при замене или удалении фото стирается.
     @discardableResult
     func saveChild(id: String?, name: String, birthDate: LocalDate?, sex: Sex?, profile: ChildProfile,
-                   photo: String?? = .none) throws -> String {
+                   photo: String?? = .none, addKnown: Set<String> = [], removeKnown: Set<String> = []) throws -> String {
         let now = nowMillis()
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         let existing = try id.flatMap { id in try db.dbQueue.read { try ChildRecord.fetchOne($0, key: id) } }
@@ -78,7 +78,16 @@ final class DiaryRepository {
         let oldPhoto = record.photo
         if case .some(let newPhoto) = photo { record.photo = newPhoto }
         record.updatedAt = now
-        try db.dbQueue.write { try record.save($0) }
+        try db.dbQueue.write { db in
+            try record.save(db)
+            for product in addKnown {
+                try Self.updateProductRow(db, childId: record.id, productId: product, now: now) { $0.status = ProductMark.known.rawValue }
+            }
+            for product in removeKnown {
+                try Self.updateProductRow(db, childId: record.id, productId: product, now: now) { $0.status = nil }
+            }
+        }
+        for _ in addKnown { Analytics.track(.productMarked(mark: .known)) }
         if oldPhoto != record.photo {
             photos.delete(oldPhoto)
             if record.photo != nil { Analytics.track(.childPhotoSet) }
@@ -190,14 +199,19 @@ final class DiaryRepository {
         guard let childId = activeChild?.id else { throw RepositoryError.noActiveChild }
         let now = nowMillis()
         try db.dbQueue.write { db in
-            var row = try ChildProductRecord.fetchOne(db, key: ["child_id": childId, "product_id": productId])
-                ?? ChildProductRecord(childId: childId, productId: productId, status: nil, liked: false, note: nil, createdAt: now, updatedAt: now)
-            change(&row)
-            row.updatedAt = now
-            row.deletedAt = (row.status == nil && !row.liked) ? now : nil
-            try row.save(db)
+            try Self.updateProductRow(db, childId: childId, productId: productId, now: now, change)
         }
         reload()
+    }
+
+    private static func updateProductRow(_ db: Database, childId: String, productId: String, now: Int64,
+                                         _ change: (inout ChildProductRecord) -> Void) throws {
+        var row = try ChildProductRecord.fetchOne(db, key: ["child_id": childId, "product_id": productId])
+            ?? ChildProductRecord(childId: childId, productId: productId, status: nil, liked: false, note: nil, createdAt: now, updatedAt: now)
+        change(&row)
+        row.updatedAt = now
+        row.deletedAt = (row.status == nil && !row.liked) ? now : nil
+        try row.save(db)
     }
 
     private static func clean(_ note: String?) -> String? {

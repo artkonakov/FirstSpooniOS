@@ -1,5 +1,6 @@
 import SwiftUI
 import SafariServices
+import FirstSpoonCore
 
 /// Граф входа: приветствие → [email → код].
 struct AuthFlow: View {
@@ -9,6 +10,7 @@ struct AuthFlow: View {
     var body: some View {
         NavigationStack(path: $path) {
             WelcomeView(onContinue: { app.auth.startAnonymous() }, onLogin: { path.append(.email(.login)) })
+                .onAppear { Analytics.track(.welcomeShown) }
                 .navigationDestination(for: AuthRoute.self) { route in
                     switch route {
                     case .email(let mode): AuthEmailView(model: AuthViewModel(auth: app.auth, mode: mode), onCodeSent: { path.append(.code($0)) })

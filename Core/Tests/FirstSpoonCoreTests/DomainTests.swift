@@ -132,6 +132,11 @@ final class ReminderRulesTests: XCTestCase {
         XCTAssertEqual(plan[0].fireAt, now.minusHours(1).plusHours(24))
     }
 
+    func testNoFirstEntryReminderWhileTheBabyIsNotReady() {
+        var i = input(); i.readyForNewFoods = false
+        XCTAssertTrue(ReminderRules.plan(i).isEmpty)
+    }
+
     func testFirstEntryDisappearsAfterAnyEntry() {
         XCTAssertEqual(kinds(input([entry("broccoli", now.toLocalDate())])), [.continueSeries])
     }
@@ -147,6 +152,17 @@ final class ReminderRulesTests: XCTestCase {
         XCTAssertEqual(plan.count, 1)
         XCTAssertEqual(plan[0].fireAt, today.plusDays(1).atTime(10, 0))
         XCTAssertEqual(plan[0].productNames, ["Брокколи"])
+    }
+
+    func testNewProfileAllergenRemovesOrReplacesSeriesReminder() {
+        let today = now.toLocalDate()
+        var reminder = input([entry("peanut", today)])
+        XCTAssertEqual(ReminderRules.plan(reminder).first?.productIds, ["peanut"])
+        let allergens: Set<String> = ["peanut"]
+        reminder.blockedProducts = Set(RecTestKit.catalog.filter { $0.containsKnownAllergen(allergens) }.map(\.id))
+        XCTAssertTrue(ReminderRules.plan(reminder).isEmpty)
+        reminder.entries.append(entry("broccoli", today.minusDays(1)))
+        XCTAssertEqual(ReminderRules.plan(reminder).first?.productIds, ["broccoli"])
     }
 
     func testNoSeriesReminderDuringThePauseAfterAReaction() {

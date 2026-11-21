@@ -43,12 +43,16 @@
 
 | Событие | Когда | Параметры | Где в коде |
 |---|---|---|---|
+| `welcome_shown` | Показан экран приветствия | — | `WelcomeView` |
 | `guest_started` | «Продолжить» без регистрации на экране приветствия | — | `AuthRepository.startAnonymous` |
 | `login` | Успешный вход по почте и коду | `from_guest`: вход из гостевого аккаунта (дневник и подписки переходят) | `AuthRepository.verifyCode` |
 | `email_linked` | Почта привязана к гостевому аккаунту | — | `AuthRepository.verifyLink` |
 | `logout` | Выход из аккаунта | — | `AuthRepository.logout` |
 | `account_deleted` | Аккаунт удалён (или «Удалить все данные» у гостя) | — | `AuthRepository.deleteAccount` |
-| `onboarding_completed` | Онбординг ребёнка пройден | — | `OnboardingViewModel.finish` |
+| `onboarding_step` | Показан шаг онбординга — воронка по шагам (развилка: вопросы готовности только если малыш ещё не ест) | `step`: `name` / `sex` / `birth` / `known_foods` / `q_known_allergens` / `q_eczema` / `q_family_allergy` / `q_milk_feeding` / `q_head_control` / `q_sits_with_support` / `result` | `OnboardingStepView` |
+| `onboarding_back_to_welcome` | «Назад» с первого шага онбординга — снова экран приветствия | — | `AuthRepository.returnToWelcome` |
+| `onboarding_completed` | Онбординг ребёнка пройден | `readiness`: `started` / `too_early` / `not_yet` / `check` / `ready`; `known_foods`: сколько основных продуктов отметили (0–19) | `OnboardingViewModel.finish` |
+| `ready_marked` | На главной «Малыш уже держит голову и сидит» (карточка «Пока готовимся») | — | `HomeViewModel.markReady` |
 | `child_added` | Добавлен ребёнок (в т.ч. в онбординге) | — | `DiaryRepository.saveChild` |
 | `entry_added` | Записана новая проба (экран пробы или быстрая кнопка на главной) | — | `DiaryRepository.addEntry` |
 | `product_marked` | Поставлена отметка продукта | `mark`: `known` / `excluded` / `allergy` | `DiaryRepository.setMark` |

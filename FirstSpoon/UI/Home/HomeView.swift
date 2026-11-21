@@ -27,6 +27,7 @@ struct HomeState {
     /// Начатые, но не активные продукты — ждут очереди, без кнопки записи (одна серия за раз).
     var queued: [ProgressItem] = []
     var recommendation: Recommendation?
+    var notReady: Bool { if case .notReady = recommendation { return true } else { return false } }
     var isEmpty: Bool { today.isEmpty && inProgress.isEmpty && attention.isEmpty && introducedCount == 0 }
 
     /// Продукт для формы «Записать пробу»: из рекомендации (новый или продолжить серию), иначе пустая форма.
@@ -92,10 +93,12 @@ struct HomeView: View {
                 if let rec = state.recommendation {
                     RecommendationCard(rec: rec, catalog: app.catalog.catalog,
                                        onOpenProduct: { nav.open(.product($0)) },
-                                       onOther: { app.recommendations.skip($0) })
+                                       onOther: { app.recommendations.skip($0) },
+                                       onMarkReady: markReady)
                 }
                 ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal).id("progress")
-                if state.isEmpty {
+                // «Пока готовимся» — пустое состояние («попробуйте продукт выше») ему противоречит.
+                if state.isEmpty && !state.notReady {
                     EmptyState(emoji: "🥄", title: L.s("home_empty_title"), text: L.s("home_empty"))
                 }
                 if !state.attention.isEmpty {
@@ -242,3 +245,16 @@ private struct ProgressCard: View {
     }
 }
 
+
+extension HomeView {
+    /// «Малыш уже держит голову и сидит»: отмечаем оба навыка — движок сразу предложит первые продукты.
+    func markReady() {
+        guard let c = app.diary.activeChild else { return }
+        Analytics.track(.readyMarked)
+        let yes = ProfileQuestion.Answer.yes
+        let profile = c.profile.with(.headControl, answer: yes).with(.sits, answer: yes)
+        let readiness = FeedingReadiness.evaluate(birthDate: c.birthDate, profile: profile, knownFoods: [], today: .today())
+        _ = try? app.diary.saveChild(id: c.id, name: c.name, birthDate: c.birthDate, sex: c.sex,
+                                     profile: profile.withReadiness(readiness.rawValue))
+    }
+}

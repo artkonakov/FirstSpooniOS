@@ -42,6 +42,12 @@ public struct Scorer: Sendable {
 public enum Rules {
     // ---------- Gates ----------
 
+    /// Малыш ещё не готов к прикорму — новый продукт не предлагаем (первые ворота; дневник при этом не блокируется).
+    public static let notReadyForSolids = Gate("NotReadyForSolids") { f, _ in
+        guard let r = f.readiness, !FeedingReadiness.canOfferNewFoods(r) else { return nil }
+        return .notReady(readiness: r, reasons: [Reason(.NOT_READY, [r.rawValue])])
+    }
+
     /// После «Плохо»/«Сомнительно» новые продукты не вводим N дней.
     public static let pauseAfterReaction = Gate("PauseAfterReaction") { f, c in
         guard let r = f.lastReaction else { return nil }

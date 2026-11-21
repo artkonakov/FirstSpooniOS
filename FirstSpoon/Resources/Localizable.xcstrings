@@ -698,6 +698,23 @@
         }
       }
     },
+    "child_head_control": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держит голову"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Holds head up"
+          }
+        }
+      }
+    },
     "child_name": {
       "extractionState": "manual",
       "localizations": {
@@ -796,6 +813,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Пол"
+          }
+        }
+      }
+    },
+    "child_sits": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сидит с поддержкой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sits with support"
           }
         }
       }
@@ -2709,6 +2743,40 @@
         }
       }
     },
+    "language_en": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "English"
+          }
+        }
+      }
+    },
+    "language_ru": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Русский"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Русский"
+          }
+        }
+      }
+    },
     "link_email_in_use": {
       "extractionState": "manual",
       "localizations": {
@@ -3450,6 +3518,74 @@
         }
       }
     },
+    "onb_head_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это один из признаков, что малыш готов к прикорму"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It's one of the signs your baby is ready for solids"
+          }
+        }
+      }
+    },
+    "onb_head_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш уверенно держит голову?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Does your baby hold their head up steadily?"
+          }
+        }
+      }
+    },
+    "onb_known_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отметьте основное — остальное можно добавить потом в «Продуктах». Если прикорм ещё не начинали, нажмите «Пропустить»"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark the main ones — you can add the rest later in Foods. If you haven't started solids yet, tap Skip"
+          }
+        }
+      }
+    },
+    "onb_known_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие продукты %1$@ уже ест?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Which foods does %1$@ already eat?"
+          }
+        }
+      }
+    },
     "onb_name_subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -3501,6 +3637,278 @@
         }
       }
     },
+    "onb_result_check_text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это признаки готовности к прикорму. Когда заметите оба, отметьте это на главном экране — и мы предложим первые продукты"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "These are signs of readiness for solids. When you see both, mark it on the home screen and we'll suggest first foods"
+          }
+        }
+      }
+    },
+    "onb_result_check_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понаблюдайте, как %1$@ держит голову и сидит"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Watch how %1$@ holds their head and sits"
+          }
+        }
+      }
+    },
+    "onb_result_check_title_n": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понаблюдайте за малышом"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keep an eye on your baby"
+          }
+        }
+      }
+    },
+    "onb_result_not_yet_f": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ пока не готова к прикорму"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ isn't ready for solids yet"
+          }
+        }
+      }
+    },
+    "onb_result_not_yet_m": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ пока не готов к прикорму"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ isn't ready for solids yet"
+          }
+        }
+      }
+    },
+    "onb_result_not_yet_n": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К прикорму пока рано"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It's too early for solids"
+          }
+        }
+      }
+    },
+    "onb_result_not_yet_text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первые продукты предложим, когда малыш уверенно держит голову и сидит с поддержкой. У каждого малыша свой темп — если сомневаетесь, спросите педиатра"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll suggest first foods once your baby holds their head up steadily and sits with support. Every baby has their own pace — if in doubt, ask your pediatrician"
+          }
+        }
+      }
+    },
+    "onb_result_ready_f": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ готова к прикорму"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is ready for solids"
+          }
+        }
+      }
+    },
+    "onb_result_ready_m": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ готов к прикорму"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is ready for solids"
+          }
+        }
+      }
+    },
+    "onb_result_ready_n": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно начинать прикорм"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "You can start solids"
+          }
+        }
+      }
+    },
+    "onb_result_ready_text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начнём с одного продукта и маленькой порции — подскажем, что дать первым"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Start with one food and a small portion — we'll suggest what to give first"
+          }
+        }
+      }
+    },
+    "onb_result_started_text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подскажем, что попробовать следующим, — по одному продукту за раз"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll suggest what to try next — one food at a time"
+          }
+        }
+      }
+    },
+    "onb_result_started_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ уже знакомится с едой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ is already exploring food"
+          }
+        }
+      }
+    },
+    "onb_result_started_title_n": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш уже знакомится с едой"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your baby is already exploring food"
+          }
+        }
+      }
+    },
+    "onb_result_too_early_text": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикорм начинают с 6 месяцев, когда малыш держит голову и сидит с поддержкой. Когда придёт время, первые продукты появятся на главном экране"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solids start from 6 months, once your baby holds their head up and sits with support. When the time comes, first foods will appear on the home screen"
+          }
+        }
+      }
+    },
+    "onb_result_too_early_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для прикорма пока рано"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "It's too early for solids"
+          }
+        }
+      }
+    },
     "onb_sex_subtitle": {
       "extractionState": "manual",
       "localizations": {
@@ -3531,6 +3939,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мальчик или девочка?"
+          }
+        }
+      }
+    },
+    "onb_sits_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сидеть без опоры не обязательно: достаточно, чтобы малыш сидел с поддержкой и не заваливался"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sitting unsupported isn't required: it's enough if your baby sits with support without slumping"
+          }
+        }
+      }
+    },
+    "onb_sits_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш сидит, хотя бы с небольшой поддержкой?"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Does your baby sit, at least with a little support?"
           }
         }
       }
@@ -4849,6 +5291,57 @@
         }
       }
     },
+    "rec_mark_ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш уже держит голову и сидит"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "My baby holds their head up and sits"
+          }
+        }
+      }
+    },
+    "rec_not_ready_skills": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первые продукты предложим, когда малыш уверенно держит голову и сидит с поддержкой. Если сомневаетесь, спросите педиатра"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We'll suggest first foods once your baby holds their head up steadily and sits with support. If in doubt, ask your pediatrician"
+          }
+        }
+      }
+    },
+    "rec_not_ready_too_early": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикорм начинают с 6 месяцев, когда малыш уверенно держит голову и сидит с поддержкой. Когда придёт время, предложим первые продукты"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solids start from 6 months, once your baby holds their head up steadily and sits with support. When the time comes, we'll suggest first foods"
+          }
+        }
+      }
+    },
     "rec_other": {
       "extractionState": "manual",
       "localizations": {
@@ -5070,6 +5563,23 @@
         }
       }
     },
+    "rec_title_not_ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока готовимся"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Getting ready"
+          }
+        }
+      }
+    },
     "rec_title_nothing": {
       "extractionState": "manual",
       "localizations": {
@@ -5287,6 +5797,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Удалим профили малышей и весь дневник. Восстановить их не получится"
+          }
+        }
+      }
+    },
+    "settings_language": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык"
+          }
+        },
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Language"
           }
         }
       }

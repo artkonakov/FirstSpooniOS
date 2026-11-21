@@ -71,6 +71,8 @@ enum Labels {
         case .eczema: return L.s("onb_eczema_title")
         case .familyAllergy: return L.s("onb_family_title")
         case .milkFeeding: return L.s("onb_feeding_title")
+        case .headControl: return L.s("onb_head_title")
+        case .sits: return L.s("onb_sits_title")
         }
     }
 
@@ -80,6 +82,8 @@ enum Labels {
         case .eczema: return L.s("onb_eczema_subtitle")
         case .familyAllergy: return L.s("onb_family_subtitle")
         case .milkFeeding: return L.s("onb_feeding_subtitle")
+        case .headControl: return L.s("onb_head_subtitle")
+        case .sits: return L.s("onb_sits_subtitle")
         }
     }
 
@@ -89,6 +93,8 @@ enum Labels {
         case .eczema: return L.s("child_eczema")
         case .familyAllergy: return L.s("child_family_allergy")
         case .milkFeeding: return L.s("child_feeding")
+        case .headControl: return L.s("child_head_control")
+        case .sits: return L.s("child_sits")
         }
     }
 

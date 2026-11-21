@@ -27,8 +27,8 @@ final class AnalyticsCatalogTests: XCTestCase {
     /// Имена у каждого case совпадают со списком `allNames` (новый case не забыт в списке).
     func testAllNamesCoverCases() {
         let samples: [AnalyticsEvent] = [
-            .guestStarted, .login(fromGuest: true), .emailLinked, .logout, .accountDeleted,
-            .onboardingCompleted, .childAdded, .entryAdded, .productMarked(mark: .known), .customProductAdded,
+            .welcomeShown, .guestStarted, .login(fromGuest: true), .emailLinked, .logout, .accountDeleted,
+            .onboardingStep(step: "name"), .onboardingBackToWelcome, .onboardingCompleted(readiness: .ready, knownFoods: 0), .readyMarked, .childAdded, .entryAdded, .productMarked(mark: .known), .customProductAdded,
             .recommendationRecord, .recommendationOther,
             .diaryExported(photos: "none"), .entryPhotoAdded, .childPhotoSet, .customProductPhotoSet, .networkBlockedShown,
             .paywallOpened, .purchaseStarted(product: "p"), .purchaseCompleted(product: "p"), .purchaseFailed(product: "p"), .restoreTapped,
@@ -55,6 +55,8 @@ final class AnalyticsCatalogTests: XCTestCase {
         XCTAssertEqual(fake.seen, [.login(fromGuest: true)])
         XCTAssertEqual(fake.seen.first?.params, ["from_guest": .bool(true)])
         XCTAssertEqual(AnalyticsEvent.productMarked(mark: .allergy).params, ["mark": .string("allergy")])
+        XCTAssertEqual(AnalyticsEvent.onboardingCompleted(readiness: .notYet, knownFoods: 3).params,
+                       ["readiness": .string("not_yet"), "known_foods": .int(3)])
     }
 
     func testNoTrackersNothingHappens() { Analytics.track(.guestStarted) }
