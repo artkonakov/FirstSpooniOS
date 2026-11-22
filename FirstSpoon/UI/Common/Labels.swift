@@ -73,6 +73,7 @@ enum Labels {
         case .milkFeeding: return L.s("onb_feeding_title")
         case .headControl: return L.s("onb_head_title")
         case .sits: return L.s("onb_sits_title")
+        case .foodInterest: return L.s("onb_food_interest_title")
         }
     }
 
@@ -84,6 +85,7 @@ enum Labels {
         case .milkFeeding: return L.s("onb_feeding_subtitle")
         case .headControl: return L.s("onb_head_subtitle")
         case .sits: return L.s("onb_sits_subtitle")
+        case .foodInterest: return L.s("onb_food_interest_subtitle")
         }
     }
 
@@ -95,6 +97,7 @@ enum Labels {
         case .milkFeeding: return L.s("child_feeding")
         case .headControl: return L.s("child_head_control")
         case .sits: return L.s("child_sits")
+        case .foodInterest: return L.s("child_food_interest")
         }
     }
 

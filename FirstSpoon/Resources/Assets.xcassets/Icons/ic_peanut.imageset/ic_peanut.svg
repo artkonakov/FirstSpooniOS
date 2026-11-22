@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000" stroke="#000000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <mask id="peanut-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <rect width="24" height="24" fill="#ffffff" stroke="none"/>
+    <path d="M7.15 17.6Q8.07 16.33 9.36 15.51" fill="none" stroke="#000000"/>
+    <path d="M14.6 8.94Q15.5 7.68 16.73 7.03" fill="none" stroke="#000000"/>
+  </mask>
+  <g mask="url(#peanut-cut)">
+    <path d="M18.7 4.03C20.93 5.31 21.58 7.97 20.34 10.2C19.51 11.71 18.19 12.6 16.3 13.09C14.69 13.51 14.21 14.09 13.66 15.66C13.08 17.46 12.03 18.98 10.55 19.89C8.16 21.38 5.22 20.83 3.87 18.62C2.65 16.62 3.21 14.07 4.84 12.32C6.01 11.07 7.33 10.56 8.84 10.27C10.06 10.04 10.74 9.44 11.21 8.22C11.75 6.63 12.67 5.21 14.18 4.31C15.6 3.48 17.17 3.17 18.7 4.03Z"/>
+  </g>
+</svg>

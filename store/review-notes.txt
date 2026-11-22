@@ -1,17 +1,20 @@
-1. SCREEN RECORDING
-A screen recording from a physical iPhone (latest iOS) is attached to this submission. It starts with launching the app and shows: continuing without an account, onboarding, logging a food try, the product catalog, PDF export, linking an email with a one-time code, and account deletion (Profile > Settings > Delete account).
+1. WHAT'S NEW IN 1.1
+- Photos for food tries (from the photo library, no camera or photo-library permission needed: the system picker is used) and an option to include them in the PDF report.
+- New home screen: one suggestion for today, foods in progress and waiting, and a pause after a reaction.
+- Onboarding asks which foods the baby already eats and, if none, whether the baby holds their head up and sits with support; the last screen says whether the baby is ready for solid foods. If not, the home screen shows "Пока готовимся" (Getting ready) instead of a food, with a button "Малыш уже держит голову и сидит" (My baby holds their head up and sits).
+- English interface (chosen by the device language) and a Language row in Settings that opens the app's page in iOS Settings.
 
 2. PURPOSE AND AUDIENCE
 «Ложку за маму» ("A spoon for mom") is a baby food diary for parents of infants starting solid foods (about 4–12 months). Parents log every food the baby tries (food, amount, meal, reaction, symptoms), see which foods are introduced, in progress or caused a reaction, get a suggestion of what to try next based on the baby's age, known allergies and foods already introduced, and export the diary to PDF for their pediatrician. It solves the problem of keeping track of dozens of new foods and possible reactions, which parents usually do on paper or in notes.
 
 3. HOW TO USE
 - No account is needed: tap "Продолжить" (Continue) on the first screen, enter a child's name, sex and date of birth, and answer a few optional questions.
-- Home: today's suggestion, progress to 100 foods, foods that need attention. Tap "Новая запись" (New entry) to log a try.
+- Home: today's suggestion, progress to 100 foods, foods that need attention. Tap "Записать пробу" (Log a try) to log a try.
 - Foods: catalog with search and filters; open a food for serving tips, marks and its tries. "+" adds your own food (with an optional photo).
 - Profile ("Профиль"): children (with photos), "Экспорт дневника в PDF" (Export diary to PDF), Settings ("Настройки").
 - Optional email sign-in: Profile > Settings > "Привязать почту" (Link email), or "У меня уже есть аккаунт" (I already have an account) on the first screen. Demo account: apple-review@littlebite.app — the one-time code for this account is fixed and is entered in the password field above (no email access needed).
 - Account deletion: Profile > Settings > "Удалить аккаунт" (Delete account); for a guest: "Удалить все данные" (Delete all data).
-The interface is in Russian.
+The interface is in Russian or English, depending on the device language (Russian and CIS languages get Russian, all others get English).
 
 4. EXTERNAL SERVICES
 - Our own backend at api.littlebite.app (Yandex Cloud): email one-time-code sign-in and account management (create, link email, delete). Diary data is NOT sent to the server; it stays on the device.

@@ -27,7 +27,7 @@ struct ProductView: View {
         }
         .bottomAction {
             if catalog.productsById[productId] != nil {
-                AppButton(progress.status == .inProgress ? L.s("home_record_try", progress.tries + 1) : L.s("product_record_try"), icon: "plus") {
+                AppButton(progress.status == .inProgress ? L.s("home_record_try", progress.tries + 1) : L.s("product_record_try"), icon: "ic_plus") {
                     nav.open(.entry(entryId: nil, productId: productId))
                 }
                 .padding(.horizontal, screenPadding)
@@ -41,14 +41,14 @@ struct ProductView: View {
             // Свой продукт можно изменить (название, категория, аллергены, фото).
             if catalog.productsById[productId]?.isCustom == true {
                 ToolbarItem(placement: .primaryAction) {
-                    Button { nav.open(.editCustomProduct(productId)) } label: { Image(systemName: "pencil") }
+                    Button { nav.open(.editCustomProduct(productId)) } label: { Image("ic_edit") }
                         .accessibilityLabel(L.s("custom_edit"))
                 }
             }
             if catalog.productsById[productId] != nil {
                 ToolbarItem(placement: .primaryAction) {
                     Button { try? app.diary.setLiked(productId, !liked) } label: {
-                        Image(systemName: liked ? "heart.fill" : "heart").foregroundStyle(liked ? AppColors.alert : AppColors.primary)
+                        Image(liked ? "ic_heart_fill" : "ic_heart").foregroundStyle(liked ? AppColors.alert : AppColors.primary)
                     }
                     .accessibilityLabel(L.s(liked ? "product_unlike" : "product_like"))
                 }
@@ -90,7 +90,7 @@ struct ProductView: View {
             if !childAllergies.isEmpty {
                 AppCard {
                     HStack(alignment: .top, spacing: 12) {
-                        Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(AppColors.alert)
+                        Image("ic_warning_fill").foregroundStyle(AppColors.alert)
                         Text(L.s("product_allergy_warning",
                                  childName(child?.name ?? "", sex: child?.sex, case: .genitive, fallback: "child_name_fallback_gen"),
                                  childAllergies.joined(separator: ", ")))

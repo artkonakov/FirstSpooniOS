@@ -16,6 +16,10 @@
 //   node tools/asc_api.mjs screenshots [store/screenshots] [--locale ru|en-US] [--version 1.1]
 //                                                       заменить скриншоты версии: папки iphone/ (6.9") и ipad/ (13"),
 //                                                       PNG по порядку имён (01-…, 02-…); en — store/screenshots-en
+//   node tools/asc_api.mjs version-info                  что заполнено у версии: сборка, выпуск, языки, скриншоты, проверка
+//   node tools/asc_api.mjs whats-new-version <ru|en-US> "<текст>"   «Что нового» версии
+//   node tools/asc_api.mjs release-type MANUAL|AFTER_APPROVAL       выпуск после одобрения: кнопкой или сразу
+//   node tools/asc_api.mjs review-notes [store/review-notes.txt]    заметки для проверяющего (контакты не трогает)
 //   Без --version берётся версия в подготовке (а если её нет — ожидающая проверки).
 //
 // Загрузка сборки — tools/upload_testflight.sh (xcodebuild archive + export с destination=upload, тот же ключ).
@@ -29,6 +33,7 @@ import { createHash, createPrivateKey, sign } from 'node:crypto'
 import { readFileSync, readdirSync, existsSync, statSync } from 'node:fs'
 import { homedir } from 'node:os'
 import { basename, join } from 'node:path'
+import { parseArgs } from 'node:util'
 
 export const KEY_ID = 'A2VCF6W9QB'
 export const ISSUER_ID = 'd7cee3e8-50f7-4cfb-bf4f-d3127e6a691a'
@@ -84,7 +89,7 @@ async function buildByNumber(app, number) {
 async function editableVersion(app) {
   const r = await get(`/v1/apps/${app}/appStoreVersions?filter[platform]=IOS&limit=10`)
   const state = (x) => x.attributes.appStoreState ?? x.attributes.appVersionState
-  const wanted = arg('--version')
+  const wanted = arg('version')
   if (wanted) {
     const v = r.data.find((x) => x.attributes.versionString === wanted)
     if (!v) throw new Error(`Версии ${wanted} нет — создайте: version-create ${wanted}`)
@@ -109,10 +114,8 @@ async function versionLocalization(version, locale) {
 /** Тип скриншотов App Store Connect для папки. */
 const SCREENSHOT_TYPES = { iphone: 'APP_IPHONE_67', ipad: 'APP_IPAD_PRO_3GEN_129' }
 
-const arg = (name, def) => {
-  const i = process.argv.indexOf(name)
-  return i > 0 ? process.argv[i + 1] : def
-}
+let options
+const arg = (name, def) => options[name] ?? def
 
 const commands = {
   async apps() {
@@ -122,7 +125,7 @@ const commands = {
 
   async builds() {
     const app = await appId()
-    const limit = arg('--limit', '10')
+    const limit = arg('limit', '10')
     const r = await get(`/v1/builds?filter[app]=${app}&sort=-uploadedDate&limit=${limit}&include=preReleaseVersion`)
     const versions = Object.fromEntries((r.included ?? []).map((v) => [v.id, v.attributes.version]))
     if (!r.data.length) console.log('Сборок нет')
@@ -214,6 +217,53 @@ const commands = {
     console.log(`версия ${version.attributes.versionString} [${t.locale}]: описание ${t.description.length} симв., ключевые слова ${t.keywords.length}/100`)
   },
 
+  /** Что заполнено у версии в подготовке: сборка, выпуск, языки, «Что нового», скриншоты, данные для проверки. */
+  async 'version-info'() {
+    const version = await editableVersion(await appId())
+    const a = version.attributes
+    const build = (await get(`/v1/appStoreVersions/${version.id}/build`)).data
+    console.log(`${a.versionString} ${a.appStoreState}; выпуск ${a.releaseType}; сборка ${build?.attributes.version ?? '—'}`)
+    for (const l of (await get(`/v1/appStoreVersions/${version.id}/appStoreVersionLocalizations`)).data) {
+      const sets = (await get(`/v1/appStoreVersionLocalizations/${l.id}/appScreenshotSets`)).data
+      const shots = []
+      for (const s of sets) shots.push(`${s.attributes.screenshotDisplayType}: ${(await get(`/v1/appScreenshotSets/${s.id}/appScreenshots`)).data.length}`)
+      console.log(`[${l.attributes.locale}] описание ${l.attributes.description?.length ?? 0}, «Что нового»: ${l.attributes.whatsNew ?? '—'}; скриншоты ${shots.join(', ') || '—'}`)
+    }
+    const d = (await get(`/v1/appStoreVersions/${version.id}/appStoreReviewDetail`)).data
+    if (!d) return console.log('App Review Information: нет')
+    const att = (await get(`/v1/appStoreReviewDetails/${d.id}/appStoreReviewAttachments`)).data
+    console.log(`проверка: контакт ${d.attributes.contactEmail ? 'есть' : 'нет'}, демо-вход ${d.attributes.demoAccountRequired}, ` +
+      `заметки ${d.attributes.notes?.length ?? 0} симв., вложений ${att.length}`)
+  },
+
+  /** «Что нового» версии в подготовке для языка (ru, en-US). */
+  async 'whats-new-version'(locale, text) {
+    if (!locale || !text) throw new Error('whats-new-version <ru|en-US> "<текст>" [--version 1.1]')
+    const version = await editableVersion(await appId())
+    const loc = await versionLocalization(version, locale)
+    await api('PATCH', `/v1/appStoreVersionLocalizations/${loc.id}`, { data: { type: 'appStoreVersionLocalizations', id: loc.id,
+      attributes: { whatsNew: text } } })
+    console.log(`версия ${version.attributes.versionString} [${locale}]: «Что нового» ${text.length} симв.`)
+  },
+
+  /** Выпуск после одобрения: MANUAL (кнопкой в App Store Connect) или AFTER_APPROVAL (сразу). */
+  async 'release-type'(type) {
+    if (!['MANUAL', 'AFTER_APPROVAL'].includes(type)) throw new Error('release-type MANUAL|AFTER_APPROVAL [--version 1.1]')
+    const version = await editableVersion(await appId())
+    await api('PATCH', `/v1/appStoreVersions/${version.id}`, { data: { type: 'appStoreVersions', id: version.id, attributes: { releaseType: type } } })
+    console.log(`версия ${version.attributes.versionString}: выпуск ${type}`)
+  },
+
+  /** Заметки для проверяющего (App Review Information → Notes) из файла; контакты и демо-аккаунт не трогает. */
+  async 'review-notes'(file = 'store/review-notes.txt') {
+    const notes = readFileSync(file, 'utf8').trim()
+    const version = await editableVersion(await appId())
+    const d = (await get(`/v1/appStoreVersions/${version.id}/appStoreReviewDetail`)).data
+    if (!d) throw new Error('у версии нет App Review Information — заполните контакты в App Store Connect')
+    await api('PATCH', `/v1/appStoreReviewDetails/${d.id}`, { data: { type: 'appStoreReviewDetails', id: d.id, attributes: { notes } } })
+    console.log(`версия ${version.attributes.versionString}: заметки для проверки ${notes.length} симв.`)
+  },
+
   async 'version-create'(versionString) {
     if (!versionString) throw new Error('version-create <номер версии, например 1.1>')
     const app = await appId()
@@ -231,7 +281,7 @@ const commands = {
   async screenshots(dir = 'store/screenshots') {
     const app = await appId()
     const version = await editableVersion(app)
-    const loc = await versionLocalization(version, arg('--locale', 'ru'))
+    const loc = await versionLocalization(version, arg('locale', 'ru'))
     const sets = (await get(`/v1/appStoreVersionLocalizations/${loc.id}/appScreenshotSets`)).data
     for (const [folder, type] of Object.entries(SCREENSHOT_TYPES)) {
       const path = join(dir, folder)
@@ -263,7 +313,7 @@ const commands = {
   },
 
   async submit(number) {
-    if (!number || !process.argv.includes('--yes')) throw new Error('submit <номер сборки> --yes (только с подтверждения пользователя)')
+    if (!number || !options.yes) throw new Error('submit <номер сборки> --yes (только с подтверждения пользователя)')
     const app = await appId()
     const version = await editableVersion(app)
     const build = await buildByNumber(app, number)
@@ -308,7 +358,20 @@ if (!commands[cmd]) {
   console.log(readFileSync(new URL(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).join('\n'))
   process.exit(cmd ? 1 : 0)
 }
-commands[cmd](...rest.filter((x) => !x.startsWith('--'))).catch((e) => {
+try {
+  const { values, positionals } = parseArgs({
+    args: rest,
+    allowPositionals: true,
+    options: {
+      version: { type: 'string' },
+      limit: { type: 'string' },
+      locale: { type: 'string' },
+      yes: { type: 'boolean' },
+    },
+  })
+  options = values
+  await commands[cmd](...positionals)
+} catch (e) {
   console.error(e.message)
-  process.exit(1)
-})
+  process.exitCode = 1
+}

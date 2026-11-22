@@ -11,6 +11,8 @@ import FirstSpoonCore
 @MainActor @Observable
 final class EntryPhotosDraft {
     private(set) var photos: [String]
+    private(set) var processing = false
+    @ObservationIgnored private var importTask: Task<Void, Never>?
     @ObservationIgnored private var created: Set<String> = []
     @ObservationIgnored private var done = false
     @ObservationIgnored let store: PhotoStore
@@ -22,7 +24,23 @@ final class EntryPhotosDraft {
 
     var remaining: Int { max(0, DiaryEntry.maxPhotos - photos.count) }
 
-    func add(_ data: Data) -> Bool {
+    func importPhotos(_ items: [PhotosPickerItem], onDone: @escaping (Bool) -> Void) {
+        guard !items.isEmpty, !processing, !done else { return }
+        processing = true
+        importTask = Task {
+            var ok = true
+            for item in items {
+                let data = try? await item.loadTransferable(type: Data.self)
+                guard !Task.isCancelled else { return }
+                ok = (data.map { add($0) } ?? false) && ok
+            }
+            processing = false
+            importTask = nil
+            onDone(ok)
+        }
+    }
+
+    private func add(_ data: Data) -> Bool {
         guard remaining > 0, let name = store.saveEntryPhoto(data) else { return false }
         created.insert(name)
         photos.append(name)
@@ -34,16 +52,20 @@ final class EntryPhotosDraft {
         if created.remove(name) != nil { store.delete(name) }
     }
 
-    /// Сохранено: итоговый список и сколько новых фото (для аналитики — по одному событию на фото).
-    func commit() -> (photos: [String], added: Int) {
+    /// После записи в БД возвращает число новых фото для аналитики.
+    func commit() -> Int {
         done = true
         let added = photos.filter(created.contains).count
         created = []
-        return (photos, added)
+        return added
     }
 
     func discard() {
         guard !done else { return }
+        importTask?.cancel()
+        importTask = nil
+        processing = false
+        photos.removeAll { created.contains($0) }
         for name in created { store.delete(name) }
         created = []
     }
@@ -59,13 +81,13 @@ struct EntryPhotosSection: View {
     @State private var failed = false
     @State private var library = false
     /// Выбранные фото уменьшаются и пишутся на диск — в плитке «+» спиннер.
-    @State private var processing = false
+    private var processing: Bool { draft.processing }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(L.s("entry_photos_hint")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted).padding(.leading, 6)
             if draft.photos.isEmpty && !processing {
-                AppButton(L.s("photo_pick"), kind: .soft, size: .medium, icon: "photo.on.rectangle") { library = true }
+                AppButton(L.s("photo_pick"), kind: .soft, size: .medium, icon: "ic_image_fill") { library = true }
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
@@ -86,17 +108,9 @@ struct EntryPhotosSection: View {
                       matching: .images, photoLibrary: .shared())
         .onChange(of: items) { _, picked in
             guard !picked.isEmpty else { return }
-            processing = true
-            Task {
-                var ok = true
-                for item in picked {
-                    let data = try? await item.loadTransferable(type: Data.self)
-                    ok = (data.map { draft.add($0) } ?? false) && ok
-                }
-                failed = !ok
-                items = []
-                processing = false
-            }
+            items = []
+            failed = false
+            draft.importPhotos(picked) { failed = !$0 }
         }
         // Только sheet, не fullScreenCover: полноэкранное окно вызывает onDisappear у экрана пробы, а он стирает черновик фото.
         .sheet(item: Binding(get: { viewer.map(ViewerIndex.init) }, set: { viewer = $0?.value })) { start in
@@ -114,7 +128,7 @@ struct EntryPhotosSection: View {
                 if processing {
                     ProgressView().tint(AppColors.primary)
                 } else {
-                    Image(systemName: "plus").font(.system(size: 28, weight: .semibold)).foregroundStyle(AppColors.primary)
+                    Image("ic_plus").font(.system(size: 28, weight: .semibold)).foregroundStyle(AppColors.primary)
                 }
             }
             .frame(width: 88, height: 88)
@@ -137,7 +151,7 @@ struct EntryPhotosSection: View {
             .clipShape(RoundedRectangle(cornerRadius: AppRadius.small, style: .continuous))
 
             Button { draft.remove(name) } label: {
-                Image(systemName: "xmark")
+                Image("ic_close")
                     .font(.system(size: 12, weight: .bold))
                     .foregroundStyle(.white)
                     .frame(width: 26, height: 26)
@@ -175,7 +189,7 @@ struct PhotoViewer: View {
             }
             .tabViewStyle(.page(indexDisplayMode: photos.count > 1 ? .always : .never))
             Button(action: onClose) {
-                Image(systemName: "xmark").font(.system(size: 18, weight: .bold)).foregroundStyle(.white)
+                Image("ic_close").font(.system(size: 18, weight: .bold)).foregroundStyle(.white)
                     .frame(width: 44, height: 44).background(.white.opacity(0.2), in: Circle())
             }
             .padding(16)

@@ -75,7 +75,10 @@ final class AuthRepository {
         if tokens.hasSession || !guest { return .success(()) }
         let task = Task<ApiResult<Void>, Never> {
             let r = await api.call("POST", "auth/anonymous", authorized: false, as: TokenResponse.self)
-            if case .success(let t) = r { completeLogin(access: t.token, refresh: t.refreshToken, userId: t.userId, email: t.email) }
+            // Пока запрос выполнялся, пользователь мог войти по почте или удалить данные.
+            if case .success(let t) = r, guest, !tokens.hasSession, isAnonymous {
+                completeLogin(access: t.token, refresh: t.refreshToken, userId: t.userId, email: t.email)
+            }
             return r.map { _ in () }
         }
         anonymousTask = task
@@ -161,6 +164,7 @@ final class AuthRepository {
         for key in [Key.owner, Key.ownerAnonymous, Key.guest] { defaults.removeObject(forKey: key) }
         guest = false
         session.onLoggedOut()
+        setBackToWelcome(false)
         onUserDataCleared()
     }
 

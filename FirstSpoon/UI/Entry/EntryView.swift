@@ -41,12 +41,12 @@ final class EntryViewModel {
 
     /// true — сохранено, экран закрывается.
     func save() -> Bool {
-        guard let productId, !saving else { return false }
+        guard let productId, !saving, !photos.processing else { return false }
         saving = true
         let r = reaction ?? .unknown
         // Симптомы имеют смысл только при «Сомнительно»/«Плохо»: при смене реакции не храним старые.
         let s = Labels.asksSymptoms(r) ? Symptom.allCases.filter(symptoms.contains) : []
-        let (files, added) = photos.commit()
+        let files = photos.photos
         do {
             if let entryId {
                 try diary.updateEntry(DiaryEntry(id: entryId, productId: productId, date: date, time: time, meal: meal,
@@ -56,7 +56,7 @@ final class EntryViewModel {
                                    reaction: r, symptoms: s, note: note, photos: files)
             }
             // По событию на каждое новое фото — только сохранённые (брошенные черновики не считаются).
-            for _ in 0..<added { Analytics.track(.entryPhotoAdded) }
+            for _ in 0..<photos.commit() { Analytics.track(.entryPhotoAdded) }
             return true
         } catch {
             saving = false
@@ -89,7 +89,7 @@ struct EntryView: View {
         .bottomAction {
             if let model {
                 AppButton(L.s(model.isEditing ? "entry_save_changes" : "entry_save"),
-                          enabled: model.productId != nil, loading: model.saving) {
+                          enabled: model.productId != nil && !model.photos.processing, loading: model.saving || model.photos.processing) {
                     if model.save() { nav.back() }
                 }
                 .padding(.horizontal, screenPadding)
@@ -134,7 +134,7 @@ struct EntryView: View {
                     }
                 }
                 section("entry_datetime") {
-                    ActionRow(title: "\(dayText(model.date)), \(UiLocale.time(model.time))", icon: "calendar") { pickDate = true }
+                    ActionRow(title: "\(dayText(model.date)), \(UiLocale.time(model.time))", icon: "ic_tab_diary") { pickDate = true }
                 }
                 section("entry_meal") {
                     TileGrid(items: Meal.allCases) { m in

@@ -29,7 +29,7 @@ final class AnalyticsCatalogTests: XCTestCase {
         let samples: [AnalyticsEvent] = [
             .welcomeShown, .guestStarted, .login(fromGuest: true), .emailLinked, .logout, .accountDeleted,
             .onboardingStep(step: "name"), .onboardingBackToWelcome, .onboardingCompleted(readiness: .ready, knownFoods: 0), .readyMarked, .childAdded, .entryAdded, .productMarked(mark: .known), .customProductAdded,
-            .recommendationRecord, .recommendationOther,
+            .recommendationRecord, .recommendationOther, .statsOpened,
             .diaryExported(photos: "none"), .entryPhotoAdded, .childPhotoSet, .customProductPhotoSet, .networkBlockedShown,
             .paywallOpened, .purchaseStarted(product: "p"), .purchaseCompleted(product: "p"), .purchaseFailed(product: "p"), .restoreTapped,
         ]

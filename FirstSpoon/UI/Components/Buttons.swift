@@ -52,7 +52,7 @@ struct AppButton: View {
                 if loading {
                     ProgressView().tint(fg)
                 } else {
-                    if let icon { Image(systemName: icon).font(.system(size: 20, weight: .bold)) }
+                    if let icon { Image(icon).font(.system(size: 20, weight: .bold)) }
                     Text(title).font(size == .large ? AppFont.titleMedium : AppFont.titleSmall).lineLimit(1)
                 }
             }

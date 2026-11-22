@@ -49,7 +49,7 @@
 | `email_linked` | Почта привязана к гостевому аккаунту | — | `AuthRepository.verifyLink` |
 | `logout` | Выход из аккаунта | — | `AuthRepository.logout` |
 | `account_deleted` | Аккаунт удалён (или «Удалить все данные» у гостя) | — | `AuthRepository.deleteAccount` |
-| `onboarding_step` | Показан шаг онбординга — воронка по шагам (развилка: вопросы готовности только если малыш ещё не ест) | `step`: `name` / `sex` / `birth` / `known_foods` / `q_known_allergens` / `q_eczema` / `q_family_allergy` / `q_milk_feeding` / `q_head_control` / `q_sits_with_support` / `result` | `OnboardingStepView` |
+| `onboarding_step` | Показан шаг онбординга — воронка по шагам (развилка: вопросы готовности только если малыш ещё не ест) | `step`: `name` / `sex` / `birth` / `known_foods` / `q_known_allergens` / `q_eczema` / `q_family_allergy` / `q_milk_feeding` / `q_head_control` / `q_sits_with_support` / `q_food_interest` / `result` | `OnboardingStepView` |
 | `onboarding_back_to_welcome` | «Назад» с первого шага онбординга — снова экран приветствия | — | `AuthRepository.returnToWelcome` |
 | `onboarding_completed` | Онбординг ребёнка пройден | `readiness`: `started` / `too_early` / `not_yet` / `check` / `ready`; `known_foods`: сколько основных продуктов отметили (0–19) | `OnboardingViewModel.finish` |
 | `ready_marked` | На главной «Малыш уже держит голову и сидит» (карточка «Пока готовимся») | — | `HomeViewModel.markReady` |
@@ -59,6 +59,7 @@
 | `custom_product_added` | Добавлен свой продукт | — | `CatalogRepository.addCustomProduct` |
 | `recommendation_record` | «Записать пробу» внизу главной, когда форма открывается с продуктом из рекомендации (новый или продолжить серию) | — | `HomeView` (`bottomAction`) |
 | `recommendation_other` | «Другой» на карточке рекомендации | — | `RecommendationRepository.skip` |
+| `stats_opened` | Открыт экран статистики — тап по карточке «N из 100» на главной | — | `StatsView` |
 | `diary_exported` | Дневник выгружен в PDF (файл готов, открыт лист «Поделиться») | `photos`: `none` / `reactions` / `all` — какие фото проб в отчёте (`none` и когда фото нет) | `ProfileView.exportDiary` |
 | `entry_photo_added` | К пробе прикреплено фото (из галереи) — по событию на фото, при сохранении пробы (брошенный черновик не считается) | — | `EntryViewModel.save` |
 | `child_photo_set` | Ребёнку поставлено новое фото (редактор или онбординг) | — | `DiaryRepository.saveChild` |

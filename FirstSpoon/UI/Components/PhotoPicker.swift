@@ -67,8 +67,9 @@ struct PhotoPickerField: View {
             .clipShape(RoundedRectangle(cornerRadius: size * 0.32, style: .continuous))
 
             VStack(alignment: .leading, spacing: 4) {
+                let pickerLabel = L.s(draft.current == nil ? "photo_pick" : "photo_change")
                 PhotosPicker(selection: $item, matching: .images, photoLibrary: .shared()) {
-                    Text(L.s(draft.current == nil ? "photo_pick" : "photo_change"))
+                    Text(pickerLabel)
                         .font(AppFont.labelLarge).foregroundStyle(AppColors.primary)
                         .frame(minHeight: 44)
                 }

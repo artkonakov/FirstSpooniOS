@@ -13,6 +13,12 @@ final class LocalDateTests: XCTestCase {
         XCTAssertNil(LocalDate.parse("2026-02-30"))
     }
 
+    func testWeekdayIsMondayBased() {
+        XCTAssertEqual(LocalDate(2026, 11, 23).weekdayMondayBased, 0) // понедельник
+        XCTAssertEqual(LocalDate(2026, 11, 22).weekdayMondayBased, 6) // воскресенье
+        XCTAssertEqual(LocalDate(1970, 1, 1).weekdayMondayBased, 3)   // четверг
+    }
+
     func testMonthsBetweenLikeJavaPeriod() {
         XCTAssertEqual(LocalDate(2026, 5, 8).monthsUntil(LocalDate(2026, 11, 11)), 6)
         XCTAssertEqual(LocalDate(2026, 5, 12).monthsUntil(LocalDate(2026, 11, 11)), 5)

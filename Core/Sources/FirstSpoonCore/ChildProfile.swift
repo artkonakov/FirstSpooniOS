@@ -11,6 +11,7 @@ public enum ProfileQuestion: String, CaseIterable, Sendable {
     /// Готовность к прикорму (Android docs/product-rules.md «Онбординг»): держит голову, сидит с поддержкой.
     case headControl = "head_control"
     case sits = "sits_with_support"
+    case foodInterest = "food_interest"
 
     public enum Kind: Sendable { case single, multi }
 
@@ -34,14 +35,14 @@ public enum ProfileQuestion: String, CaseIterable, Sendable {
         case .knownAllergens: return []
         case .eczema, .familyAllergy: return [Answer.no, Answer.yes, Answer.notSure]
         case .milkFeeding: return [Answer.breast, Answer.formula, Answer.mixed]
-        case .headControl, .sits: return [Answer.yes, Answer.no, Answer.notSure]
+        case .headControl, .sits, .foodInterest: return [Answer.yes, Answer.no, Answer.notSure]
         }
     }
 
     public var inOnboarding: Bool { true }
 
     /// Задавать в онбординге, только если прикорм ещё не начали (ничего не отмечено в «Что малыш уже ест?»).
-    public var onlyBeforeStart: Bool { self == .headControl || self == .sits }
+    public var onlyBeforeStart: Bool { self == .headControl || self == .sits || self == .foodInterest }
 }
 
 /// Ответы на вопросы профиля. Хранится как словарь ключ → значение (MULTI — значения через запятую).

@@ -698,19 +698,36 @@
         }
       }
     },
-    "child_head_control": {
+    "child_food_interest": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reaches for food"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Держит голову"
+            "value": "Тянется к еде"
           }
-        },
+        }
+      }
+    },
+    "child_head_control": {
+      "extractionState": "manual",
+      "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Holds head up"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Держит голову"
           }
         }
       }
@@ -735,16 +752,16 @@
     "child_name_fallback_gen": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "малыша"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Your little one"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "малыша"
           }
         }
       }
@@ -786,16 +803,16 @@
     "child_profile_fallback": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "этого малыша"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "this child"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "этого малыша"
           }
         }
       }
@@ -820,16 +837,16 @@
     "child_sits": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сидит с поддержкой"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sits with support"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сидит с поддержкой"
           }
         }
       }
@@ -1604,6 +1621,57 @@
         }
       }
     },
+    "entry_photo_reaction_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add a photo of the rash or redness — it helps your pediatrician"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавьте фото сыпи или покраснения — врачу будет проще оценить"
+          }
+        }
+      }
+    },
+    "entry_photos": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото"
+          }
+        }
+      }
+    },
+    "entry_photos_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rash, redness — or just mealtime. Handy for your pediatrician and a nice keepsake"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сыпь, покраснение — или просто как малыш ест. Пригодится врачу и на память"
+          }
+        }
+      }
+    },
     "entry_product": {
       "extractionState": "manual",
       "localizations": {
@@ -1961,6 +2029,23 @@
         }
       }
     },
+    "export_create": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Create PDF"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создать PDF"
+          }
+        }
+      }
+    },
     "export_empty": {
       "extractionState": "manual",
       "localizations": {
@@ -2076,6 +2161,91 @@
           "stringUnit": {
             "state": "translated",
             "value": "стр. %1$d из %2$d"
+          }
+        }
+      }
+    },
+    "export_photos_all": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все"
+          }
+        }
+      }
+    },
+    "export_photos_none": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "None"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Без фото"
+          }
+        }
+      }
+    },
+    "export_photos_note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos will be included in the file you share"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото попадут в файл, который вы отправите"
+          }
+        }
+      }
+    },
+    "export_photos_reactions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reactions only"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "При реакции"
+          }
+        }
+      }
+    },
+    "export_photos_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Photos in report"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Фото в отчёте"
           }
         }
       }
@@ -2610,16 +2780,16 @@
     "home_queue": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ждут очереди"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Waiting their turn"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ждут очереди"
           }
         }
       }
@@ -2627,16 +2797,16 @@
     "home_queue_after": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжим, когда введём текущий продукт — по одному за раз"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "We'll continue once the current food is introduced — one at a time"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжим, когда введём текущий продукт — по одному за раз"
           }
         }
       }
@@ -2644,16 +2814,16 @@
     "home_queue_pause": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Продолжим после паузы, с %1$@"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "We'll continue after the pause, from %1$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продолжим после паузы, с %1$@"
           }
         }
       }
@@ -2695,16 +2865,16 @@
     "home_today_next": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Завтра — %1$d-я проба"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Tomorrow — try %1$d"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Завтра — %1$d-я проба"
           }
         }
       }
@@ -2712,16 +2882,16 @@
     "home_today_question": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Как прошло?"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "How did it go?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как прошло?"
           }
         }
       }
@@ -2746,13 +2916,13 @@
     "language_en": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
+        "en": {
           "stringUnit": {
             "state": "translated",
             "value": "English"
           }
         },
-        "en": {
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "English"
@@ -2763,13 +2933,13 @@
     "language_ru": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
+        "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Русский"
           }
         },
-        "en": {
+        "ru": {
           "stringUnit": {
             "state": "translated",
             "value": "Русский"
@@ -3518,19 +3688,53 @@
         }
       }
     },
-    "onb_head_subtitle": {
+    "onb_food_interest_subtitle": {
       "extractionState": "manual",
       "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For example, they reach for your food while you eat"
+          }
+        },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Это один из признаков, что малыш готов к прикорму"
+            "value": "Например, тянет руки к вашей еде, когда вы едите"
+          }
+        }
+      }
+    },
+    "onb_food_interest_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Does your baby reach for food?"
           }
         },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш тянется к еде?"
+          }
+        }
+      }
+    },
+    "onb_head_subtitle": {
+      "extractionState": "manual",
+      "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "It's one of the signs your baby is ready for solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это один из признаков, что малыш готов к прикорму"
           }
         }
       }
@@ -3538,16 +3742,16 @@
     "onb_head_title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Малыш уверенно держит голову?"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Does your baby hold their head up steadily?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш уверенно держит голову?"
           }
         }
       }
@@ -3555,16 +3759,16 @@
     "onb_known_subtitle": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Отметьте основное — остальное можно добавить потом в «Продуктах». Если прикорм ещё не начинали, нажмите «Пропустить»"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Mark the main ones — you can add the rest later in Foods. If you haven't started solids yet, tap Skip"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отметьте основное — остальное можно добавить потом в «Продуктах». Если прикорм ещё не начинали, нажмите «Пропустить»"
           }
         }
       }
@@ -3572,16 +3776,16 @@
     "onb_known_title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Какие продукты %1$@ уже ест?"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Which foods does %1$@ already eat?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Какие продукты %1$@ уже ест?"
           }
         }
       }
@@ -3640,16 +3844,16 @@
     "onb_result_check_text": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Это признаки готовности к прикорму. Когда заметите оба, отметьте это на главном экране — и мы предложим первые продукты"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "These are signs of readiness for solids. When you see both, mark it on the home screen and we'll suggest first foods"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Это признаки готовности к прикорму. Когда заметите оба, отметьте это на главном экране — и мы предложим первые продукты"
           }
         }
       }
@@ -3657,16 +3861,16 @@
     "onb_result_check_title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понаблюдайте, как %1$@ держит голову и сидит"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Watch how %1$@ holds their head and sits"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понаблюдайте, как %1$@ держит голову и сидит"
           }
         }
       }
@@ -3674,16 +3878,16 @@
     "onb_result_check_title_n": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Понаблюдайте за малышом"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Keep an eye on your baby"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Понаблюдайте за малышом"
           }
         }
       }
@@ -3691,16 +3895,16 @@
     "onb_result_not_yet_f": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ пока не готова к прикорму"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ isn't ready for solids yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ пока не готова к прикорму"
           }
         }
       }
@@ -3708,16 +3912,16 @@
     "onb_result_not_yet_m": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ пока не готов к прикорму"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ isn't ready for solids yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ пока не готов к прикорму"
           }
         }
       }
@@ -3725,16 +3929,16 @@
     "onb_result_not_yet_n": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "К прикорму пока рано"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "It's too early for solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "К прикорму пока рано"
           }
         }
       }
@@ -3742,16 +3946,16 @@
     "onb_result_not_yet_text": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Первые продукты предложим, когда малыш уверенно держит голову и сидит с поддержкой. У каждого малыша свой темп — если сомневаетесь, спросите педиатра"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "We'll suggest first foods once your baby holds their head up steadily and sits with support. Every baby has their own pace — if in doubt, ask your pediatrician"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первые продукты предложим, когда малыш уверенно держит голову и сидит с поддержкой. У каждого малыша свой темп — если сомневаетесь, спросите педиатра"
           }
         }
       }
@@ -3759,16 +3963,16 @@
     "onb_result_ready_f": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ готова к прикорму"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ is ready for solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ готова к прикорму"
           }
         }
       }
@@ -3776,16 +3980,16 @@
     "onb_result_ready_m": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ готов к прикорму"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ is ready for solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ готов к прикорму"
           }
         }
       }
@@ -3793,16 +3997,16 @@
     "onb_result_ready_n": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Можно начинать прикорм"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "You can start solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Можно начинать прикорм"
           }
         }
       }
@@ -3810,16 +4014,16 @@
     "onb_result_ready_text": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Начнём с одного продукта и маленькой порции — подскажем, что дать первым"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Start with one food and a small portion — we'll suggest what to give first"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Начнём с одного продукта и маленькой порции — подскажем, что дать первым"
           }
         }
       }
@@ -3827,16 +4031,16 @@
     "onb_result_started_text": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Подскажем, что попробовать следующим, — по одному продукту за раз"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "We'll suggest what to try next — one food at a time"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подскажем, что попробовать следующим, — по одному продукту за раз"
           }
         }
       }
@@ -3844,16 +4048,16 @@
     "onb_result_started_title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%1$@ уже знакомится с едой"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "%1$@ is already exploring food"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ уже знакомится с едой"
           }
         }
       }
@@ -3861,16 +4065,16 @@
     "onb_result_started_title_n": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Малыш уже знакомится с едой"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Your baby is already exploring food"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш уже знакомится с едой"
           }
         }
       }
@@ -3878,16 +4082,16 @@
     "onb_result_too_early_text": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прикорм начинают с 6 месяцев, когда малыш держит голову и сидит с поддержкой. Когда придёт время, первые продукты появятся на главном экране"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Solids start from 6 months, once your baby holds their head up and sits with support. When the time comes, first foods will appear on the home screen"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикорм начинают с 6 месяцев, когда малыш держит голову и сидит с поддержкой. Когда придёт время, первые продукты появятся на главном экране"
           }
         }
       }
@@ -3895,16 +4099,16 @@
     "onb_result_too_early_title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Для прикорма пока рано"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "It's too early for solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Для прикорма пока рано"
           }
         }
       }
@@ -3946,16 +4150,16 @@
     "onb_sits_subtitle": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Сидеть без опоры не обязательно: достаточно, чтобы малыш сидел с поддержкой и не заваливался"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Sitting unsupported isn't required: it's enough if your baby sits with support without slumping"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сидеть без опоры не обязательно: достаточно, чтобы малыш сидел с поддержкой и не заваливался"
           }
         }
       }
@@ -3963,16 +4167,16 @@
     "onb_sits_title": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Малыш сидит, хотя бы с небольшой поддержкой?"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Does your baby sit, at least with a little support?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш сидит, хотя бы с небольшой поддержкой?"
           }
         }
       }
@@ -5294,16 +5498,16 @@
     "rec_mark_ready": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Малыш уже держит голову и сидит"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "My baby holds their head up and sits"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш уже держит голову и сидит"
           }
         }
       }
@@ -5311,16 +5515,16 @@
     "rec_not_ready_skills": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Первые продукты предложим, когда малыш уверенно держит голову и сидит с поддержкой. Если сомневаетесь, спросите педиатра"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "We'll suggest first foods once your baby holds their head up steadily and sits with support. If in doubt, ask your pediatrician"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Первые продукты предложим, когда малыш уверенно держит голову и сидит с поддержкой. Если сомневаетесь, спросите педиатра"
           }
         }
       }
@@ -5328,16 +5532,16 @@
     "rec_not_ready_too_early": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Прикорм начинают с 6 месяцев, когда малыш уверенно держит голову и сидит с поддержкой. Когда придёт время, предложим первые продукты"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Solids start from 6 months, once your baby holds their head up steadily and sits with support. When the time comes, we'll suggest first foods"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Прикорм начинают с 6 месяцев, когда малыш уверенно держит голову и сидит с поддержкой. Когда придёт время, предложим первые продукты"
           }
         }
       }
@@ -5430,16 +5634,16 @@
     "rec_reason_done": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Одна проба в день: если появится реакция, будет понятно, на что. Завтра продолжим"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "One try a day: if a reaction shows up, you'll know what caused it. We'll continue tomorrow"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одна проба в день: если появится реакция, будет понятно, на что. Завтра продолжим"
           }
         }
       }
@@ -5515,16 +5719,16 @@
     "rec_reason_pause_doctor": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Если реакция сильная или не проходит — покажитесь врачу"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "If the reaction is strong or doesn't go away, see a doctor"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если реакция сильная или не проходит — покажитесь врачу"
           }
         }
       }
@@ -5549,16 +5753,16 @@
     "rec_title_done": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "На сегодня всё"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "That's it for today"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На сегодня всё"
           }
         }
       }
@@ -5566,16 +5770,16 @@
     "rec_title_not_ready": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Пока готовимся"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Getting ready"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока готовимся"
           }
         }
       }
@@ -5583,16 +5787,16 @@
     "rec_title_nothing": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Новых продуктов пока нет"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "No new foods for now"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новых продуктов пока нет"
           }
         }
       }
@@ -5804,16 +6008,16 @@
     "settings_language": {
       "extractionState": "manual",
       "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Язык"
-          }
-        },
         "en": {
           "stringUnit": {
             "state": "translated",
             "value": "Language"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Язык"
           }
         }
       }
@@ -6103,6 +6307,244 @@
           "stringUnit": {
             "state": "translated",
             "value": "Мальчик"
+          }
+        }
+      }
+    },
+    "stats_chart_empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tries to show yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет проб в календаре"
+          }
+        }
+      }
+    },
+    "stats_chart_legend_empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no try"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "без пробы"
+          }
+        }
+      }
+    },
+    "stats_chart_legend_reaction": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "had a reaction"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "была реакция"
+          }
+        }
+      }
+    },
+    "stats_chart_legend_tries": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "had a try"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "была проба"
+          }
+        }
+      }
+    },
+    "stats_chart_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tries by day"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пробы по дням"
+          }
+        }
+      }
+    },
+    "stats_days_active": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Days with tries: %1$d"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Дней с пробами: %1$d"
+          }
+        }
+      }
+    },
+    "stats_empty": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log your first try and the stats will show up here"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запишите первую пробу — здесь появится статистика"
+          }
+        }
+      }
+    },
+    "stats_empty_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No tries yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока нет проб"
+          }
+        }
+      }
+    },
+    "stats_excluded": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Excluded"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Исключены"
+          }
+        }
+      }
+    },
+    "stats_introduced": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "On the menu"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В меню"
+          }
+        }
+      }
+    },
+    "stats_note": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A food counts as introduced after 3 tries without a reaction"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Продукт считается введённым после 3 проб без реакции"
+          }
+        }
+      }
+    },
+    "stats_open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open feeding stats"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть статистику"
+          }
+        }
+      }
+    },
+    "stats_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How feeding is going"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как идёт прикорм"
+          }
+        }
+      }
+    },
+    "stats_tries_total": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tries: %1$d"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Проб: %1$d"
           }
         }
       }

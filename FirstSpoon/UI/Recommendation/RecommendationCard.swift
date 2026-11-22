@@ -36,9 +36,9 @@ struct RecommendationCard: View {
         case .tryNew(let id, let reasons), .continueSeries(let id, _, let reasons):
             AppCard(spacing: 14) {
                 FieldLabel(L.s(isContinue ? "rec_title_continue" : "rec_title_try"), inset: 0)
-                // Тап по продукту — его страница.
+                // Тап по продукту — его страница (без шеврона, как в Android).
                 Button { onOpenProduct(id) } label: {
-                    ProductRow(productId: id, name: catalog.productsById[id]?.name ?? id, supporting: { EmptyView() }, trailing: { Chevron() })
+                    ProductRow(productId: id, name: catalog.productsById[id]?.name ?? id, supporting: { EmptyView() }, trailing: { EmptyView() })
                 }
                 .buttonStyle(PressableStyle())
                 // Одна главная причина (самая весомая), законченной фразой — без маркеров списка.
@@ -46,7 +46,7 @@ struct RecommendationCard: View {
                     .font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted)
                     .fixedSize(horizontal: false, vertical: true)
                 if !isContinue {
-                    AppButton(L.s("rec_other"), kind: .soft, size: .medium, icon: "arrow.clockwise") { onOther(id) }
+                    AppButton(L.s("rec_other"), kind: .soft, size: .medium, icon: "ic_refresh") { onOther(id) }
                 }
             }
         }

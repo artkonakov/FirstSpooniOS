@@ -55,7 +55,7 @@ enum DemoData {
 }
 
 /// Только debug: какой экран открыть сразу после запуска — для скриншотов без касаний.
-/// `-demo_screen home_progress | diary | catalog | product:<slug> | entry` (entry — новая проба брокколи).
+/// `-demo_screen home_progress | stats | diary | catalog | product:<slug> | entry` (entry — новая проба брокколи).
 enum DemoScreen {
     static var current: String? { UserDefaults.standard.string(forKey: "demo_screen") }
 }

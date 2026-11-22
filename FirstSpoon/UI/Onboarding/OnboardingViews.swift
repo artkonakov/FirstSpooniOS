@@ -17,7 +17,7 @@ enum OnboardingStep: Hashable {
         [.name, .sex, .birthDate, .knownFoods] + ProfileQuestion.allCases.filter(\.inOnboarding).map { .question($0) } + [.result]
 
     /// Шаги для текущих ответов (развилка, Android docs/product-rules.md «Онбординг»): если малыш уже что-то ест,
-    /// вопросы готовности (держит голову, сидит) не задаём.
+    /// вопросы о навыках и интересе к еде не задаём.
     static func forAnswers(alreadyEating: Bool) -> [OnboardingStep] {
         all.filter { step in
             if case .question(let q) = step, q.onlyBeforeStart, alreadyEating { return false }
@@ -90,7 +90,9 @@ final class OnboardingViewModel {
         self.store = store
         allergens = catalog.base.allergens
         let products = catalog.base.productsById
-        knownFoodChoices = FeedingReadiness.knownFoodsChoices.compactMap { id in products[id].map { (id, $0.name) } }
+        let blocked = Set(diary.marks.filter { $0.value == .allergy || $0.value == .excluded }.keys)
+        knownFoodChoices = FeedingReadiness.knownFoodsChoices.filter { !blocked.contains($0) }
+            .compactMap { id in products[id].map { (id, $0.name) } }
         let child = diary.activeChild
         if let child {
             childId = child.id; name = child.name; sex = child.sex; birthDate = child.birthDate; profile = child.profile
@@ -101,7 +103,7 @@ final class OnboardingViewModel {
             knownBefore = before
             inDiary = fromDiary
             hasOtherFoodHistory = !diary.entries.isEmpty || !allKnown.isSubset(of: choices)
-            knownFoods = before.union(fromDiary)
+            knownFoods = before.union(fromDiary.subtracting(blocked))
         }
         photo = PhotoDraft(store: diary.photos, original: child?.photo)
     }
@@ -141,7 +143,7 @@ final class OnboardingViewModel {
 
     func toggleKnownFood(_ id: String) {
         // Продукт из дневника снять нельзя — его пробы уже записаны.
-        guard !inDiary.contains(id) else { return }
+        guard !inDiary.contains(id), knownFoodChoices.contains(where: { $0.0 == id }) else { return }
         if knownFoods.contains(id) { knownFoods.remove(id) } else { knownFoods.insert(id) }
     }
 
@@ -156,7 +158,7 @@ final class OnboardingViewModel {
         do {
             let readiness = readiness()
             // Уже ест — вопросы готовности не задавали: старые ответы на них не храним.
-            let base = alreadyEating ? profile.without(.headControl, .sits) : profile
+            let base = alreadyEating ? profile.without(.headControl, .sits, .foodInterest) : profile
             let id = try diary.saveChild(id: childId, name: name, birthDate: birthDate, sex: sex,
                                          profile: base.withReadiness(readiness.rawValue), photo: .some(photo.current),
                                          addKnown: knownFoods.subtracting(inDiary).subtracting(knownBefore),
@@ -236,7 +238,7 @@ struct OnboardingStepView: View {
             if isFirst && app.canReturnToWelcome {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { app.auth.returnToWelcome() } label: {
-                        HStack(spacing: 4) { Image(systemName: "chevron.left").fontWeight(.semibold); Text(L.s("back")) }
+                        HStack(spacing: 4) { Image("ic_chevron_left").fontWeight(.semibold); Text(L.s("back")) }
                     }
                 }
             }

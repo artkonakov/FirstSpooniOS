@@ -59,7 +59,7 @@ struct CatalogView: View {
                     }
                     if sections.isEmpty {
                         EmptyState(emoji: "🔍", title: L.s("catalog_empty_title"), text: L.s("catalog_empty"))
-                        AppButton(L.s("custom_add"), kind: .soft, icon: "plus") { addCustom() }
+                        AppButton(L.s("custom_add"), kind: .soft, icon: "ic_plus") { addCustom() }
                             .padding(.horizontal, screenPadding).padding(.top, 12)
                     }
                     ForEach(sections, id: \.0.id) { category, rows in
@@ -80,7 +80,7 @@ struct CatalogView: View {
                 ToolbarItem(placement: .cancellationAction) { Button(L.s("cancel"), action: onBack) }
             }
             ToolbarItem(placement: .primaryAction) {
-                Button(action: addCustom) { Image(systemName: "plus") }.accessibilityLabel(L.s("custom_add"))
+                Button(action: addCustom) { Image("ic_plus") }.accessibilityLabel(L.s("custom_add"))
             }
         }
     }
@@ -116,12 +116,9 @@ private struct CatalogItem: View {
                         }
                     },
                     trailing: {
-                        HStack(spacing: 0) {
-                            if row.liked {
-                                Image(systemName: "heart.fill").font(.system(size: 18)).foregroundStyle(AppColors.alert)
-                                    .accessibilityLabel(L.s("filter_favorites"))
-                            }
-                            Chevron()
+                        if row.liked {
+                            Image("ic_heart_fill").font(.system(size: 18)).foregroundStyle(AppColors.alert)
+                                .accessibilityLabel(L.s("filter_favorites"))
                         }
                     },
                     footer: { EmptyView() })

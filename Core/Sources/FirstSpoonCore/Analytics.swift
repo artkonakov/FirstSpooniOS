@@ -31,6 +31,8 @@ public enum AnalyticsEvent: Hashable, Sendable {
     // Рекомендации
     case recommendationRecord
     case recommendationOther
+    /// Тап по карточке прогресса на главной — открыт экран статистики.
+    case statsOpened
     // Профиль и фото
     /// `photos`: `none` | `reactions` | `all` — какие фото проб попали в PDF (`none` и когда фото у ребёнка нет).
     case diaryExported(photos: String)
@@ -51,7 +53,7 @@ public enum AnalyticsEvent: Hashable, Sendable {
     public static let allNames: [String] = [
         "welcome_shown", "guest_started", "login", "email_linked", "logout", "account_deleted",
         "onboarding_step", "onboarding_back_to_welcome", "onboarding_completed", "ready_marked", "child_added", "entry_added", "product_marked", "custom_product_added",
-        "recommendation_record", "recommendation_other",
+        "recommendation_record", "recommendation_other", "stats_opened",
         "diary_exported", "entry_photo_added", "child_photo_set", "custom_product_photo_set", "network_blocked_shown",
         "paywall_opened", "purchase_started", "purchase_completed", "purchase_failed", "restore_tapped",
     ]
@@ -74,6 +76,7 @@ public enum AnalyticsEvent: Hashable, Sendable {
         case .customProductAdded: return "custom_product_added"
         case .recommendationRecord: return "recommendation_record"
         case .recommendationOther: return "recommendation_other"
+        case .statsOpened: return "stats_opened"
         case .diaryExported: return "diary_exported"
         case .entryPhotoAdded: return "entry_photo_added"
         case .childPhotoSet: return "child_photo_set"

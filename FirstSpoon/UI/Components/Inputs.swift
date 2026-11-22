@@ -19,7 +19,7 @@ struct AppTextField: View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: multiline ? .top : .center, spacing: 14) {
                 if let icon {
-                    Image(systemName: icon).font(.system(size: 22, weight: .semibold)).foregroundStyle(AppColors.inkFaint)
+                    Image(icon).font(.system(size: 22, weight: .semibold)).foregroundStyle(AppColors.inkFaint)
                 }
                 Group {
                     if multiline {

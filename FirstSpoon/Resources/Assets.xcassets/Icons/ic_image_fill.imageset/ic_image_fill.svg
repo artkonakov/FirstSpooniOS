@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000" stroke="#000000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <mask id="image-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <rect width="24" height="24" fill="#ffffff" stroke="none"/>
+    <path d="M1.8 18.38L3.863 15.970C5.06 14.57 6.36 13.29 7.81 12.19C8.51 11.66 9.46 11.7 10.11 12.3C11.18 13.3 12.22 14.36 13.29 15.38C13.73 15.8 14.33 15.89 14.83 15.55C15.49 15.11 16.49 14.34 17.12 14.02C17.74 13.7 18.35 13.84 18.78 14.21C19.33 14.68 19.84 15.28 20.164 15.860L22.2 18.15" fill="none" stroke="#000000"/>
+    <path d="M15.25 7.25C16.34 7.25 17 7.92 17 9C17 10.09 16.34 10.75 15.25 10.75C14.16 10.75 13.5 10.09 13.5 9C13.5 7.92 14.16 7.25 15.25 7.25Z" fill="#000000" stroke="#000000" stroke-width="0.75"/>
+  </mask>
+  <g mask="url(#image-cut)">
+    <path d="M12 4C18.9 4 20.5 5.6 20.5 12C20.5 18.4 18.9 20 12 20C5.1 20 3.5 18.4 3.5 12C3.5 5.6 5.1 4 12 4Z"/>
+  </g>
+</svg>

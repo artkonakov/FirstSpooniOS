@@ -10,6 +10,7 @@ enum Route: Hashable {
     case editCustomProduct(String)
     case child(String?)
     case settings
+    case stats
     case linkEmail
     case authCode(AuthViewModel)
 }
@@ -34,17 +35,17 @@ struct MainFlow: View {
 
     var body: some View {
         TabView(selection: $tab) {
-            TabStack { HomeView() }
-                .tabItem { Label(L.s("tab_home"), systemImage: "house") }
+            TabStack(initialPath: MainFlow.initialHomePath) { HomeView() }
+                .tabItem { Label(L.s("tab_home"), image: "ic_tab_home") }
                 .tag(Tab.home)
             TabStack { DiaryView() }
-                .tabItem { Label(L.s("tab_diary"), systemImage: "calendar") }
+                .tabItem { Label(L.s("tab_diary"), image: "ic_tab_diary") }
                 .tag(Tab.diary)
             TabStack(initialPath: MainFlow.initialProductsPath) { ProductsTab(state: catalogState) }
-                .tabItem { Label(L.s("tab_products"), systemImage: "list.bullet") }
+                .tabItem { Label(L.s("tab_products"), image: "ic_tab_products") }
                 .tag(Tab.products)
             TabStack { ProfileView() }
-                .tabItem { Label(L.s("tab_profile"), systemImage: "person") }
+                .tabItem { Label(L.s("tab_profile"), image: "ic_tab_profile") }
                 .tag(Tab.profile)
         }
         .tint(AppColors.primary)
@@ -89,6 +90,7 @@ extension View {
             case .editCustomProduct(let id): CustomProductView(editId: id)
             case .child(let id): ChildEditView(childId: id)
             case .settings: SettingsView()
+            case .stats: StatsView()
             case .linkEmail: LinkEmailFlow()
             case .authCode(let m): AuthCodeView(model: m)
             }
@@ -116,6 +118,14 @@ extension MainFlow {
         #else
         return .home
         #endif
+    }
+
+    fileprivate static var initialHomePath: [Route] {
+        #if DEBUG
+        // Скриншоты и проверка экрана статистики без касаний: `-demo_screen stats`.
+        if DemoScreen.current == "stats" { return [.stats] }
+        #endif
+        return []
     }
 
     fileprivate static var initialProductsPath: [Route] {

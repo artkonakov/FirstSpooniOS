@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000" stroke="#000000" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+  <mask id="trash-cut" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+    <rect width="24" height="24" fill="#ffffff" stroke="none"/>
+    <path d="M10.25 11V16.75" fill="none" stroke="#000000" stroke-width="1.75"/>
+    <path d="M13.75 11V16.75" fill="none" stroke="#000000" stroke-width="1.75"/>
+  </mask>
+  <g mask="url(#trash-cut)">
+    <path d="M4 7H20" fill="none"/>
+    <path d="M8 7V5.75C8 3.82 9.46 3.3 12 3.3C14.54 3.3 16 3.82 16 5.75V7" fill="none"/>
+    <path d="M5.75 7C5.68 11.37 5.76 15.76 6.25 18.25C6.73 20.64 8.76 21 12 21C15.24 21 17.27 20.64 17.75 18.25C18.24 15.76 18.32 11.37 18.25 7"/>
+  </g>
+</svg>

@@ -12,6 +12,7 @@
   (те же ключи, что в Android; `%1$s` → `%1$@`; plurals → ключи `<name>#one|few|many|other`, в en — `#one|other`)
   Строки только для iOS — FirstSpoon/Resources/IOS.xcstrings, правится руками (в Xcode или как JSON).
 - `res/font/onest.ttf`                         → FirstSpoon/Resources/Fonts/Onest.ttf
+- `icons/*.svg`                              → FirstSpoon/Resources/Assets.xcassets/Icons
 - иконка 1024×1024 (RN `assets/icon.png`)      → AppIcon.appiconset
 """
 import json
@@ -35,6 +36,40 @@ def main():
         del args[i:i + 2]
     android = Path(args[0]).expanduser() if args else Path.home() / "Documents/Claude/FirstSpoon Android"
     main_src = android / "app/src/main"
+
+    # Иконки интерфейса: залитые SVG из Android icons/ → Assets.xcassets/Icons (шаблонные, для tint).
+    # Ключ — имя drawable в Android (ic_*), значение — файл SVG из icons/.
+    ui_icons = {
+        "ic_arrow_back": "arrow-back-fill",
+        "ic_ban": "ban-fill",
+        "ic_check_circle_fill": "check-circle-fill",
+        "ic_chevron_down": "chevron-down-fill",
+        "ic_chevron_left": "chevron-left-fill",
+        "ic_chevron_right": "chevron-right-fill",
+        "ic_close": "close-fill",
+        "ic_cloud": "cloud-fill",
+        "ic_document": "document-fill",
+        "ic_edit": "edit-fill",
+        "ic_heart": "heart",
+        "ic_heart_fill": "heart-fill",
+        "ic_image_fill": "image-fill",
+        "ic_peanut": "peanut-fill",
+        "ic_plus": "plus-fill",
+        "ic_refresh": "refresh-fill",
+        "ic_search": "search-fill",
+        "ic_settings": "settings-fill",
+        "ic_sparkles": "sparkles-fill",
+        "ic_tab_diary": "calendar-fill",
+        "ic_tab_home": "home-fill",
+        "ic_tab_products": "carrot-fill",
+        "ic_tab_profile": "user-fill",
+        "ic_trash": "trash-fill",
+        "ic_warning_fill": "warning-fill",
+    }
+    icon_sources = {name: android / "icons" / f"{svg}.svg" for name, svg in ui_icons.items()}
+    missing_icons = [str(src) for src in icon_sources.values() if not src.is_file()]
+    if missing_icons:
+        sys.exit("Нет SVG для иконок: " + ", ".join(missing_icons))
 
     APP.mkdir(parents=True, exist_ok=True)
     shutil.copy(main_src / "assets/catalog.json", APP / "catalog.json")
@@ -76,6 +111,20 @@ def main():
             "info": {"author": "xcode", "version": 1},
         })
 
+    icons_dir = xcassets / "Icons"
+    if icons_dir.exists():
+        shutil.rmtree(icons_dir)
+    write_json(icons_dir / "Contents.json", {"info": {"author": "xcode", "version": 1}})
+    for ic_name, src in icon_sources.items():
+        imageset = icons_dir / f"{ic_name}.imageset"
+        imageset.mkdir(parents=True)
+        shutil.copy(src, imageset / f"{ic_name}.svg")
+        write_json(imageset / "Contents.json", {
+            "images": [{"filename": f"{ic_name}.svg", "idiom": "universal"}],
+            "info": {"author": "xcode", "version": 1},
+            "properties": {"template-rendering-intent": "template", "preserves-vector-representation": True},
+        })
+
     ru = read_strings(main_src / "res/values/strings.xml")
     en_xml = main_src / "res/values-en/strings.xml"
     en = read_strings(en_xml) if en_xml.exists() else {}
@@ -107,6 +156,8 @@ def write_json(path: Path, data):
 def android_text(el) -> str:
     text = "".join(el.itertext())
     text = text.replace("\\'", "'").replace('\\"', '"').replace("\\n", "\n")
+    # Android хранит неразрывный пробел как `\u00A0`; в String Catalog нужен сам символ (иначе он виден текстом).
+    text = re.sub(r"\\u([0-9a-fA-F]{4})", lambda m: chr(int(m.group(1), 16)), text)
     if len(text) >= 2 and text[0] == '"' and text[-1] == '"':
         text = text[1:-1]
     # %1$s → %1$@ (строки в Swift — объекты); %d/%1$d и %% остаются.

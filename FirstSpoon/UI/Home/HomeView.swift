@@ -96,7 +96,11 @@ struct HomeView: View {
                                        onOther: { app.recommendations.skip($0) },
                                        onMarkReady: markReady)
                 }
-                ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal).id("progress")
+                ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal,
+                             onTap: {
+                                 Analytics.track(.statsOpened)
+                                 nav.open(.stats)
+                             }).id("progress")
                 // «Пока готовимся» — пустое состояние («попробуйте продукт выше») ему противоречит.
                 if state.isEmpty && !state.notReady {
                     EmptyState(emoji: "🥄", title: L.s("home_empty_title"), text: L.s("home_empty"))
@@ -129,7 +133,6 @@ struct HomeView: View {
                     ForEach(state.queued) { item in
                         ProductCard(productId: item.productId, name: item.name, onTap: { nav.open(.product(item.productId)) },
                                     supporting: { StatusBadge(status: item.status, tries: item.tries) },
-                                    trailing: { Chevron() },
                                     footer: { Text(note).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted) })
                     }
                 }
@@ -149,7 +152,7 @@ struct HomeView: View {
         }
         .bottomAction {
             // Общая кнопка записи: форма открывается с продуктом из рекомендации (его можно сменить).
-            AppButton(L.s("home_new_entry"), icon: "plus") {
+            AppButton(L.s("home_new_entry"), icon: "ic_plus") {
                 let pid = state.entryProductId
                 if pid != nil { Analytics.track(.recommendationRecord) }
                 nav.open(.entry(entryId: nil, productId: pid))
@@ -178,7 +181,6 @@ private struct TodayCard: View {
                             if let s = item.status, s != .notTried { StatusBadge(status: s, tries: item.tries) }
                         }
                     },
-                    trailing: { Chevron() },
                     footer: {
                         VStack(alignment: .leading, spacing: 10) {
                             Text(L.s("home_today_question")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted)
@@ -215,36 +217,13 @@ struct ChildMenu: View {
                 }
             }
             Divider()
-            Button(action: onAdd) { Label(L.s("child_add"), systemImage: "plus") }
+            Button(action: onAdd) { Label(L.s("child_add"), image: "ic_plus") }
         } label: {
             if let child = app.diary.activeChild { ChildAvatar(child: child, size: 34) }
         }
         .accessibilityLabel(L.s("child_switch"))
     }
 }
-
-private struct ProgressCard: View {
-    let introduced: Int
-    let goal: Int
-    var body: some View {
-        AppCard {
-            HStack(alignment: .lastTextBaseline, spacing: 8) {
-                Text("\(introduced)").font(AppFont.displaySmall).foregroundStyle(AppColors.primary)
-                Text(L.s("home_progress_of", goal)).font(AppFont.titleLarge).foregroundStyle(AppColors.inkMuted)
-            }
-            Text(L.s("home_progress_label")).font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted)
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(AppColors.surfaceSoft)
-                    Capsule().fill(AppColors.primary)
-                        .frame(width: geo.size.width * min(max(CGFloat(introduced) / CGFloat(goal), 0), 1))
-                }
-            }
-            .frame(height: 14)
-        }
-    }
-}
-
 
 extension HomeView {
     /// «Малыш уже держит голову и сидит»: отмечаем оба навыка — движок сразу предложит первые продукты.

@@ -20,15 +20,15 @@ struct ProfileView: View {
                     ChildCard(child: child, active: child.id == app.diary.activeChild?.id,
                               onTap: { app.diary.selectChild(child.id) }, onEdit: { nav.open(.child(child.id)) })
                 }
-                AppButton(L.s("child_add"), kind: .soft, icon: "plus") { nav.open(.child(nil)) }
+                AppButton(L.s("child_add"), kind: .soft, icon: "ic_plus") { nav.open(.child(nil)) }
                 Spacer().frame(height: 12)
                 if app.diary.activeChild != nil {
-                    ActionRow(title: L.s("export_row"), icon: "doc.richtext") {
+                    ActionRow(title: L.s("export_row"), icon: "ic_document") {
                         // Есть фото проб — сначала спрашиваем, какие класть в отчёт; нет — сразу без фото.
                         if app.diary.entries.contains(where: { !$0.photos.isEmpty }) { askPhotos = true } else { exportDiary(.none) }
                     }
                 }
-                ActionRow(title: L.s("settings"), icon: "gearshape.fill") { nav.open(.settings) }
+                ActionRow(title: L.s("settings"), icon: "ic_settings") { nav.open(.settings) }
             }
             .padding(.horizontal, screenPadding)
             .padding(.bottom, 24)
@@ -87,7 +87,7 @@ private struct ChildCard: View {
                 }
                 Spacer()
                 Button(action: onEdit) {
-                    Image(systemName: "pencil").font(.system(size: 20, weight: .semibold)).foregroundStyle(AppColors.inkMuted)
+                    Image("ic_edit").font(.system(size: 20, weight: .semibold)).foregroundStyle(AppColors.inkMuted)
                         .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
@@ -124,7 +124,7 @@ struct ChildEditView: View {
                     FieldLabel(L.s("child_birth_date")).padding(.top, 8)
                     ActionRow(title: birthDate.map { UiLocale.dayMonthYear($0) } ?? L.s("child_birth_date_pick"),
                               value: birthDate.map { Labels.ageText(Child(id: "", name: name, birthDate: $0)) },
-                              icon: "calendar") { pickDate = true }
+                              icon: "ic_tab_diary") { pickDate = true }
                     FieldLabel(L.s("child_sex")).padding(.top, 8)
                     SegmentedControl(options: Sex.allCases, selected: sex, label: Labels.label) { sex = sex == $0 ? nil : $0 }
                     ForEach(ProfileQuestion.allCases, id: \.self) { q in
@@ -200,7 +200,7 @@ private struct ExportPhotosSheet: View {
                     ChoiceRow(label: L.s(key), selected: current == mode, emoji: emoji) { choice = mode.rawValue }
                 }
                 Text(L.s("export_photos_note")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted).padding(.leading, 6)
-                AppButton(L.s("export_row"), icon: "doc.richtext") { onExport(current) }.padding(.top, 8)
+                AppButton(L.s("export_row"), icon: "ic_document") { onExport(current) }.padding(.top, 8)
             }
             .padding(.horizontal, screenPadding)
             .padding(.bottom, 24)

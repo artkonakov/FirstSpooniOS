@@ -78,16 +78,22 @@ final class DiaryRepository {
         let oldPhoto = record.photo
         if case .some(let newPhoto) = photo { record.photo = newPhoto }
         record.updatedAt = now
-        try db.dbQueue.write { db in
+        let addedCount = try db.dbQueue.write { db in
             try record.save(db)
+            var count = 0
             for product in addKnown {
-                try Self.updateProductRow(db, childId: record.id, productId: product, now: now) { $0.status = ProductMark.known.rawValue }
+                if try Self.updateProductRow(db, childId: record.id, productId: product, now: now, onlyIf: { $0.status == nil },
+                                             { $0.status = ProductMark.known.rawValue }) {
+                    count += 1
+                }
             }
             for product in removeKnown {
-                try Self.updateProductRow(db, childId: record.id, productId: product, now: now) { $0.status = nil }
+                try Self.updateProductRow(db, childId: record.id, productId: product, now: now,
+                                          onlyIf: { $0.status == ProductMark.known.rawValue }) { $0.status = nil }
             }
+            return count
         }
-        for _ in addKnown { Analytics.track(.productMarked(mark: .known)) }
+        for _ in 0..<addedCount { Analytics.track(.productMarked(mark: .known)) }
         if oldPhoto != record.photo {
             photos.delete(oldPhoto)
             if record.photo != nil { Analytics.track(.childPhotoSet) }
@@ -199,19 +205,23 @@ final class DiaryRepository {
         guard let childId = activeChild?.id else { throw RepositoryError.noActiveChild }
         let now = nowMillis()
         try db.dbQueue.write { db in
-            try Self.updateProductRow(db, childId: childId, productId: productId, now: now, change)
+            _ = try Self.updateProductRow(db, childId: childId, productId: productId, now: now, change)
         }
         reload()
     }
 
+    @discardableResult
     private static func updateProductRow(_ db: Database, childId: String, productId: String, now: Int64,
-                                         _ change: (inout ChildProductRecord) -> Void) throws {
+                                         onlyIf: (ChildProductRecord) -> Bool = { _ in true },
+                                         _ change: (inout ChildProductRecord) -> Void) throws -> Bool {
         var row = try ChildProductRecord.fetchOne(db, key: ["child_id": childId, "product_id": productId])
             ?? ChildProductRecord(childId: childId, productId: productId, status: nil, liked: false, note: nil, createdAt: now, updatedAt: now)
+        guard onlyIf(row) else { return false }
         change(&row)
         row.updatedAt = now
         row.deletedAt = (row.status == nil && !row.liked) ? now : nil
         try row.save(db)
+        return true
     }
 
     private static func clean(_ note: String?) -> String? {

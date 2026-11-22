@@ -98,12 +98,11 @@ struct ActionRow: View {
         AppCard(padding: EdgeInsets(top: 18, leading: 20, bottom: 18, trailing: 20), onTap: onTap) {
             HStack(spacing: 14) {
                 if let icon {
-                    Image(systemName: icon).font(.system(size: 22, weight: .semibold)).foregroundStyle(AppColors.primary)
+                    Image(icon).font(.system(size: 22, weight: .semibold)).foregroundStyle(AppColors.primary)
                 }
                 Text(title).font(AppFont.titleMedium).foregroundStyle(titleColor)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if let value { Text(value).font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted) }
-                if onTap != nil { Chevron() }
             }
         }
     }
@@ -160,7 +159,7 @@ struct SwitchRow: View {
 
 struct Chevron: View {
     var body: some View {
-        Image(systemName: "chevron.right").font(.system(size: 18, weight: .bold)).foregroundStyle(AppColors.ink)
+        Image("ic_chevron_right").font(.system(size: 18, weight: .bold)).foregroundStyle(AppColors.ink)
             .padding(.leading, 4)
     }
 }

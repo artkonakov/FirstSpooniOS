@@ -102,7 +102,7 @@ struct AuthEmailView: View {
                 VStack(alignment: .leading, spacing: 24) {
                     Text(L.s(model.mode == .login ? "auth_subtitle" : "link_subtitle"))
                         .font(AppFont.bodyLarge).foregroundStyle(AppColors.inkMuted)
-                    AppTextField(text: $model.email, placeholder: L.s("auth_email"), icon: "envelope", error: model.error,
+                    AppTextField(text: $model.email, placeholder: L.s("auth_email"), error: model.error,
                                  keyboard: .emailAddress, contentType: .emailAddress, capitalization: .never,
                                  onSubmit: submit)
                     if model.emailInUse, let onLoginInstead {

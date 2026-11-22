@@ -36,6 +36,17 @@ final class FeedingReadinessTests: XCTestCase {
         XCTAssertEqual(eval(nil, A.yes, A.yes), .ready, "без даты рождения — по навыкам")
     }
 
+    func testInterestInFoodDoesNotChangeReadiness() {
+        let interested = ChildProfile([ProfileQuestion.foodInterest.key: A.yes])
+        let notInterested = ChildProfile([
+            ProfileQuestion.headControl.key: A.yes,
+            ProfileQuestion.sits.key: A.yes,
+            ProfileQuestion.foodInterest.key: A.no,
+        ])
+        XCTAssertEqual(FeedingReadiness.evaluate(birthDate: born(7), profile: notInterested, knownFoods: [], today: today), .ready)
+        XCTAssertEqual(FeedingReadiness.evaluate(birthDate: born(7), profile: interested, knownFoods: [], today: today), .checkWithDoctor)
+    }
+
     func testCurrentTreatsLegacyChildrenAsReady() {
         XCTAssertNil(FeedingReadiness.current(birthDate: born(5), profile: ChildProfile(), started: false, today: today))
         XCTAssertTrue(FeedingReadiness.canOfferNewFoods(nil))

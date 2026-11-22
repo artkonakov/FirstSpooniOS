@@ -18,6 +18,9 @@ public struct LocalDate: Hashable, Comparable, Sendable, CustomStringConvertible
     public func plusDays(_ n: Int) -> LocalDate { LocalDate(epochDay: epochDay + n) }
     public func minusDays(_ n: Int) -> LocalDate { plusDays(-n) }
 
+    /// День недели, где 0 — понедельник … 6 — воскресенье (1970-01-01 был четвергом, поэтому +3).
+    public var weekdayMondayBased: Int { ((epochDay + 3) % 7 + 7) % 7 }
+
     /// Как `LocalDate.plusMonths`: день обрезается до последнего дня месяца (31 янв + 1 мес = 28/29 фев).
     public func plusMonths(_ n: Int) -> LocalDate {
         let (y, m, d) = LocalDate.civilFromDays(epochDay)

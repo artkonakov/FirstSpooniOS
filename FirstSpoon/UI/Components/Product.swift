@@ -8,10 +8,14 @@ struct ProductThumb: View {
     let productId: String
     let name: String
     var size: CGFloat = 56
+    /// В календаре статистики фон рисует клетка — квадрат внутри не нужен.
+    var background: Color? = AppColors.surfaceSoft
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: size * 0.32, style: .continuous).fill(AppColors.surfaceSoft)
+            if let background {
+                RoundedRectangle(cornerRadius: size * 0.32, style: .continuous).fill(background)
+            }
             // Своё фото продукта (только у своих продуктов) — вместо буквы-заглушки.
             if let photo = app.photos.image(app.catalog.catalog.productsById[productId]?.photo) {
                 Image(uiImage: photo).resizable().scaledToFill().frame(width: size, height: size)
@@ -23,6 +27,29 @@ struct ProductThumb: View {
             }
         }
         .frame(width: size, height: size)
+    }
+}
+
+/// Компактная пилюля продукта со значком и названием — для списков на экране статистики.
+/// Цвет задаётся вызывающим (фон и текст из `AppColors`), тап открывает страницу продукта.
+struct ProductPill: View {
+    let productId: String
+    let name: String
+    let background: Color
+    let foreground: Color
+    let onTap: () -> Void
+
+    var body: some View {
+        Button(action: onTap) {
+            HStack(spacing: 8) {
+                ProductThumb(productId: productId, name: name, size: 28)
+                Text(name).font(AppFont.labelMedium).foregroundStyle(foreground).lineLimit(1)
+            }
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .background(background, in: Capsule())
+        }
+        .buttonStyle(PressableStyle())
     }
 }
 
@@ -41,7 +68,7 @@ struct Badge: View {
     var icon: String?
     var body: some View {
         HStack(spacing: 6) {
-            if let icon { Image(systemName: icon).font(.system(size: 15, weight: .bold)) }
+            if let icon { Image(icon).font(.system(size: 15, weight: .bold)) }
             Text(text).font(AppFont.labelMedium).lineLimit(1)
         }
         .foregroundStyle(color)
@@ -80,11 +107,11 @@ struct StatusBadge: View {
             .padding(.horizontal, 12).frame(height: 32)
             .background(AppColors.progressSoft, in: Capsule())
         case .introduced:
-            Badge(text: L.s("status_introduced"), color: AppColors.good, background: AppColors.goodSoft, icon: "checkmark.circle.fill")
+            Badge(text: L.s("status_introduced"), color: AppColors.good, background: AppColors.goodSoft, icon: "ic_check_circle_fill")
         case .reaction:
-            Badge(text: L.s("status_reaction"), color: AppColors.alert, background: AppColors.alertSoft, icon: "exclamationmark.triangle.fill")
+            Badge(text: L.s("status_reaction"), color: AppColors.alert, background: AppColors.alertSoft, icon: "ic_warning_fill")
         case .allergy:
-            Badge(text: L.s("status_allergy"), color: AppColors.alert, background: AppColors.alertSoft, icon: "exclamationmark.triangle.fill")
+            Badge(text: L.s("status_allergy"), color: AppColors.alert, background: AppColors.alertSoft, icon: "ic_warning_fill")
         case .excluded:
             Badge(text: L.s("status_excluded"), color: AppColors.inkMuted, background: AppColors.neutralSoft)
         }
@@ -128,15 +155,23 @@ struct ProductCard<Supporting: View, Trailing: View, Footer: View>: View {
     }
 }
 
-extension ProductCard where Trailing == Chevron, Footer == EmptyView {
-    init(productId: String, name: String, onTap: @escaping () -> Void, @ViewBuilder supporting: @escaping () -> Supporting) {
-        self.init(productId: productId, name: name, onTap: onTap, supporting: supporting, trailing: { Chevron() }, footer: { EmptyView() })
+extension ProductCard where Trailing == EmptyView {
+    init(productId: String, name: String, onTap: (() -> Void)? = nil,
+         @ViewBuilder supporting: @escaping () -> Supporting,
+         @ViewBuilder footer: @escaping () -> Footer) {
+        self.init(productId: productId, name: name, onTap: onTap, supporting: supporting, trailing: { EmptyView() }, footer: footer)
     }
 }
 
-extension ProductCard where Supporting == EmptyView, Trailing == Chevron, Footer == EmptyView {
+extension ProductCard where Trailing == EmptyView, Footer == EmptyView {
+    init(productId: String, name: String, onTap: @escaping () -> Void, @ViewBuilder supporting: @escaping () -> Supporting) {
+        self.init(productId: productId, name: name, onTap: onTap, supporting: supporting, trailing: { EmptyView() }, footer: { EmptyView() })
+    }
+}
+
+extension ProductCard where Supporting == EmptyView, Trailing == EmptyView, Footer == EmptyView {
     init(productId: String, name: String, onTap: @escaping () -> Void) {
-        self.init(productId: productId, name: name, onTap: onTap, supporting: { EmptyView() }, trailing: { Chevron() }, footer: { EmptyView() })
+        self.init(productId: productId, name: name, onTap: onTap, supporting: { EmptyView() }, trailing: { EmptyView() }, footer: { EmptyView() })
     }
 }
 
