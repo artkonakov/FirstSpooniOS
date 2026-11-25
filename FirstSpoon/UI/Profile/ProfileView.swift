@@ -28,6 +28,12 @@ struct ProfileView: View {
                         if app.diary.entries.contains(where: { !$0.photos.isEmpty }) { askPhotos = true } else { exportDiary(.none) }
                     }
                 }
+                if case .loggedIn(let email) = app.session.state, email != nil {
+                    DiarySyncControls(sync: app.diarySync) {
+                        nav.open(.devices)
+                        Analytics.track(.deviceSessionsOpened)
+                    }
+                }
                 ActionRow(title: L.s("settings"), icon: "ic_settings") { nav.open(.settings) }
             }
             .padding(.horizontal, screenPadding)

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="574" height="554" viewBox="0 0 574 554">
+  <path id="cuff" fill="#F9E7D2" d="M173 263 C148 271 82 327 48 376 C12 422 30 479 92 517 C133 542 161 537 188 516 C225 489 259 450 288 421 C299 402 282 377 244 332 C216 298 192 255 173 263 Z"/>
+  <path id="hand" fill="#FBB28D" d="M206 264 C236 230 262 187 311 139 C347 110 404 90 462 74 C487 67 517 57 530 69 C544 82 539 105 523 118 C503 134 466 144 441 158 C472 170 479 190 476 226 C490 245 496 275 482 293 C484 321 471 344 445 353 C427 360 408 359 389 350 C367 362 338 373 315 372 C303 383 286 405 271 415 C252 429 189 378 175 328 C169 303 174 278 206 264 Z"/>
+  <path id="index-fold" fill="none" stroke="#DD7B5D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M443 157 C425 167 407 181 395 193"/>
+  <path id="thumb-fold" fill="none" stroke="#DD7B5D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M334 191 C362 185 403 191 418 214 C432 236 406 260 384 266 C371 270 360 268 353 265 C349 292 333 313 311 324"/>
+  <path id="middle-finger-fold" fill="none" stroke="#DD7B5D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M375 269 C369 280 379 292 391 294 C422 298 462 264 472 229"/>
+  <path id="ring-finger-fold" fill="none" stroke="#DD7B5D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M390 294 C376 308 386 326 408 328 C432 330 459 314 473 297"/>
+</svg>

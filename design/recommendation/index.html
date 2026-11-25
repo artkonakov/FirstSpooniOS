@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Следующий продукт — черновик</title>
+<style>
+:root { color-scheme: light; font: 16px/1.5 Onest, system-ui, sans-serif; color: #292622; background: #f7f2e9; }
+* { box-sizing: border-box; }
+body { max-width: 860px; padding: 28px 20px 48px; margin: auto; }
+h1 { font-size: clamp(2rem, 6vw, 3rem); line-height: 1.1; margin: .4rem 0 1rem; letter-spacing: -.04em; }
+h2 { font-size: 1.2rem; line-height: 1.2; margin: 0 0 12px; }
+p { margin: 0 0 12px; }
+label { display: block; margin-bottom: 6px; font-weight: 650; }
+select { padding: 10px 14px; font: inherit; background: #fff; color: inherit; border: 1px solid #8b887e; border-radius: 12px; max-width: 100%; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 14px; margin: 20px 0; }
+article { background: #fff; border-radius: 28px; padding: 22px; display: flex; flex-direction: column; align-items: start; }
+.product { font-size: 1.5rem; line-height: 1.2; font-weight: 750; margin: 2px 0 8px; }
+.note { color: #585249; }
+button { margin-top: auto; border: 0; border-radius: 24px; padding: 10px 16px; background: #dfecd8; color: #1c3924; font: inherit; cursor: pointer; }
+button:focus-visible, select:focus-visible { outline: 3px solid #28683a; outline-offset: 3px; }
+a { color: #244e31; }
+</style>
+</head>
+<body>
+<header>
+  <p class="note">Ложку за маму · Черновик</p>
+  <h1>Следующий продукт</h1>
+</header>
+<label for="scenario">Что уже отмечено в дневнике</label>
+<select id="scenario">
+  <option value="first">Ничего не пробовали</option>
+  <option value="second">Кабачок уже знаком</option>
+  <option value="third">Кабачок и гречневая каша уже знакомы</option>
+</select>
+<main class="grid" id="cards" aria-live="polite"></main>
+<p><a href="../../docs/complementary-feeding/recommendation-draft.md">Правила и результаты сравнения</a></p>
+<script>
+const scenarios = {
+  first: [
+    [["Кабачок", "Можно начать с кабачка"], ["Гречневая каша", "Можно начать с гречневой каши"]],
+    [["Кабачок", "Можно начать с кабачка"], ["Гречневая каша", "Можно начать с гречневой каши"]]
+  ],
+  second: [
+    [["Гречневая каша", "После овощей можно попробовать кашу"], ["Кукурузная каша", "После овощей можно попробовать кашу"]],
+    [["Говядина", "В мясных блюдах есть железо"], ["Индейка", "В мясных блюдах есть железо"]]
+  ],
+  third: [
+    [["Говядина", "В мясных блюдах есть железо"], ["Индейка", "В мясных блюдах есть железо"]],
+    [["Говядина", "В мясных блюдах есть железо"], ["Индейка", "В мясных блюдах есть железо"]]
+  ]
+};
+const titles = ["Понятные шаги", "По вашему дневнику"];
+const cards = document.getElementById("cards");
+const scenario = document.getElementById("scenario");
+
+function renderCards() {
+  cards.replaceChildren();
+  scenarios[scenario.value].forEach((alternatives, index) => {
+    const card = document.createElement("article");
+    const heading = document.createElement("h2");
+    heading.textContent = titles[index];
+    const product = document.createElement("p");
+    product.className = "product";
+    const reason = document.createElement("p");
+    const another = document.createElement("button");
+    another.type = "button";
+    another.textContent = "Предложить другой";
+    another.setAttribute("aria-label", "Предложить другой продукт · " + titles[index]);
+    let choice = 0;
+    function showChoice() {
+      [product.textContent, reason.textContent] = alternatives[choice];
+    }
+    another.addEventListener("click", () => {
+      choice = (choice + 1) % alternatives.length;
+      showChoice();
+    });
+    showChoice();
+    card.append(heading, product, reason, another);
+    cards.append(card);
+  });
+}
+scenario.addEventListener("change", renderCards);
+renderCards();
+</script>
+</body>
+</html>

@@ -139,12 +139,23 @@ final class OnboardingViewModel {
         }
     }
 
-    func setSex(_ v: Sex) { sex = sex == v ? nil : v }
+    func setSex(_ v: Sex) {
+        sex = sex == v ? nil : v
+        Analytics.track(.onboardingOptionChanged(option: .sex(v), selected: sex == v))
+    }
+
+    func toggleSingle(_ question: ProfileQuestion, _ code: String) {
+        profile = profile.toggleSingle(question, code)
+        if question == .milkFeeding, let choice = AnalyticsEvent.OnboardingOption.MilkFeeding(rawValue: code) {
+            Analytics.track(.onboardingOptionChanged(option: .milkFeeding(choice), selected: profile.single(question) == code))
+        }
+    }
 
     func toggleKnownFood(_ id: String) {
         // Продукт из дневника снять нельзя — его пробы уже записаны.
         guard !inDiary.contains(id), knownFoodChoices.contains(where: { $0.0 == id }) else { return }
         if knownFoods.contains(id) { knownFoods.remove(id) } else { knownFoods.insert(id) }
+        Analytics.track(.onboardingOptionChanged(option: .knownFood(id), selected: knownFoods.contains(id)))
     }
 
     /// Шаг показан — воронка онбординга.
@@ -274,7 +285,7 @@ struct OnboardingStepView: View {
             }
         case .question(let q):
             QuestionInput(question: q, profile: model.profile, allergens: model.allergens,
-                          onSingle: { model.profile = model.profile.toggleSingle(q, $0) },
+                          onSingle: { model.toggleSingle(q, $0) },
                           onMulti: { model.profile = model.profile.toggleMulti(q, $0) })
         case .result:
             EmptyView()

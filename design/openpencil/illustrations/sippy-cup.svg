@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="906" height="906" viewBox="0 0 906 906" role="img" aria-label="Blue sippy cup with a yellow lid">
+  <defs>
+    <linearGradient id="blue" gradientUnits="userSpaceOnUse" x1="457" y1="394" x2="457" y2="879">
+      <stop offset="0" stop-color="#5879D6"/>
+      <stop offset="0.46" stop-color="#5A7BD8"/>
+      <stop offset="1" stop-color="#5B7CD8"/>
+    </linearGradient>
+    <linearGradient id="yellow-rim" gradientUnits="userSpaceOnUse" x1="457" y1="284" x2="457" y2="471">
+      <stop offset="0" stop-color="#F3A627"/>
+      <stop offset="1" stop-color="#F5AA2A"/>
+    </linearGradient>
+    <linearGradient id="yellow-top" gradientUnits="userSpaceOnUse" x1="457" y1="196" x2="457" y2="398">
+      <stop offset="0" stop-color="#FBB638"/>
+      <stop offset="1" stop-color="#FCB935"/>
+    </linearGradient>
+    <linearGradient id="yellow-spout" gradientUnits="userSpaceOnUse" x1="510" y1="81" x2="510" y2="299">
+      <stop offset="0" stop-color="#F5A725"/>
+      <stop offset="1" stop-color="#F4AB2B"/>
+    </linearGradient>
+    <linearGradient id="orange" gradientUnits="userSpaceOnUse" x1="513" y1="91" x2="513" y2="126">
+      <stop offset="0" stop-color="#E18310"/>
+      <stop offset="1" stop-color="#E4860C"/>
+    </linearGradient>
+  </defs>
+  <path id="left-handle" fill="url(#blue)" d="M186 394 C132 397 94 427 75 481 C50 550 67 624 119 666 C135 679 152 683 165 674 C181 663 181 647 170 631 C151 607 138 585 136 556 C133 529 142 502 157 488 C166 480 177 477 186 480 C207 465 216 413 186 394 Z"/>
+  <path id="right-handle" fill="url(#blue)" d="M728 394 C782 398 821 427 840 480 C865 548 848 624 796 665 C781 678 763 683 750 674 C735 663 734 647 745 631 C764 608 777 586 779 557 C782 530 774 503 758 488 C749 480 738 477 728 480 C708 465 698 413 728 394 Z"/>
+  <path id="cup-body" fill="url(#blue)" d="M173 389 C235 394 337 420 456 420 C575 420 679 394 742 389 C735 455 726 507 721 566 C715 625 709 688 701 746 C688 829 632 877 457 879 C282 879 227 829 214 746 C207 689 201 626 194 566 C188 507 180 455 173 389 Z"/>
+  <path id="lid-rim" fill="url(#yellow-rim)" d="M175 285 C215 263 332 239 456 239 C580 239 698 263 739 285 C750 307 755 343 753 367 C753 390 743 403 720 416 C668 447 567 471 457 471 C344 471 247 447 194 416 C171 403 161 390 161 367 C160 343 164 307 175 285 Z"/>
+  <path id="lid-top" fill="url(#yellow-top)" d="M169 303 C169 251 292 197 456 196 C620 196 744 248 744 302 C744 355 618 398 456 398 C296 398 169 356 169 303 Z"/>
+  <path id="spout" fill="url(#yellow-spout)" d="M439 111 C443 91 472 81 513 81 C550 81 582 92 587 110 C596 150 606 208 614 250 C620 276 568 298 506 299 C447 299 390 279 395 252 C406 220 425 161 439 111 Z"/>
+  <path id="spout-opening" fill="url(#orange)" d="M462 108 C462 99 487 91 514 91 C541 91 566 98 566 108 C567 119 541 126 514 126 C485 126 461 118 462 108 Z"/>
+</svg>

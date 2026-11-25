@@ -16,6 +16,7 @@ final class AppContainer {
     let catalog: CatalogRepository
     let activeChildStore: ActiveChildStore
     let diary: DiaryRepository
+    private(set) var diarySync: DiarySync!
     let onboarding: OnboardingStore
     let recommendations: RecommendationRepository
     let reminderSettings: ReminderSettings
@@ -37,14 +38,24 @@ final class AppContainer {
         session = SessionManager(tokens: tokens)
         api = ApiClient(tokens: tokens)
         auth = AuthRepository(api: api, tokens: tokens, session: session, db: self.db, photos: photos, defaults: defaults)
-        catalog = CatalogRepository(db: self.db, photos: photos)
+        let productCatalog = CatalogRepository(db: self.db, photos: photos)
+        catalog = productCatalog
         activeChildStore = ActiveChildStore(defaults: defaults)
-        diary = DiaryRepository(db: self.db, activeStore: activeChildStore, photos: photos)
+        diary = DiaryRepository(db: self.db, activeStore: activeChildStore, photos: photos) { id in
+            productCatalog.catalog.productsById[id]
+        }
         onboarding = OnboardingStore(defaults: defaults)
         recommendations = RecommendationRepository(diary: diary, catalog: catalog)
         reminderSettings = ReminderSettings(defaults: defaults)
         reminders = ReminderScheduler(settings: reminderSettings, onboarding: onboarding, diary: diary, catalog: catalog,
                                       accountStarted: { [unowned self] in self.accountStarted })
+
+        diarySync = DiarySync(db: self.db, api: api, tokens: tokens, restored: { [weak self] in
+            self?.onboarding.set(true)
+        }, changed: { [weak self] in
+            self?.catalog.reload()
+            self?.diary.reload()
+        })
 
         auth.onUserDataCleared = { [unowned self] in
             catalog.reload()

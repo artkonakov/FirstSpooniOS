@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 /// Результат сетевого вызова. Экраны никогда не видят исключений URLSession.
 enum ApiResult<T> {
@@ -65,11 +66,15 @@ final class ApiClient: @unchecked Sendable {
     }()
 
     func call<Res: Decodable>(_ method: String, _ path: String, body: (any Encodable)? = nil, authorized: Bool,
-                              as: Res.Type = Res.self) async -> ApiResult<Res> {
+                              as: Res.Type = Res.self, root: URL = baseURL, encoder: JSONEncoder = ApiClient.encoder,
+                              expectedOwner: String? = nil) async -> ApiResult<Res> {
         var attempt = 0
         while true {
+            if let expectedOwner, (tokens.userId ?? "local") != expectedOwner {
+                return .failure(ApiError(status: 401, message: "Session changed", code: "AUTHORIZATION_REQUIRED"))
+            }
             let sentToken = authorized ? tokens.accessToken : nil
-            let result = await send(method, path, body: body, token: sentToken)
+            let result = await send(method, path, body: body, token: sentToken, root: root, encoder: encoder)
             switch result {
             case .failure(let e):
                 return .failure(e)
@@ -105,19 +110,25 @@ final class ApiClient: @unchecked Sendable {
         #endif
     }
 
-    fileprivate func send(_ method: String, _ path: String, body: (any Encodable)?, token: String?) async -> ApiResult<(Int, Data)> {
+    fileprivate func send(_ method: String, _ path: String, body: (any Encodable)?, token: String?,
+                           root: URL = baseURL, encoder: JSONEncoder = ApiClient.encoder) async -> ApiResult<(Int, Data)> {
         if Self.offline { return .failure(ApiError(status: nil, message: "debug_offline", code: nil)) }
-        var request = URLRequest(url: Self.baseURL.appendingPathComponent(path))
+        var request = URLRequest(url: root.appendingPathComponent(path))
         request.httpMethod = method
         request.timeoutInterval = 30
         request.setValue("application/json", forHTTPHeaderField: "Accept")
+        if path == "auth/email/verify" || path == "auth/refresh" {
+            let device = await MainActor.run { UIDevice.current.model }
+            request.setValue(device, forHTTPHeaderField: "X-Device-Name")
+        }
         if let token { request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization") }
         if let body {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = try? Self.encoder.encode(AnyEncodable(body))
+            request.httpBody = try? encoder.encode(AnyEncodable(body))
         }
         do {
-            let (data, response) = try await session.data(for: request)
+            let redirectGuard = root == Self.baseURL ? nil : RejectRedirects()
+            let (data, response) = try await session.data(for: request, delegate: redirectGuard)
             return .success(((response as? HTTPURLResponse)?.statusCode ?? 0, data))
         } catch {
             return .failure(ApiError(status: nil, message: error.localizedDescription, code: nil))
@@ -131,6 +142,13 @@ final class ApiClient: @unchecked Sendable {
         struct Body: Decodable { let error: String?; let message: String?; let code: String? }
         let body = try? JSONDecoder().decode(Body.self, from: data)
         return ApiError(status: status, message: body?.error ?? body?.message ?? "HTTP \(status)", code: body?.code)
+    }
+}
+
+private final class RejectRedirects: NSObject, URLSessionTaskDelegate {
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse,
+                    newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        completionHandler(nil)
     }
 }
 

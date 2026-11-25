@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="421" viewBox="0 0 440 421">
+  <path id="hair" fill="#6D3E2E" d="M141 371 C83 375 30 347 21 299 C12 266 26 226 40 190 C53 149 71 96 109 63 C161 16 243 6 294 47 C342 57 375 106 389 156 C403 200 428 248 418 296 C405 353 358 373 306 371 C266 367 229 361 192 364 Z"/>
+  <path id="neck" fill="#FFBC97" d="M186 328 C208 332 240 332 263 328 C263 344 264 350 272 358 C264 377 249 395 227 397 C207 398 184 379 179 359 C185 351 186 343 186 328 Z"/>
+  <path id="neck-shadow" fill="#F28B65" d="M186 337 C203 344 245 344 263 336 L266 348 C251 356 244 361 229 362 C211 364 195 358 183 353 Z"/>
+  <path id="face" fill="#FFBC97" d="M123 213 C175 203 247 179 280 121 C290 154 313 175 327 209 C330 216 331 230 331 237 C335 232 337 223 338 217 C359 205 377 221 369 245 C363 267 342 281 323 270 C312 309 277 347 230 351 C185 355 144 319 127 270 C103 282 82 264 79 242 C76 219 93 206 113 218 C116 229 120 234 121 236 Z"/>
+  <path id="left-ear-detail" fill="none" stroke="#E77551" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M113 242 C102 229 93 237 97 247 C100 253 104 255 110 255"/>
+  <path id="right-ear-detail" fill="none" stroke="#E77551" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M337 242 C348 229 357 237 353 247 C350 253 346 255 340 255"/>
+  <path id="left-eyebrow" fill="none" stroke="#6D3E2E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M156 228 C165 218 180 216 193 220"/>
+  <path id="right-eyebrow" fill="none" stroke="#6D3E2E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M264 220 C278 215 292 220 301 228"/>
+  <path id="left-eye" fill="#55250E" d="M174 272 C174 266 178 261 183 261 C188 261 192 266 192 272 C192 278 188 283 183 283 C178 283 174 278 174 272 Z"/>
+  <path id="right-eye" fill="#55250E" d="M265 271 C265 265 269 260 274 260 C279 260 283 265 283 271 C283 277 279 282 274 282 C269 282 265 277 265 271 Z"/>
+  <path id="nose" fill="none" stroke="#6D3E2E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M217 294 C214 311 240 312 239 294"/>
+  <path id="smile" fill="none" stroke="#6D3E2E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M200 317 C212 332 238 333 254 317"/>
+</svg>

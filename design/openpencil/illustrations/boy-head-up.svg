@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="414" height="438" viewBox="0 0 414 438">
+  <path id="hair" fill="#7B402C" d="M63 299 C27 260 19 191 43 144 C81 74 153 39 224 54 C221 45 215 38 206 32 C200 25 216 25 226 27 C249 31 265 47 271 69 C322 91 359 143 361 194 C364 250 335 309 297 342 C244 387 117 379 76 323 Z"/>
+  <path id="neck" fill="#FBB28D" d="M158 352 L234 352 L235 385 C237 390 238 391 241 393 C232 413 216 423 197 423 C179 422 159 413 152 394 C156 389 157 385 157 379 Z"/>
+  <path id="neck-shadow" fill="#FB8958" d="M158 363 C179 370 217 372 234 362 L234 373 C213 388 184 387 158 373 Z"/>
+  <path id="face" fill="#FBB28D" d="M109 123 C158 119 219 110 263 93 C299 132 319 171 319 243 C335 231 357 242 361 259 C371 293 342 323 306 311 C285 349 253 371 198 371 C146 371 104 343 85 309 C65 321 39 309 32 282 C23 254 44 230 73 241 C73 195 83 152 109 123 Z"/>
+  <path id="left-ear-detail" fill="none" stroke="#FB8958" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M69 275 C58 262 49 270 53 280 C56 286 60 288 66 288"/>
+  <path id="right-ear-detail" fill="none" stroke="#FB8958" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M322 274 C333 261 342 269 338 279 C335 285 331 287 325 287"/>
+  <path id="left-eyebrow" fill="none" stroke="#7B402C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M110 156 C119 141 133 134 146 137"/>
+  <path id="right-eyebrow" fill="none" stroke="#7B402C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M245 137 C260 133 276 144 283 157"/>
+  <path id="left-eye" fill="#51230F" d="M128 191 C128 183 133 177 139 177 C145 177 150 183 150 191 C150 199 145 205 139 205 C133 205 128 199 128 191 Z"/>
+  <path id="right-eye" fill="#51230F" d="M242 191 C242 183 247 177 253 177 C259 177 264 183 264 191 C264 199 259 205 253 205 C247 205 242 199 242 191 Z"/>
+  <path id="nose" fill="none" stroke="#7B402C" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M202 205 C184 199 178 226 200 225"/>
+  <path id="smile" fill="none" stroke="#7B402C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M158 247 C175 270 218 273 236 246"/>
+</svg>

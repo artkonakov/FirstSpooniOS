@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="430" height="937" viewBox="0 0 430 937">
+  <path id="neck" fill="#FFBA94" d="M198 339 L274 360 L273 392 C267 402 231 402 196 383 Z"/>
+  <path id="neck-shadow" fill="#FB895B" d="M198 352 C225 359 251 365 273 365 L273 376 C248 378 221 370 198 362 Z"/>
+  <path id="hair" fill="#773923" d="M158 370 C81 370 35 325 28 262 C21 205 39 143 74 99 C124 36 198 16 261 30 C312 40 356 71 373 107 C384 128 385 147 376 154 C352 172 329 186 281 215 C255 245 239 279 221 316 C221 354 207 369 158 370 Z"/>
+  <path id="ankle" fill="#FFBA94" d="M181 804 L259 808 L264 843 C244 854 203 849 182 843 Z"/>
+  <path id="shoe-sole" fill="#FCEBD4" d="M177 877 C215 868 307 872 320 881 C334 891 337 905 315 910 C285 918 214 918 184 910 C165 906 163 896 177 877 Z"/>
+  <path id="shoe-upper" fill="#286DD5" d="M218 839 C240 830 271 837 297 841 C310 848 327 869 330 881 C331 895 184 899 173 885 C172 874 199 855 218 839 Z"/>
+  <path id="shoe-lace-top" fill="none" stroke="#FEEDD7" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round" d="M223 851 C242 846 264 848 284 853"/>
+  <path id="shoe-lace-bottom" fill="none" stroke="#FEEDD7" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round" d="M214 868 C230 863 256 864 277 869"/>
+  <path id="shirt" fill="#FEEDD7" d="M197 380 C222 383 252 402 273 394 C288 401 303 425 309 446 C318 475 301 545 292 600 L170 629 C155 595 154 546 158 507 C163 450 173 405 197 380 Z"/>
+  <path id="overalls" fill="#FC6069" d="M219 386 C252 385 275 412 291 442 C299 446 305 441 311 442 C330 493 340 547 340 592 C340 653 320 712 297 765 C286 789 276 813 261 819 C243 825 205 824 184 820 C163 817 156 786 153 752 C150 726 149 706 148 696 C122 663 114 625 127 588 C134 568 142 551 144 538 C151 492 151 435 177 405 C190 390 206 386 219 386 Z"/>
+  <path id="button" fill="#FEEDD7" d="M285 470 C285 461 292 453 300 453 C308 453 315 461 315 470 C315 479 308 487 300 487 C292 487 285 479 285 470 Z"/>
+  <path id="pocket" fill="none" stroke="#DA4548" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M314 613 C310 633 295 651 279 657"/>
+  <path id="hand" fill="#FFBA94" d="M191 599 C201 591 231 587 252 597 C261 608 269 618 273 638 C275 648 269 653 264 647 C265 662 259 677 249 677 C244 678 240 676 238 675 C230 685 221 682 216 673 L211 673 C201 679 195 670 195 658 C196 647 191 643 190 633 C188 620 189 609 191 599 Z"/>
+  <path id="sleeve" fill="#FEEDD7" d="M209 405 C234 398 257 423 263 447 C268 466 261 482 258 502 C254 525 256 542 258 567 C259 583 260 597 253 599 C240 592 209 597 193 607 C184 613 178 595 174 582 C164 552 162 526 163 501 C165 465 173 415 209 405 Z"/>
+  <path id="hand-fold-1" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M219 647 C220 660 216 670 213 673"/>
+  <path id="hand-fold-2" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M242 645 C246 656 242 668 238 675"/>
+  <path id="hand-fold-3" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M263 628 C266 635 268 642 268 648"/>
+  <path id="face" fill="#FFBA94" d="M290 146 C293 164 310 168 326 159 C340 152 351 138 353 123 C363 139 367 157 375 154 C383 175 383 199 382 217 C381 232 382 243 390 249 C407 247 407 268 394 273 C397 304 384 332 359 348 C319 375 264 372 215 358 C221 348 221 328 219 315 C196 312 180 290 181 270 C182 239 209 226 237 241 C255 219 279 178 290 146 Z"/>
+  <path id="ear-detail" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M234 272 C224 259 212 267 218 280 C221 287 225 290 232 290"/>
+  <path id="ear-base" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M220 318 C230 320 235 317 240 314"/>
+  <path id="eyebrow" fill="none" stroke="#773923" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M325 192 C332 177 343 170 357 174"/>
+  <path id="eye" fill="#5D2912" d="M345 235 C345 226 349 219 355 219 C361 219 365 226 365 235 C365 244 361 251 355 251 C349 251 345 244 345 235 Z"/>
+  <path id="nose" fill="none" stroke="#773923" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M389 249 C405 247 407 266 394 272"/>
+  <path id="smile" fill="none" stroke="#773923" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M362 294 C368 304 378 309 388 309"/>
+</svg>

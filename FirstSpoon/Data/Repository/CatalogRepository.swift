@@ -95,9 +95,11 @@ final class CatalogRepository {
     func deleteCustomProduct(_ id: String) throws {
         let now = nowMillis()
         photos.delete(catalog.productsById[id]?.photo)
-        try db.dbQueue.write { db in
-            try db.execute(sql: "UPDATE custom_products SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id])
+        let removed = try db.dbQueue.write { db in
+            try db.execute(sql: "UPDATE custom_products SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ? AND deleted_at IS NULL", arguments: [now, now, id])
+            return db.changesCount > 0
         }
+        if removed { Analytics.track(.customProductDeleted) }
         reload()
     }
 }

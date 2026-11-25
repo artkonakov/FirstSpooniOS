@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="389" height="970" viewBox="0 0 389 970">
+  <path id="hair" fill="#6D3E2E" d="M118 307 C68 307 33 280 29 239 C24 207 41 176 51 145 C69 87 104 43 156 27 C190 16 226 22 244 42 C290 46 318 94 327 144 C335 185 352 207 347 240 C341 280 311 304 271 306 C238 309 219 293 195 294 C171 294 151 307 118 307 Z"/>
+  <path id="neck" fill="#FFBC97" d="M167 261 L225 261 L227 296 C228 323 211 331 194 332 C177 332 159 320 163 300 C167 291 168 276 167 261 Z"/>
+  <path id="neck-shadow" fill="#F18A60" d="M167 272 C187 281 206 281 225 272 L225 282 C211 292 186 293 167 280 Z"/>
+  <path id="left-shoe" fill="#F9E7D2" d="M111 892 C124 884 156 883 167 901 C172 909 174 929 168 937 C159 949 118 955 99 948 C77 942 87 923 100 908 Z"/>
+  <path id="right-shoe" fill="#F9E7D2" d="M223 896 C234 882 264 883 275 897 C291 910 303 922 301 937 C299 954 256 953 234 947 C216 944 212 931 218 909 Z"/>
+  <path id="left-ankle" fill="#FFBC97" d="M117 871 L165 871 L166 900 C154 916 121 923 106 916 C96 910 111 901 115 892 Z"/>
+  <path id="right-ankle" fill="#FFBC97" d="M221 871 L271 871 C270 887 273 894 280 901 C296 917 269 922 247 916 C236 912 227 907 221 902 Z"/>
+  <path id="left-hand" fill="#FFBC97" d="M48 540 L86 542 C91 557 79 572 84 584 C91 605 87 633 78 633 C73 632 73 627 71 624 C78 644 82 653 69 652 C50 649 37 631 38 607 C38 583 47 561 48 540 Z"/>
+  <path id="left-hand-fold-1" fill="none" stroke="#E77551" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M52 615 C55 631 62 644 70 649"/>
+  <path id="left-hand-fold-2" fill="none" stroke="#E77551" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M67 606 C68 616 72 627 76 632"/>
+  <path id="right-hand" fill="#FFBC97" d="M302 540 L339 540 C343 568 349 587 350 610 C351 630 336 650 321 652 C311 653 307 642 316 624 C311 635 304 635 301 627 C298 614 296 591 303 578 C308 568 303 552 302 540 Z"/>
+  <path id="right-hand-fold-1" fill="none" stroke="#E77551" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M336 615 C333 632 326 647 318 650"/>
+  <path id="right-hand-fold-2" fill="none" stroke="#E77551" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M320 606 C319 617 316 627 311 632"/>
+  <path id="trousers" fill="#10AEA5" d="M109 510 C160 513 232 513 278 511 C301 551 304 608 304 671 C304 734 302 828 298 871 C296 882 272 885 251 885 C229 885 210 885 210 872 L194 645 L178 871 C177 883 163 886 140 885 C121 885 95 882 91 874 C86 862 84 746 84 673 C83 596 87 556 109 510 Z"/>
+  <path id="trouser-seam" fill="none" stroke="#088E86" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M195 591 C194 611 195 631 194 649"/>
+  <path id="sweater" fill="#FF604F" d="M156 303 C174 314 217 317 237 304 C272 313 298 333 310 365 C327 406 335 438 352 479 C366 512 359 537 340 549 C325 555 304 556 294 551 C289 541 285 529 280 519 C249 531 142 535 108 519 C102 532 97 543 89 552 C80 559 54 554 43 546 C27 531 24 508 34 482 C48 447 59 413 72 379 C88 339 105 317 156 303 Z"/>
+  <path id="left-sleeve-seam" fill="none" stroke="#DF4D3E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M113 379 C109 410 120 424 117 445 C115 467 99 492 105 513"/>
+  <path id="right-sleeve-seam" fill="none" stroke="#DF4D3E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M275 380 C280 409 269 424 272 444 C273 470 290 496 284 513"/>
+  <path id="sweater-fold" fill="none" stroke="#DF4D3E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M159 494 C192 496 218 486 245 469"/>
+  <path id="peter-pan-collar" fill="#FAEDD9" d="M163 297 C168 313 184 324 199 327 C215 319 226 311 229 297 C239 301 247 302 253 308 C251 328 244 347 227 349 C216 351 204 345 199 330 C194 345 184 351 173 349 C155 347 143 327 141 309 C147 304 155 302 163 297 Z"/>
+  <path id="face" fill="#FFBC97" d="M121 152 C141 132 168 129 191 117 C211 106 225 94 234 78 C246 107 271 125 277 160 C279 168 279 175 278 183 C289 172 304 173 310 185 C322 207 300 236 274 225 C262 257 233 279 200 281 C165 283 131 259 118 225 C90 236 71 209 81 189 C88 174 105 171 115 183 C115 171 117 159 121 152 Z"/>
+  <path id="left-ear-detail" fill="none" stroke="#E77551" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M108 199 C101 189 92 194 95 204 C97 210 102 212 106 212"/>
+  <path id="right-ear-detail" fill="none" stroke="#E77551" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M283 199 C290 189 300 194 296 203 C294 209 290 211 285 212"/>
+  <path id="left-eyebrow" fill="none" stroke="#6D3E2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M140 152 C148 142 159 139 170 142"/>
+  <path id="right-eyebrow" fill="none" stroke="#6D3E2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M230 142 C242 138 253 142 259 152"/>
+  <path id="left-eye" fill="#55250E" d="M156 185 C156 179 159 175 163 175 C167 175 170 179 170 185 C170 191 167 195 163 195 C159 195 156 191 156 185 Z"/>
+  <path id="right-eye" fill="#55250E" d="M230 185 C230 179 233 175 237 175 C241 175 244 179 244 185 C244 191 241 195 237 195 C233 195 230 191 230 185 Z"/>
+  <path id="nose" fill="none" stroke="#6D3E2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M191 201 C188 218 211 219 208 201"/>
+  <path id="smile" fill="none" stroke="#6D3E2E" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M174 228 C186 246 212 248 226 228"/>
+</svg>

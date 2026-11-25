@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>По плану · Ложку за маму</title>
+<style>
+:root { font: 16px/1.5 Onest, system-ui, sans-serif; color: #252822; background: #faf4e9; }
+* { box-sizing: border-box; }
+body { max-width: 850px; margin: auto; padding: 28px 20px 48px; }
+h1 { font-size: clamp(2rem, 7vw, 3.8rem); letter-spacing: -.06em; line-height: 1.05; margin: .25rem 0 1.3rem; }
+h2 { margin: 0; font-size: 1.75rem; letter-spacing: -.04em; }
+p { margin: .4em 0; }
+label { display: block; font-weight: 650; }
+select, button { font: inherit; color: inherit; }
+select { max-width: 100%; margin: 6px 0 16px; padding: 9px 12px; border-radius: 12px; border: 1px solid #a09d90; background: #fff; }
+main { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
+section { background: #fff; border-radius: 28px; padding: 22px; }
+button { margin-top: 14px; padding: 10px 16px; border: 0; border-radius: 24px; background: #deead6; cursor: pointer; }
+button:focus-visible, select:focus-visible { outline: 3px solid #315b3d; outline-offset: 3px; }
+ol { margin: 8px 0 0; padding-left: 1.5em; }
+li { padding: 3px 4px; }
+li[data-status="known"] { color: #55584f; }
+li[data-status="next"] { font-weight: 750; color: #255332; }
+a { color: #255332; }
+footer { margin-top: 16px; }
+</style>
+</head>
+<body>
+<p>Ложку за маму · Черновик</p>
+<h1>По плану</h1>
+<label for="scenario">Состояние дневника</label>
+<select id="scenario">
+  <option value="start">Начинаем с первого продукта</option>
+  <option value="partial">Кабачок и брокколи уже знакомы</option>
+  <option value="ready">Знакомы овощи и гречневая каша</option>
+  <option value="pending">Кролик временно недоступен</option>
+  <option value="pause">Записали возможную реакцию</option>
+</select>
+<main>
+  <section>
+    <p>Следующий шаг</p>
+    <div aria-live="polite" aria-atomic="true">
+      <h2 id="product"></h2>
+      <p id="reason"></p>
+    </div>
+    <button type="button" id="another">Предложить другой</button>
+  </section>
+  <section>
+    <h2>Продукты по плану</h2>
+    <ol id="route"></ol>
+  </section>
+</main>
+<footer><a href="../../docs/complementary-feeding/source-plan.md">Откуда взялся порядок</a></footer>
+<script src="source-plan.js"></script>
+<script>
+const starter = ['zucchini', 'cauliflower', 'broccoli', 'buckwheat-groats'];
+const states = {
+  start: {},
+  partial: { familiar: ['zucchini', 'broccoli'] },
+  ready: { familiar: starter },
+  pending: { familiar: starter, unavailable: ['rabbit'] },
+  pause: { familiar: ['zucchini'], gate: { kind: 'pause' } }
+};
+const scenario = document.getElementById('scenario');
+const another = document.getElementById('another');
+const route = document.getElementById('route');
+let skippedToday = [];
+
+function render() {
+  const state = states[scenario.value];
+  const eligible = sourcePlan.flatMap(step => step.candidates ?? [step])
+    .filter(product => !state.unavailable?.includes(product.id)).map(product => product.id);
+  const action = nextPlanAction({ ...state, eligible, skippedToday });
+  const texts = {
+    try: [action.name, action.step === 'iron'
+      ? 'Следующий шаг плана — познакомиться с источником железа'
+      : 'Следующий продукт из тех, которые вы ещё не отметили как знакомые'],
+    pause: ['Пауза', 'Дальше — по подсказке после записи о реакции'],
+    empty: ['Подсказки на сегодня закончились', 'Можно снова посмотреть пропущенные варианты'],
+    complete: ['Первые шаги позади', 'Дальше — подсказки по дневнику']
+  };
+  [document.getElementById('product').textContent, document.getElementById('reason').textContent] = texts[action.kind];
+  another.hidden = action.kind !== 'try' && action.kind !== 'empty';
+  another.textContent = action.kind === 'empty' ? 'Посмотреть снова' : 'Предложить другой';
+  another.onclick = () => {
+    skippedToday = action.kind === 'empty' ? [] : [...skippedToday, action.product];
+    render();
+  };
+  route.replaceChildren(...sourcePlan.map(step => {
+    const item = document.createElement('li');
+    const known = (step.candidates ?? [step]).some(product => state.familiar?.includes(product.id));
+    item.textContent = step.name + (known ? ' · знакомо' : '');
+    if (known) item.dataset.status = 'known';
+    if (step.id === action.step) {
+      item.dataset.status = 'next';
+      item.setAttribute('aria-current', 'step');
+    }
+    return item;
+  }));
+}
+scenario.addEventListener('change', () => {
+  skippedToday = [];
+  render();
+});
+render();
+</script>
+</body>
+</html>

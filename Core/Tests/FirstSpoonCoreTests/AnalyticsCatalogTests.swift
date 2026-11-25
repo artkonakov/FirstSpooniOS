@@ -27,8 +27,17 @@ final class AnalyticsCatalogTests: XCTestCase {
     /// Имена у каждого case совпадают со списком `allNames` (новый case не забыт в списке).
     func testAllNamesCoverCases() {
         let samples: [AnalyticsEvent] = [
+            .entryUpdated(food: .custom), .entryDeleted(food: .custom), .entryReactionChanged(food: .custom),
+            .productOpened(food: .custom), .productFavoriteChanged(food: .custom, liked: true),
+            .productMarkRemoved(food: .custom), .customProductDeleted, .onboardingOptionChanged(option: .sex(.female), selected: true),
+            .assistantOpened(source: .home), .assistantHistoryOpened, .assistantChatCreated, .assistantChatSelected, .assistantChatDeleted,
+            .assistantMessageSent, .assistantReplyReceived, .assistantRequestFailed(reason: .network), .assistantRequestStopped,
+            .assistantAnswerCopied, .assistantShareOpened, .deviceSessionsFailed(operation: .list),
+            .diarySyncEnabled, .diarySyncDisabled, .deviceSessionsOpened, .deviceSessionRevoked,
+            .themeChanged(mode: .dark), .legalDocumentOpened(document: .privacy), .assistantSourceOpened, .assistantRetried,
+            .assistantFeedbackTapped(vote: .like),
             .welcomeShown, .guestStarted, .login(fromGuest: true), .emailLinked, .logout, .accountDeleted,
-            .onboardingStep(step: "name"), .onboardingBackToWelcome, .onboardingCompleted(readiness: .ready, knownFoods: 0), .readyMarked, .childAdded, .entryAdded, .productMarked(mark: .known), .customProductAdded,
+            .onboardingStep(step: "name"), .onboardingBackToWelcome, .onboardingCompleted(readiness: .ready, knownFoods: 0), .readyMarked, .childAdded, .entryAdded(food: .custom), .productMarked(mark: .known), .customProductAdded,
             .recommendationRecord, .recommendationOther, .statsOpened,
             .diaryExported(photos: "none"), .entryPhotoAdded, .childPhotoSet, .customProductPhotoSet, .networkBlockedShown,
             .paywallOpened, .purchaseStarted(product: "p"), .purchaseCompleted(product: "p"), .purchaseFailed(product: "p"), .restoreTapped,

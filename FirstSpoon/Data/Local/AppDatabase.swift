@@ -100,6 +100,38 @@ final class AppDatabase {
         m.registerMigration("v3_entry_photos") { db in
             try db.alter(table: "entries") { t in t.add(column: "photos", .text).notNull().defaults(to: "[]") }
         }
+        m.registerMigration("v4_assistant_chats") { db in
+            try db.create(table: "assistant_chats") { t in
+                t.primaryKey("id", .text)
+                t.column("child_id", .text).notNull().references("children", onDelete: .cascade)
+                t.column("owner_id", .text).notNull()
+                t.column("product_id", .text)
+                t.column("product_name", .text)
+                t.column("title", .text).notNull()
+                t.column("updated_at", .integer).notNull()
+            }
+            try db.create(index: "assistant_chats_scope", on: "assistant_chats", columns: ["child_id", "owner_id", "updated_at"])
+            try db.create(table: "assistant_turns") { t in
+                t.primaryKey("id", .text)
+                t.column("chat_id", .text).notNull().references("assistant_chats", onDelete: .cascade)
+                t.column("request_id", .text).notNull()
+                t.column("question", .text).notNull()
+                t.column("context", .blob).notNull()
+                t.column("reply", .blob)
+                t.column("failure", .text)
+            }
+            try db.create(index: "assistant_turns_chat", on: "assistant_turns", columns: ["chat_id"])
+        }
+        m.registerMigration("v5_diary_sync") { db in
+            try db.execute(sql: "CREATE TABLE diary_sync_local (owner TEXT PRIMARY KEY NOT NULL, payload TEXT NOT NULL)")
+        }
+        m.registerMigration("v6_assistant_reply_actions") { db in
+            try db.alter(table: "assistant_turns") { table in
+                table.add(column: "stopped", .boolean).notNull().defaults(to: false)
+                table.add(column: "feedback", .boolean)
+                table.add(column: "replied_at", .integer)
+            }
+        }
         return m
     }
 
@@ -118,7 +150,7 @@ final class AppDatabase {
     /// Жёстко стереть данные пользователя (выход, удаление аккаунта, вход в чужой аккаунт).
     func clearUserData() throws {
         try dbQueue.write { db in
-            try db.execute(sql: "DELETE FROM entries; DELETE FROM child_products; DELETE FROM children; DELETE FROM custom_products;")
+            try db.execute(sql: "DELETE FROM diary_sync_local; DELETE FROM entries; DELETE FROM child_products; DELETE FROM children; DELETE FROM custom_products;")
         }
     }
 }

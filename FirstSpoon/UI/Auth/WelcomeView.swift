@@ -84,6 +84,11 @@ extension URL: @retroactive Identifiable { public var id: String { absoluteStrin
 /// Документы открываем внутри приложения (аналог Custom Tabs).
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
-    func makeUIViewController(context: Context) -> SFSafariViewController { SFSafariViewController(url: url) }
+    var closeStyle: SFSafariViewController.DismissButtonStyle = .done
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let browser = SFSafariViewController(url: url)
+        browser.dismissButtonStyle = closeStyle
+        return browser
+    }
     func updateUIViewController(_ vc: SFSafariViewController, context: Context) {}
 }

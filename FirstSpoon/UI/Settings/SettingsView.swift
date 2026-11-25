@@ -10,6 +10,9 @@ struct SettingsView: View {
     @State private var confirm: Confirm?
     @State private var busy = false
     @State private var error: String?
+    @AppStorage("app_theme") private var theme = AppearanceMode.system
+    @State private var chooseTheme = false
+    @State private var document: URL?
 
     private enum Confirm: Identifiable { case logout, delete; var id: Self { self } }
 
@@ -34,6 +37,16 @@ struct SettingsView: View {
                               value: L.s(AppLocale.current() == .ru ? "language_ru" : "language_en")) {
                         if let url = URL(string: UIApplication.openSettingsURLString) { UIApplication.shared.open(url) }
                     }
+                    ActionRow(title: L.s("theme_title"), value: L.s(theme.titleKey)) { chooseTheme = true }
+                        .confirmationDialog(L.s("theme_title"), isPresented: $chooseTheme, titleVisibility: .visible) {
+                            ForEach(AppearanceMode.allCases, id: \.self) { mode in
+                                Button(L.s(mode.titleKey)) {
+                                    guard theme != mode else { return }
+                                    theme = mode
+                                    Analytics.track(.themeChanged(mode: mode))
+                                }
+                            }
+                        }
 
                     SectionTitle(L.s("settings_account"))
                     if busy { ProgressView().frame(maxWidth: .infinity) }
@@ -45,13 +58,31 @@ struct SettingsView: View {
                         ActionRow(title: email ?? "")
                         AppButton(L.s("settings_logout"), kind: .ghost) { if !busy { confirm = .logout } }
                     }
+                    if let userId = app.tokens.userId {
+                        AppCard {
+                            Text(L.s("settings_user_id")).font(AppFont.titleMedium)
+                            Text(userId).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted)
+                                .textSelection(.enabled)
+                        }
+                    }
                     AppButton(L.s(anonymous ? "settings_delete_data" : "settings_delete_account"), kind: .danger) {
                         if !busy { confirm = .delete }
                     }
                     if let error { Text(error).font(AppFont.bodyLarge).foregroundStyle(AppColors.alert).padding(.leading, 6) }
 
+                    SectionTitle(L.s("settings_about"))
+                    ActionRow(title: L.s("settings_app_version"), value: appVersion)
+                    ActionRow(title: L.s("settings_privacy")) { openDocument(.privacy) }
+                    ActionRow(title: L.s("settings_terms")) { openDocument(.terms) }
+
+                    if AssistantPilot.enabled {
+                        SectionTitle(L.s("settings_debug"))
+                        ActionRow(title: L.s("assistant_entry")) {
+                        nav.open(.assistant(productId: nil))
+                        Analytics.track(.assistantOpened(source: .settings))
+                    }
+                    }
                     #if DEBUG
-                    SectionTitle(L.s("settings_debug"))
                     Picker(L.s("settings_debug_strategy"), selection: Binding(
                         get: { app.recommendations.debugStrategy }, set: { app.recommendations.debugStrategy = $0 }
                     )) {
@@ -68,6 +99,7 @@ struct SettingsView: View {
         }
         .appScreen()
         .navigationTitle(L.s("settings"))
+        .sheet(item: $document) { SafariView(url: $0).ignoresSafeArea() }
         // Разрешение могут выдать в системных настройках — перепроверяем при возвращении.
         .task(id: scenePhase) { canPost = await app.reminders.canPost() }
         .alert(item: $confirm) { kind in
@@ -79,6 +111,18 @@ struct SettingsView: View {
                 secondaryButton: .cancel(Text(L.s("cancel")))
             )
         }
+    }
+
+    private var appVersion: String? {
+        guard let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String else { return nil }
+        guard let build = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String else { return version }
+        return "\(version) (\(build))"
+    }
+
+    private func openDocument(_ type: AnalyticsEvent.LegalDocument) {
+        guard let url = URL(string: L.s(type == .privacy ? "url_privacy" : "url_terms")) else { return }
+        document = url
+        Analytics.track(.legalDocumentOpened(document: type))
     }
 
     private func hint(_ text: String) -> some View {

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="574" height="554" viewBox="0 0 574 554">
+  <path id="cuff" fill="#F9E7D2" d="M199 250 C168 251 104 327 65 379 C25 429 63 483 123 519 C161 542 186 534 216 513 C255 485 300 443 325 411 C336 391 325 370 301 339 C263 293 226 244 199 250 Z"/>
+  <path id="hand" fill="#FBB28D" d="M214 249 C249 212 232 194 263 146 C283 116 317 81 354 69 C394 57 425 65 446 98 C474 103 485 128 488 151 C509 160 522 185 517 211 C528 230 525 259 510 277 C494 296 473 302 452 306 C425 327 391 340 361 339 C342 354 322 381 306 396 C290 411 245 381 220 351 C200 326 184 296 196 276 C201 266 208 259 214 249 Z"/>
+  <path id="thumb-fold" fill="none" stroke="#DD7B5D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M311 160 C337 156 376 162 397 183 C414 201 409 222 394 235 C378 248 359 250 342 240"/>
+  <path id="thumb-base" fill="none" stroke="#DD7B5D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M357 249 C356 261 353 270 349 278"/>
+  <path id="index-fold" fill="none" stroke="#DD7B5D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M348 158 C349 140 358 125 371 114"/>
+  <path id="first-knuckle" fill="none" stroke="#DD7B5D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M442 115 C441 139 424 172 400 185"/>
+  <path id="second-knuckle" fill="none" stroke="#DD7B5D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M487 160 C478 193 457 221 434 234 C423 241 411 242 400 232"/>
+  <path id="third-knuckle" fill="none" stroke="#DD7B5D" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M511 220 C499 240 466 273 441 274 C421 275 410 261 416 243"/>
+  <path id="little-finger-fold" fill="none" stroke="#DD7B5D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M436 275 C427 287 438 301 452 305"/>
+</svg>

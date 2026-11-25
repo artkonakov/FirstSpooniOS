@@ -96,6 +96,12 @@ struct HomeView: View {
                                        onOther: { app.recommendations.skip($0) },
                                        onMarkReady: markReady)
                 }
+                if AssistantPilot.enabled {
+                    ActionRow(title: L.s("assistant_entry")) {
+                        nav.open(.assistant(productId: nil))
+                        Analytics.track(.assistantOpened(source: .home))
+                    }
+                }
                 ProgressCard(introduced: state.introducedCount, goal: FeedingRules.introductionGoal,
                              onTap: {
                                  Analytics.track(.statsOpened)

@@ -23,6 +23,9 @@ struct ProductView: View {
                 content(product, catalog: catalog, own: own, mark: mark, progress: progress)
                     .padding(.horizontal, screenPadding)
                     .padding(.vertical, 12)
+                    .task(id: product.id) {
+                        Analytics.track(.productOpened(food: product.isCustom ? .custom : .catalog(product.id)))
+                    }
             }
         }
         .bottomAction {
@@ -100,6 +103,13 @@ struct ProductView: View {
             }
             if !product.description.isEmpty { InfoCard(title: L.s("product_about"), text: product.description) }
             if !product.firstServing.isEmpty { InfoCard(title: L.s("product_first_serving"), text: product.firstServing) }
+
+            if AssistantPilot.enabled {
+                AppButton(L.s("assistant_serving"), kind: .soft) {
+                        nav.open(.assistant(productId: product.id))
+                        Analytics.track(.assistantOpened(source: .product))
+                    }
+            }
 
             SectionTitle(L.s("product_marks"))
             Text(L.s("product_marks_hint")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted)

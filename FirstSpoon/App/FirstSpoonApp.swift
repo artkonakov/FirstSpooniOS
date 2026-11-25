@@ -6,6 +6,7 @@ import FirstSpoonCore
 struct FirstSpoonApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
     @State private var container = AppContainer()
+    @AppStorage("app_theme") private var theme = AppearanceMode.system
 
     init() { SystemBars.configure() }
 
@@ -14,6 +15,11 @@ struct FirstSpoonApp: App {
             RootView()
                 .environment(container)
                 .tint(AppColors.primary)
+                .preferredColorScheme(theme.colorScheme)
+        }
+        .backgroundTask(.appRefresh(DiarySync.backgroundIdentifier)) {
+            await container.diarySync.refresh()
+            await container.diarySync.scheduleBackground()
         }
     }
 }
@@ -47,7 +53,7 @@ struct RootView: View {
             Group {
                 switch app.rootGraph {
                 case .auth: AuthFlow()
-                case .onboarding: OnboardingFlow()
+                case .onboarding: OnboardingFlow().modifier(RestoreDiaryPrompt(sync: app.diarySync))
                 case .main: MainFlow()
                 }
             }
@@ -63,12 +69,14 @@ struct RootView: View {
         .animation(.easeInOut(duration: 0.2), value: app.networkAccess.blocked)
         .animation(.easeInOut(duration: 0.25), value: app.rootGraph)
         // Пересчёт напоминаний на любое изменение данных и настроек.
-        .onChange(of: app.catalog.catalog.products) { app.reminders.refresh() }
-        .onChange(of: app.diary.version) { app.reminders.refresh() }
+        .onChange(of: app.catalog.catalog.products) { app.reminders.refresh(); app.diarySync.schedule() }
+        .onChange(of: app.diary.version) { app.reminders.refresh(); app.diarySync.schedule() }
+        .task(id: app.session.state) { await app.diarySync.refresh() }
         .onChange(of: app.reminderSettings.enabled) { app.reminders.refresh() }
         .onChange(of: app.onboarding.done) { app.reminders.refresh() }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .active { app.reminders.refresh(); app.networkAccess.refresh() }
+            if phase == .active { app.reminders.refresh(); app.networkAccess.refresh(); app.diarySync.schedule() }
+            if phase == .background { app.diarySync.scheduleBackground() }
         }
     }
 }

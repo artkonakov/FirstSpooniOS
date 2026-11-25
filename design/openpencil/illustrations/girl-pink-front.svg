@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="447" height="937" viewBox="0 0 447 937">
+  <path id="hair" fill="#773923" d="M151 367 C87 368 40 334 30 279 C19 226 40 152 65 115 C101 59 156 28 218 26 C286 24 342 55 380 108 C406 145 422 205 421 254 C420 326 377 367 299 367 C266 367 245 357 222 358 C197 359 177 367 151 367 Z"/>
+  <path id="neck" fill="#FFBA94" d="M186 354 L263 353 C263 364 262 376 270 385 C266 395 254 402 229 404 C207 405 187 398 181 386 C187 378 186 365 186 354 Z"/>
+  <path id="neck-shadow" fill="#FB895B" d="M187 360 C209 366 240 366 264 359 L264 371 C244 386 207 386 187 374 Z"/>
+  <path id="left-ankle" fill="#FFBA94" d="M119 808 L187 805 L186 845 C169 852 140 854 122 844 Z"/>
+  <path id="right-ankle" fill="#FFBA94" d="M261 805 L331 806 L329 845 C307 853 280 850 264 844 Z"/>
+  <path id="left-shoe-sole" fill="#FCEBD4" d="M91 878 C117 867 182 871 191 882 C201 892 203 906 188 911 C167 919 116 919 95 911 C82 907 81 897 91 878 Z"/>
+  <path id="left-shoe-upper" fill="#286DD5" d="M119 838 C134 829 157 836 175 840 C184 847 196 868 198 882 C199 896 95 900 88 886 C87 873 106 854 119 838 Z"/>
+  <path id="left-shoe-lace-top" fill="none" stroke="#FEEDD7" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round" d="M123 850 C136 845 152 847 166 852"/>
+  <path id="left-shoe-lace-bottom" fill="none" stroke="#FEEDD7" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round" d="M116 867 C128 862 147 863 161 868"/>
+  <path id="right-shoe-sole" fill="#FCEBD4" d="M261 878 C288 867 354 871 364 882 C374 892 376 906 361 911 C339 919 287 919 265 911 C252 907 251 897 261 878 Z"/>
+  <path id="right-shoe-upper" fill="#286DD5" d="M290 838 C306 829 329 836 347 840 C356 847 369 868 371 882 C372 896 265 900 258 886 C257 873 277 854 290 838 Z"/>
+  <path id="right-shoe-lace-top" fill="none" stroke="#FEEDD7" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round" d="M294 850 C308 845 323 847 338 852"/>
+  <path id="right-shoe-lace-bottom" fill="none" stroke="#FEEDD7" stroke-width="7.0" stroke-linecap="round" stroke-linejoin="round" d="M287 867 C300 862 318 863 333 868"/>
+  <path id="left-hand" fill="#FFBA94" d="M50 568 C69 564 90 579 97 596 C103 611 107 632 97 638 C92 642 87 638 84 632 C90 646 84 660 70 661 C49 660 32 642 31 621 C29 604 39 583 50 568 Z"/>
+  <path id="right-hand" fill="#FFBA94" d="M401 571 C411 588 421 606 418 625 C416 648 395 663 378 660 C366 658 361 649 367 637 C359 644 351 640 349 629 C347 612 349 598 356 584 Z"/>
+  <path id="shirt" fill="#FEEDD7" d="M180 381 C194 398 213 404 227 403 C245 403 262 395 270 382 C306 384 329 413 348 446 C379 495 397 533 407 574 C386 578 368 587 354 596 C338 613 317 619 294 619 L136 617 C122 613 104 608 96 596 C82 585 62 578 43 577 C35 569 45 549 57 517 C74 474 102 430 128 405 C148 386 164 382 180 381 Z"/>
+  <path id="overalls" fill="#FC6069" d="M143 393 C147 386 172 375 180 381 C186 394 184 422 189 442 C206 446 241 446 262 442 C267 425 265 390 270 381 C278 377 307 387 308 394 L306 449 C313 490 335 536 346 593 C353 633 366 677 362 735 C359 775 347 809 332 817 C319 825 266 826 255 813 C243 800 239 727 225 686 C216 721 206 779 200 800 C195 818 182 824 155 824 C129 824 112 820 103 801 C88 771 82 723 89 675 C96 624 104 570 120 528 C133 490 144 461 145 448 Z"/>
+  <path id="left-button" fill="#FEEDD7" d="M154 470 C154 461 162 453 172 453 C182 453 190 461 190 470 C190 479 182 487 172 487 C162 487 154 479 154 470 Z"/>
+  <path id="right-button" fill="#FEEDD7" d="M264 470 C264 461 272 453 281 453 C290 453 298 461 298 470 C298 479 290 487 281 487 C272 487 264 479 264 470 Z"/>
+  <path id="left-pocket" fill="none" stroke="#DA4548" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M167 613 C159 633 144 650 125 655"/>
+  <path id="right-pocket" fill="none" stroke="#DA4548" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M285 613 C293 632 307 649 327 655"/>
+  <path id="left-hand-fold-1" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M53 628 C55 641 63 652 72 656"/>
+  <path id="left-hand-fold-2" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M77 616 C78 626 82 635 86 639"/>
+  <path id="right-hand-fold-1" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M397 627 C395 640 387 651 378 655"/>
+  <path id="right-hand-fold-2" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M373 615 C372 625 368 634 364 638"/>
+  <path id="face" fill="#FFBA94" d="M101 241 C96 199 120 157 166 131 C154 148 161 163 184 164 C204 164 219 155 235 142 C223 161 237 168 254 162 C277 158 298 135 306 113 C335 144 353 195 350 241 C367 231 382 240 388 253 C401 282 374 318 340 308 C320 349 276 371 226 371 C174 371 129 351 110 307 C89 317 69 302 62 280 C52 254 75 226 101 241 Z"/>
+  <path id="left-eyebrow" fill="none" stroke="#773923" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M138 192 C147 177 161 173 174 177"/>
+  <path id="right-eyebrow" fill="none" stroke="#773923" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M278 177 C294 172 308 179 315 192"/>
+  <path id="left-eye" fill="#5D2912" d="M155 239 C155 230 160 223 167 223 C174 223 179 230 179 239 C179 248 174 255 167 255 C160 255 155 248 155 239 Z"/>
+  <path id="right-eye" fill="#5D2912" d="M274 239 C274 230 279 223 286 223 C293 223 298 230 298 239 C298 248 293 255 286 255 C279 255 274 248 274 239 Z"/>
+  <path id="left-ear-detail" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M98 270 C88 257 76 265 82 278 C85 285 89 288 96 288"/>
+  <path id="right-ear-detail" fill="none" stroke="#FB895B" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" d="M353 270 C363 257 375 265 369 278 C366 285 362 288 355 288"/>
+  <path id="nose" fill="none" stroke="#773923" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M232 254 C213 248 209 278 231 275"/>
+  <path id="smile" fill="none" stroke="#773923" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M194 294 C207 318 246 319 261 294"/>
+</svg>

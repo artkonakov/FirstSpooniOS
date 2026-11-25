@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="755" height="1283" viewBox="0 0 755 1283">
+  <path id="chair-crossbar" fill="#49989D" d="M116 1000 L253 986 L253 1025 L121 1038 Z"/>
+  <path id="chair-far-left-leg" fill="#54A2A7" d="M159 800 L200 810 L81 1195 C76 1222 23 1218 28 1190 C32 1171 100 975 159 800 Z"/>
+  <path id="chair-far-right-leg" fill="#54A2A7" d="M525 815 L570 829 L487 1159 C482 1186 430 1184 434 1152 Z"/>
+  <path id="chair-near-left-leg" fill="#54A2A7" d="M233 824 L284 835 L320 1228 C325 1274 260 1275 256 1239 Z"/>
+  <path id="chair-near-right-leg" fill="#54A2A7" d="M556 804 L608 806 C649 937 694 1074 730 1193 C748 1243 680 1248 669 1216 Z"/>
+  <path id="chair-shell" fill="#54A2A7" d="M76 519 C77 430 129 400 192 398 C304 388 427 494 518 588 C574 638 623 680 626 749 C628 821 582 859 515 863 L297 870 C210 866 146 846 123 792 C101 737 77 580 76 519 Z"/>
+  <path id="chair-cushion" fill="#FC7925" d="M110 492 C110 416 155 393 223 392 C329 384 421 421 452 514 C481 591 540 605 583 678 C609 725 613 787 573 814 C552 828 451 833 394 834 L288 833 C228 825 189 809 172 770 C140 692 110 537 110 492 Z"/>
+  <path id="chair-seat-rim" fill="#70B7BA" d="M179 666 C185 734 201 814 239 844 C263 862 282 869 313 870 L510 863 C570 862 608 835 620 799 C631 762 628 725 619 692 L597 687 C602 742 602 784 575 807 C548 831 503 835 462 834 L301 835 C264 835 245 814 230 777 C214 738 212 705 204 670 Z"/>
+  <path id="footrest" fill="#F9E3C4" d="M281 1031 C279 1003 288 990 330 983 C402 970 518 968 587 973 C631 976 646 985 647 1006 C648 1029 637 1037 617 1041 L350 1062 C313 1064 279 1060 281 1031 Z"/>
+  <path id="left-ankle" fill="#FBB28D" d="M325 878 L410 879 C415 899 413 925 406 944 L336 947 C330 929 328 909 325 878 Z"/>
+  <path id="right-ankle" fill="#FBB28D" d="M492 875 L575 870 L562 935 L488 934 C487 915 489 892 492 875 Z"/>
+  <path id="left-shoe-sole" fill="#F9E6CD" d="M323 969 C354 958 423 960 449 981 C464 990 467 1008 458 1016 C434 1035 354 1029 328 1012 C320 1007 313 998 323 969 Z"/>
+  <path id="left-shoe-upper" fill="#2C6BCC" d="M333 931 C355 948 373 926 400 928 C413 928 418 933 427 945 C442 962 458 970 460 983 C467 1003 382 1008 343 995 C330 991 320 986 320 979 C323 954 327 937 333 931 Z"/>
+  <path id="left-shoe-lace-1" fill="none" stroke="#FAEEDA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M376 958 C392 950 409 947 423 947"/>
+  <path id="left-shoe-lace-2" fill="none" stroke="#FAEEDA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M387 976 C402 969 421 964 436 964"/>
+  <path id="right-shoe-sole" fill="#F9E6CD" d="M479 955 C515 947 582 948 599 967 C614 980 618 995 608 1004 C585 1023 508 1015 484 1002 C472 997 469 979 479 955 Z"/>
+  <path id="right-shoe-upper" fill="#2C6BCC" d="M490 920 C510 939 530 914 554 921 C565 920 571 924 579 936 C594 952 607 960 610 973 C615 991 537 995 498 983 C484 978 474 973 476 965 C479 944 484 927 490 920 Z"/>
+  <path id="right-shoe-lace-1" fill="none" stroke="#FAEEDA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M531 947 C546 939 560 937 576 938"/>
+  <path id="right-shoe-lace-2" fill="none" stroke="#FAEEDA" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M542 965 C557 957 573 954 588 954"/>
+  <path id="overalls-seat" fill="#DD9520" d="M218 674 C271 654 379 667 459 668 C504 667 546 696 554 739 C550 785 499 808 462 806 C415 799 389 777 338 781 C289 787 244 787 234 767 Z"/>
+  <path id="left-trouser-leg" fill="#FFB127" d="M263 713 C294 700 345 700 376 719 C414 737 425 764 430 797 C435 836 428 875 421 894 C417 907 390 910 364 910 C336 909 320 908 316 898 C309 878 302 842 298 820 C275 814 246 806 239 789 C227 761 238 731 263 713 Z"/>
+  <path id="right-trouser-leg" fill="#FFB127" d="M474 708 C501 697 525 699 554 715 C588 736 599 764 600 786 C603 819 593 862 582 887 C576 903 542 902 518 901 C500 899 482 897 480 886 C476 861 476 829 477 810 C458 808 439 803 431 797 C440 761 454 733 474 708 Z"/>
+  <path id="left-knee-fold" fill="none" stroke="#E19A16" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M299 818 C309 802 320 792 332 784"/>
+  <path id="right-knee-fold" fill="none" stroke="#E19A16" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M478 807 C492 789 504 780 516 773"/>
+  <path id="shirt-and-far-sleeve" fill="#FAEEDA" d="M311 416 C346 403 407 401 438 422 C472 443 498 482 522 514 C555 527 583 539 598 558 C613 575 590 602 566 608 C535 607 507 597 484 586 L299 598 C260 589 242 555 245 500 C250 463 275 423 311 416 Z"/>
+  <path id="overall-bib" fill="#FFB127" d="M254 437 C264 421 291 413 311 413 C328 423 342 452 350 483 C373 487 399 486 421 481 C421 454 413 430 403 415 C413 409 436 417 444 428 C458 446 460 483 466 508 L484 586 C466 610 337 616 268 608 C277 566 279 509 275 484 C272 458 262 441 254 437 Z"/>
+  <path id="left-button" fill="#FAEEDA" d="M319 511 C319 501 327 493 337 493 C347 493 355 501 355 511 C355 521 347 529 337 529 C327 529 319 521 319 511 Z"/>
+  <path id="right-button" fill="#FAEEDA" d="M425 507 C425 498 432 490 440 490 C448 490 455 498 455 507 C455 516 448 524 440 524 C432 524 425 516 425 507 Z"/>
+  <path id="tray-rim" fill="#F9E3C4" d="M113 634 L727 626 C732 633 733 652 728 664 C715 688 661 694 614 698 C491 707 407 714 299 715 C233 716 187 698 139 683 C110 674 107 664 113 634 Z"/>
+  <path id="tray-top" fill="#FAEED9" d="M113 634 C122 614 180 618 216 613 C356 607 480 593 566 594 C621 581 660 589 702 604 C720 610 730 618 728 628 C723 642 688 654 639 660 C514 673 378 683 282 682 C222 682 174 664 132 649 C120 645 113 640 113 634 Z"/>
+  <path id="near-sleeve" fill="#FAEEDA" d="M249 438 C276 414 293 436 300 465 C307 493 299 518 284 539 C279 549 275 556 272 562 C287 567 301 575 310 588 C314 607 304 626 278 639 C248 652 214 634 195 620 C171 605 172 581 181 554 C191 523 217 463 249 438 Z"/>
+  <path id="sleeve-fold" fill="none" stroke="#F0D3AD" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M263 554 C279 561 294 569 305 579"/>
+  <path id="near-hand" fill="#FBB28D" d="M251 626 C254 604 273 585 297 582 C317 578 351 598 358 622 C363 637 352 647 341 648 C331 654 321 654 313 651 C299 661 283 651 277 645 C263 647 252 640 251 626 Z"/>
+  <path id="near-finger-1" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M291 625 C304 634 310 641 313 651"/>
+  <path id="near-finger-2" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M311 615 C326 627 331 636 334 647"/>
+  <path id="near-finger-3" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M330 608 C341 618 348 629 350 641"/>
+  <path id="far-hand" fill="#FBB28D" d="M546 583 C550 564 569 549 587 549 C610 550 640 570 647 588 C655 605 647 616 639 618 C629 626 619 626 613 622 C604 631 597 625 584 611 C581 623 570 625 561 616 C552 608 541 597 546 583 Z"/>
+  <path id="far-finger-1" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M571 593 C578 600 582 607 585 612"/>
+  <path id="far-finger-2" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M597 586 C605 598 611 609 611 619"/>
+  <path id="far-finger-3" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M614 583 C622 594 628 609 628 621"/>
+  <path id="far-finger-4" fill="none" stroke="#FB8958" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" d="M631 581 C637 590 643 604 642 614"/>
+  <path id="food-cube-top" fill="#FF9F13" d="M456 615 L489 607 L520 616 L487 628 Z"/>
+  <path id="food-cube-left" fill="#FF9A13" d="M456 615 L487 625 L487 662 L456 652 Z"/>
+  <path id="food-cube-right" fill="#F58A18" d="M487 625 L520 616 L520 652 L487 662 Z"/>
+  <path id="neck" fill="#FBB28D" d="M315 384 L406 386 L403 425 C401 442 341 445 313 413 Z"/>
+  <path id="neck-shadow" fill="#FB8958" d="M315 401 C342 410 377 410 405 400 L405 413 C374 425 340 419 315 407 Z"/>
+  <path id="hair" fill="#7B402C" d="M218 369 C152 320 122 262 137 199 C151 131 214 71 281 52 C303 46 326 45 344 48 C341 37 331 28 323 25 C318 22 324 17 335 17 C363 16 393 36 400 62 C461 83 503 138 503 200 C504 240 486 276 464 314 C417 387 296 415 218 369 Z"/>
+  <path id="face" fill="#FBB28D" d="M240 171 C304 179 379 157 409 113 C447 138 476 183 483 246 C494 240 507 251 514 263 C526 283 517 318 491 325 C476 379 421 409 361 410 C310 411 274 394 246 365 C222 384 192 372 179 351 C165 329 179 302 192 294 C199 289 210 289 219 292 C204 248 214 204 240 171 Z"/>
+  <path id="ear-detail" fill="none" stroke="#FB8958" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" d="M224 326 C217 315 203 318 198 324 C208 320 217 320 211 328 C204 339 216 350 228 345"/>
+  <path id="far-ear-detail" fill="#FB8958" d="M488 270 C499 264 508 290 494 302 C494 292 493 281 488 270 Z"/>
+  <path id="near-eyebrow" fill="none" stroke="#7B402C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M259 221 C268 204 283 194 301 197"/>
+  <path id="far-eyebrow" fill="none" stroke="#7B402C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" d="M407 178 C421 170 438 174 448 186"/>
+  <path id="near-eye" fill="#51230F" d="M295 275 C295 265 301 257 308 257 C315 257 321 265 321 275 C321 285 315 293 308 293 C301 293 295 285 295 275 Z"/>
+  <path id="far-eye" fill="#51230F" d="M419 251 C419 241 425 233 432 233 C439 233 445 241 445 251 C445 261 439 269 432 269 C425 269 419 261 419 251 Z"/>
+  <path id="nose" fill="none" stroke="#7B402C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" d="M375 278 C383 273 395 276 397 287 C398 296 390 303 381 301"/>
+  <path id="smile" fill="#C94C32" d="M347 334 C344 328 348 323 354 325 C378 330 401 325 416 314 C422 310 426 313 425 319 C427 343 411 362 392 364 C372 366 355 356 347 334 Z"/>
+</svg>

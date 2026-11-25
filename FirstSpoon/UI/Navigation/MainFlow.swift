@@ -10,7 +10,9 @@ enum Route: Hashable {
     case editCustomProduct(String)
     case child(String?)
     case settings
+    case devices
     case stats
+    case assistant(productId: String?)
     case linkEmail
     case authCode(AuthViewModel)
 }
@@ -90,7 +92,9 @@ extension View {
             case .editCustomProduct(let id): CustomProductView(editId: id)
             case .child(let id): ChildEditView(childId: id)
             case .settings: SettingsView()
+            case .devices: DevicesView()
             case .stats: StatsView()
+            case .assistant(let id): AssistantView(productId: id)
             case .linkEmail: LinkEmailFlow()
             case .authCode(let m): AuthCodeView(model: m)
             }
@@ -112,7 +116,7 @@ extension MainFlow {
         switch DemoScreen.current {
         case "diary": return .diary
         case "catalog", "entry": return .products
-        case let s? where s.hasPrefix("product:"): return .products
+        case let s? where s.hasPrefix("product:") || s.hasPrefix("assistant-product:"): return .products
         default: return .home
         }
         #else
@@ -124,6 +128,8 @@ extension MainFlow {
         #if DEBUG
         // Скриншоты и проверка экрана статистики без касаний: `-demo_screen stats`.
         if DemoScreen.current == "stats" { return [.stats] }
+        if DemoScreen.current == "assistant" { return [.assistant(productId: nil)] }
+        if DemoScreen.current == "assistant-settings" { return [.settings] }
         #endif
         return []
     }
@@ -133,6 +139,9 @@ extension MainFlow {
         switch DemoScreen.current {
         case let s? where s.hasPrefix("product:"): return [.product(String(s.dropFirst("product:".count)))]
         case "entry": return [.product("broccoli"), .entry(entryId: nil, productId: "broccoli")]
+        case let s? where s.hasPrefix("assistant-product:"):
+            let id = String(s.dropFirst("assistant-product:".count))
+            return [.product(id), .assistant(productId: id)]
         default: return []
         }
         #else

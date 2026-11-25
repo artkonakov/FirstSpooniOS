@@ -22,11 +22,14 @@ final class DiaryRepository {
     @ObservationIgnored private let db: AppDatabase
     @ObservationIgnored private let activeStore: ActiveChildStore
     @ObservationIgnored let photos: PhotoStore
+    @ObservationIgnored private let findProduct: (String) -> Product?
 
-    init(db: AppDatabase, activeStore: ActiveChildStore, photos: PhotoStore) {
+    init(db: AppDatabase, activeStore: ActiveChildStore, photos: PhotoStore,
+         findProduct: @escaping (String) -> Product? = { _ in nil }) {
         self.db = db
         self.activeStore = activeStore
         self.photos = photos
+        self.findProduct = findProduct
         reload()
     }
 
@@ -118,7 +121,10 @@ final class DiaryRepository {
             try EntryRecord.filter(sql: "child_id = ?", arguments: [id]).fetchAll(db).flatMap(\.photos)
         }) ?? []
         entryPhotos.forEach(photos.delete)
-        try db.dbQueue.write { try $0.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id]) }
+        try db.dbQueue.write {
+            try $0.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id])
+            try $0.execute(sql: "DELETE FROM assistant_chats WHERE child_id = ?", arguments: [id])
+        }
         if activeStore.id == id { activeStore.set(nil) }
         reload()
     }
@@ -134,7 +140,7 @@ final class DiaryRepository {
                                  symptoms: symptoms.map(\.rawValue), note: Self.clean(note),
                                  photos: Array(photos.prefix(DiaryEntry.maxPhotos)), createdAt: now, updatedAt: now)
         try db.dbQueue.write { try record.insert($0) }
-        Analytics.track(.entryAdded)
+        Analytics.track(.entryAdded(food: analyticsFood(productId)))
         reload()
         return record.id
     }
@@ -153,6 +159,7 @@ final class DiaryRepository {
     /// Сохранить изменённую пробу. Ребёнок и дата создания не меняются.
     func updateEntry(_ entry: DiaryEntry) throws {
         guard var old = try db.dbQueue.read({ try EntryRecord.fetchOne($0, key: entry.id) }) else { return }
+        let reactionChanged = old.reaction != entry.reaction.rawValue
         old.productId = entry.productId
         old.date = entry.date.iso
         old.time = entry.time?.description
@@ -165,15 +172,22 @@ final class DiaryRepository {
         old.photos = Array(entry.photos.prefix(DiaryEntry.maxPhotos))
         old.updatedAt = nowMillis()
         try db.dbQueue.write { try old.update($0) }
+        let food = analyticsFood(entry.productId)
+        Analytics.track(.entryUpdated(food: food))
+        if reactionChanged { Analytics.track(.entryReactionChanged(food: food)) }
         // Убранные из пробы фото — стираем файлы (сначала БД, потом файл).
         removed.forEach(photos.delete)
         reload()
     }
 
     func setReaction(_ entryId: String, _ reaction: Reaction) throws {
+        let original = getEntry(entryId)
         let now = nowMillis()
         try db.dbQueue.write {
             try $0.execute(sql: "UPDATE entries SET reaction = ?, updated_at = ? WHERE id = ?", arguments: [reaction.rawValue, now, entryId])
+        }
+        if let original, original.reaction != reaction {
+            Analytics.track(.entryReactionChanged(food: analyticsFood(original.productId)))
         }
         reload()
     }
@@ -181,23 +195,36 @@ final class DiaryRepository {
     /// Мягкое удаление: запись скрывается, но остаётся для будущей синхронизации.
     func deleteEntry(_ entryId: String) throws {
         let now = nowMillis()
-        let files = (try? db.dbQueue.read { try EntryRecord.fetchOne($0, key: entryId) })??.photos ?? []
+        let original = try? db.dbQueue.read { try EntryRecord.fetchOne($0, key: entryId) }
+        let files = original?.photos ?? []
         try db.dbQueue.write { try $0.execute(sql: "UPDATE entries SET deleted_at = ?, updated_at = ?, photos = '[]' WHERE id = ?", arguments: [now, now, entryId]) }
         // Мягкое удаление записи, но фото живут только на устройстве — стираем их сразу.
         files.forEach(photos.delete)
+        if let original, original.deletedAt == nil { Analytics.track(.entryDeleted(food: analyticsFood(original.productId))) }
         reload()
     }
 
     /// Поставить или снять (mark = nil) ручную отметку продукта. Избранное не трогает.
     func setMark(_ productId: String, _ mark: ProductMark?) throws {
+        let previous = marks[productId]
         try updateProductRow(productId) { $0.status = mark?.rawValue }
-        // Только тип отметки, без продукта.
-        if let mark { Analytics.track(.productMarked(mark: mark)) }
+        guard previous != mark else { return }
+        let food = analyticsFood(productId)
+        if let mark { Analytics.track(.productMarked(mark: mark, food: food)) }
+        else { Analytics.track(.productMarkRemoved(food: food)) }
     }
 
     /// Добавить или убрать продукт из избранного. Отметку не трогает.
     func setLiked(_ productId: String, _ liked: Bool) throws {
+        let changed = favorites.contains(productId) != liked
         try updateProductRow(productId) { $0.liked = liked }
+        if changed { Analytics.track(.productFavoriteChanged(food: analyticsFood(productId), liked: liked)) }
+    }
+
+    private func analyticsFood(_ id: String) -> AnalyticsEvent.Food {
+        if let product = findProduct(id) { return product.isCustom ? .custom : .catalog(product.id) }
+        if (try? db.dbQueue.read { try CustomProductRecord.fetchOne($0, key: id) }) != nil { return .custom }
+        return .unknown
     }
 
     /// Строка child_products без отметки и без лайка не нужна — мягко удаляем.
