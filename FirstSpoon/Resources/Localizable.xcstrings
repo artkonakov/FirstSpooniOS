@@ -3004,13 +3004,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "We'll send a confirmation code. Your diary stays with you when you change phones"
+            "value": "We’ll send a code to your email. To move your diary, turn on sync in your profile"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пришлём код подтверждения. Дневник останется с вами при смене телефона"
+            "value": "Пришлём код на почту. Для переноса дневника включите синхронизацию в профиле"
           }
         }
       }
@@ -6045,13 +6045,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "You are using the app without an account. Link your email so you don't lose the diary"
+            "value": "Link your email to sign in on another device. To move your diary, turn on sync in your profile"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сейчас вы без аккаунта. Привяжите почту, чтобы не потерять дневник"
+            "value": "Привяжите почту, чтобы войти в аккаунт на другом устройстве. Для переноса дневника включите синхронизацию в профиле"
           }
         }
       }

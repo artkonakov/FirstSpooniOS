@@ -619,13 +619,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Оставить мои правки"
+            "value": "Оставить записи на этом устройстве"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep my changes"
+            "value": "Keep the entries on this device"
           }
         }
       }
@@ -636,13 +636,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Загрузить из облака"
+            "value": "Взять записи из облака"
           }
         },
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Use cloud version"
+            "value": "Use the entries from the cloud"
           }
         }
       }
@@ -908,7 +908,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Достигнут лимит чата. Попробуйте позже"
+            "value": "Лимит чата исчерпан. Попробуйте позже"
           }
         },
         "en": {
