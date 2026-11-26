@@ -12,6 +12,7 @@ final class DiaryRepository {
     private(set) var activeChild: Child?
     /// Пробы активного ребёнка: дата ↓, время ↓, создание ↓ (как в Android DAO).
     private(set) var entries: [DiaryEntry] = []
+    private(set) var recipeMeals: [RecipeMeal] = []
     /// Ручные отметки активного ребёнка: productId → отметка.
     private(set) var marks: [String: ProductMark] = [:]
     /// Избранные продукты активного ребёнка.
@@ -41,17 +42,20 @@ final class DiaryRepository {
             children = all.map { $0.toDomain() }
             activeChild = children.first { $0.id == activeStore.id } ?? children.first
             if let id = activeChild?.id {
-                let (e, rows) = try db.dbQueue.read { db in
+                let (e, rows, meals) = try db.dbQueue.read { db in
                     (try EntryRecord.filter(sql: "child_id = ? AND deleted_at IS NULL", arguments: [id])
                         .order(sql: "date DESC, time DESC, created_at DESC").fetchAll(db),
-                     try ChildProductRecord.filter(sql: "child_id = ? AND deleted_at IS NULL", arguments: [id]).fetchAll(db))
+                     try ChildProductRecord.filter(sql: "child_id = ? AND deleted_at IS NULL", arguments: [id]).fetchAll(db),
+                     try RecipeMealRecord.filter(sql: "child_id = ? AND deleted_at IS NULL", arguments: [id])
+                         .order(sql: "date DESC, time DESC, created_at DESC").fetchAll(db))
                 }
                 entries = e.map { $0.toDomain() }
+                recipeMeals = meals.compactMap { $0.toDomain() }
                 marks = Dictionary(rows.compactMap { r in r.status.flatMap(ProductMark.init(rawValue:)).map { (r.productId, $0) } },
                                    uniquingKeysWith: { a, _ in a })
                 favorites = Set(rows.filter(\.liked).map(\.productId))
             } else {
-                entries = []; marks = [:]; favorites = []
+                entries = []; recipeMeals = []; marks = [:]; favorites = []
             }
         } catch {
             assertionFailure("DiaryRepository.reload: \(error)")
@@ -121,10 +125,14 @@ final class DiaryRepository {
             try EntryRecord.filter(sql: "child_id = ?", arguments: [id]).fetchAll(db).flatMap(\.photos)
         }) ?? []
         entryPhotos.forEach(photos.delete)
-        try db.dbQueue.write {
-            try $0.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id])
-            try $0.execute(sql: "DELETE FROM assistant_chats WHERE child_id = ?", arguments: [id])
+        let mealPhotos = try db.dbQueue.write { db -> [String] in
+            let files = try RecipeMealRecord.filter(sql: "child_id = ?", arguments: [id]).fetchAll(db).flatMap(\.photos)
+            try db.execute(sql: "UPDATE recipe_meals SET photos = '[]' WHERE child_id = ?", arguments: [id])
+            try db.execute(sql: "UPDATE children SET deleted_at = ?, updated_at = ?, photo = NULL WHERE id = ?", arguments: [now, now, id])
+            try db.execute(sql: "DELETE FROM assistant_chats WHERE child_id = ?", arguments: [id])
+            return files
         }
+        mealPhotos.forEach(photos.delete)
         if activeStore.id == id { activeStore.set(nil) }
         reload()
     }
@@ -154,6 +162,45 @@ final class DiaryRepository {
 
     func getEntry(_ id: String) -> DiaryEntry? {
         try? db.dbQueue.read { try EntryRecord.fetchOne($0, key: id) }.flatMap { $0.deletedAt == nil ? $0.toDomain() : nil }
+    }
+
+    func saveRecipeMeal(_ meal: RecipeMeal, editing: Bool) throws {
+        guard activeChild?.id == meal.childId, !meal.eatenIngredients.isEmpty else { throw RepositoryError.invalidMeal }
+        let now = nowMillis()
+        let files = Array(meal.photos.prefix(DiaryEntry.maxPhotos))
+        let removed = try db.dbQueue.write { db -> Set<String> in
+            let previous = try RecipeMealRecord.fetchOne(db, key: meal.id)
+            if editing {
+                guard previous?.deletedAt == nil, previous?.childId == meal.childId else { throw RepositoryError.invalidMeal }
+            } else if previous != nil {
+                throw RepositoryError.invalidMeal
+            }
+            let row = RecipeMealRecord(id: meal.id, childId: meal.childId, recipeId: previous?.recipeId ?? meal.recipeId,
+                                       snapshot: meal.snapshot, date: meal.date.iso, time: meal.time?.description,
+                                       meal: meal.meal?.rawValue, amount: meal.amount?.rawValue,
+                                       reaction: meal.reaction.rawValue, note: Self.clean(meal.note),
+                                       photos: files, createdAt: previous?.createdAt ?? now, updatedAt: now)
+            if editing { try row.update(db) } else { try row.insert(db) }
+            return Set(previous?.photos ?? []).subtracting(files)
+        }
+        removed.forEach(photos.delete)
+        reload()
+    }
+
+    func deleteRecipeMeal(_ meal: RecipeMeal) throws {
+        guard activeChild?.id == meal.childId else { throw RepositoryError.invalidMeal }
+        let files = try db.dbQueue.write { db -> [String] in
+            guard var row = try RecipeMealRecord.fetchOne(db, key: meal.id),
+                  row.deletedAt == nil, row.childId == meal.childId else { throw RepositoryError.invalidMeal }
+            let files = row.photos
+            row.photos = []
+            row.updatedAt = nowMillis()
+            row.deletedAt = row.updatedAt
+            try row.update(db)
+            return files
+        }
+        files.forEach(photos.delete)
+        reload()
     }
 
     /// Сохранить изменённую пробу. Ребёнок и дата создания не меняются.
@@ -257,4 +304,4 @@ final class DiaryRepository {
     }
 }
 
-enum RepositoryError: Error { case noActiveChild }
+enum RepositoryError: Error { case noActiveChild, invalidMeal }

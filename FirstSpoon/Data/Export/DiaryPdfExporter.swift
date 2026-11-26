@@ -15,10 +15,10 @@ enum DiaryPdfExporter {
     enum PhotoMode: String, CaseIterable {
         case none, reactions, all
 
-        func includes(_ e: DiaryEntry) -> Bool {
+        func includes(_ reaction: Reaction) -> Bool {
             switch self {
             case .none: return false
-            case .reactions: return e.hasReaction
+            case .reactions: return reaction == .unsure || reaction == .reaction
             case .all: return true
             }
         }
@@ -32,6 +32,7 @@ enum DiaryPdfExporter {
         let today: LocalDate
         var photoMode: PhotoMode = .none
         var photos: PhotoStore?
+        var recipeMeals: [RecipeMeal] = []
     }
 
     /// Миниатюры фото в PDF: высота ~4 см, пропорции сохраняются, уменьшены до ~1000 px JPEG, чтобы файл был в пределах МБ.
@@ -144,7 +145,9 @@ enum DiaryPdfExporter {
         let progress = FeedingRules.progressByProduct(input.entries, marks: input.marks)
         let introduced = progress.values.filter { $0.status == .introduced }.count
         let inProgress = progress.values.filter { $0.status == .inProgress }.count
-        out.append(Block(text: text(L.s("export_summary", introduced, FeedingRules.introductionGoal, inProgress, input.entries.count), style(13, 600)),
+        let hasMeals = !input.recipeMeals.isEmpty
+        let summary = hasMeals ? "export_summary_with_meals" : "export_summary"
+        out.append(Block(text: text(L.s(summary, introduced, FeedingRules.introductionGoal, inProgress, input.entries.count + input.recipeMeals.count), style(13, 600)),
                          spaceBefore: 16))
 
         // Списки по статусам — названия по алфавиту.
@@ -155,39 +158,48 @@ enum DiaryPdfExporter {
             out.append(Block(text: text(L.s(key, names.isEmpty ? "—" : names.joined(separator: ", ")), style(12, 400)), spaceBefore: 6))
         }
 
-        // Пробы по дням, по возрастанию даты и времени.
-        out.append(Block(text: text(L.s("product_tries"), style(18, 700)), spaceBefore: 20, keepWithNext: true))
-        let sorted = input.entries.enumerated().sorted { a, b in
-            let (x, y) = (a.element, b.element)
-            if x.date != y.date { return x.date < y.date }
-            let tx = x.time?.minuteOfDay ?? -1, ty = y.time?.minuteOfDay ?? -1
-            if tx != ty { return tx < ty }
-            if x.createdAt != y.createdAt { return x.createdAt < y.createdAt }
-            return a.offset > b.offset
-        }.map(\.element)
+        // Записи по дням, по возрастанию даты и времени.
+        out.append(Block(text: text(L.s(hasMeals ? "diary_title" : "product_tries"), style(18, 700)), spaceBefore: 20, keepWithNext: true))
+        let sorted = DiaryTimelineItem.newestFirst(entries: input.entries, meals: input.recipeMeals).reversed()
         if sorted.isEmpty {
             out.append(Block(text: text(L.s("export_empty"), style(12, 400, muted: true)), spaceBefore: 6))
         }
         var day: LocalDate?
-        for e in sorted {
-            if e.date != day {
-                day = e.date
-                out.append(Block(text: text(UiLocale.dayMonthYear(e.date), style(14, 700)), spaceBefore: 12, keepWithNext: true))
+        for record in sorted {
+            if record.date != day {
+                day = record.date
+                out.append(Block(text: text(UiLocale.dayMonthYear(record.date), style(14, 700)), spaceBefore: 12, keepWithNext: true))
             }
-            let line = NSMutableAttributedString(string: (e.time.map { UiLocale.time($0) + "  " } ?? ""), attributes: style(12, 400, muted: true))
-            line.append(NSAttributedString(string: name(e.productId), attributes: style(12, 700)))
-            let details = [e.amount.map(Labels.label), e.meal.map(Labels.label), L.s("export_reaction_value", Labels.label(e.reaction))].compactMap { $0 }
+            let title: String, contents: String?, meal: Meal?, amount: Amount?, reaction: Reaction
+            let symptoms: [Symptom], note: String?, photos: [String]
+            switch record {
+            case .product(let entry):
+                title = name(entry.productId)
+                contents = nil
+                (meal, amount, reaction, symptoms, note, photos) = (entry.meal, entry.amount, entry.reaction, entry.symptoms, entry.note, entry.photos)
+            case .meal(let entry):
+                title = entry.snapshot.title.value()
+                let eaten = entry.eatenIngredients.map { input.catalog.productsById[$0.productId]?.name ?? $0.name }
+                contents = L.s("recipe_meal_contents", eaten.joined(separator: ", "))
+                (meal, amount, reaction, symptoms, note, photos) = (entry.meal, entry.amount, entry.reaction, [], entry.note, entry.photos)
+            }
+            let line = NSMutableAttributedString(string: (record.time.map { UiLocale.time($0) + "  " } ?? ""), attributes: style(12, 400, muted: true))
+            line.append(NSAttributedString(string: title, attributes: style(12, 700)))
+            let details = [amount.map(Labels.label), meal.map(Labels.label), L.s("export_reaction_value", Labels.label(reaction))].compactMap { $0 }
             line.append(NSAttributedString(string: " — " + details.joined(separator: ", "), attributes: style(12, 400)))
-            if !e.symptoms.isEmpty {
-                line.append(NSAttributedString(string: "\n" + L.s("export_symptoms", e.symptoms.map(Labels.label).joined(separator: ", ")),
+            if let contents {
+                line.append(NSAttributedString(string: "\n" + contents, attributes: style(11, 400, muted: true)))
+            }
+            if !symptoms.isEmpty {
+                line.append(NSAttributedString(string: "\n" + L.s("export_symptoms", symptoms.map(Labels.label).joined(separator: ", ")),
                                                attributes: style(11, 400, muted: true)))
             }
-            if let note = e.note, !note.isEmpty {
+            if let note, !note.isEmpty {
                 line.append(NSAttributedString(string: "\n" + L.s("export_note", note), attributes: style(11, 400, muted: true)))
             }
             out.append(Block(text: line, spaceBefore: 4))
-            if input.photoMode.includes(e), let store = input.photos {
-                out += photoRows(e.photos.compactMap { store.image($0) })
+            if input.photoMode.includes(reaction), let store = input.photos {
+                out += photoRows(photos.compactMap { store.image($0) })
             }
         }
         return out

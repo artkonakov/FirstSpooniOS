@@ -22,13 +22,14 @@ struct ProgressItem: Identifiable { var id: String { productId }; let productId:
 struct HomeState {
     var introducedCount = 0
     var today: [TodayItem] = []
+    var todayRecords: [DiaryTimelineItem] = []
     var inProgress: [ProgressItem] = []
     var attention: [ProgressItem] = []
     /// Начатые, но не активные продукты — ждут очереди, без кнопки записи (одна серия за раз).
     var queued: [ProgressItem] = []
     var recommendation: Recommendation?
     var notReady: Bool { if case .notReady = recommendation { return true } else { return false } }
-    var isEmpty: Bool { today.isEmpty && inProgress.isEmpty && attention.isEmpty && introducedCount == 0 }
+    var isEmpty: Bool { todayRecords.isEmpty && inProgress.isEmpty && attention.isEmpty && introducedCount == 0 }
 
     /// Продукт для формы «Записать пробу»: из рекомендации (новый или продолжить серию), иначе пустая форма.
     var entryProductId: String? {
@@ -56,6 +57,7 @@ struct HomeState {
         let r = result?.recommendation
         recommendation = r
         let todayEntries = diary.entries.filter { $0.date == date }
+        todayRecords = DiaryTimelineItem.newestFirst(entries: todayEntries, meals: diary.recipeMeals.filter { $0.date == date })
         let todayIds = Set(todayEntries.map(\.productId))
         let shownInCard = r?.productId
         let active = result?.activeSeries
@@ -119,9 +121,20 @@ struct HomeView: View {
                         }
                     }
                 }
-                if !state.today.isEmpty {
+                if !state.todayRecords.isEmpty {
                     SectionTitle(L.s("home_today"))
-                    ForEach(state.today) { item in TodayCard(item: item) { nav.open(.entry(entryId: item.id, productId: nil)) } }
+                    ForEach(state.todayRecords) { record in
+                        switch record {
+                        case .product(let entry):
+                            if let item = state.today.first(where: { $0.id == entry.id }) {
+                                TodayCard(item: item) { nav.open(.entry(entryId: item.id, productId: nil)) }
+                            }
+                        case .meal(let meal):
+                            RecipeMealCard(meal: meal) {
+                                nav.open(.recipeMeal(recipeId: nil, childId: nil, entryId: meal.id))
+                            }
+                        }
+                    }
                 }
                 if !state.inProgress.isEmpty {
                     SectionTitle(L.s("home_in_progress"))

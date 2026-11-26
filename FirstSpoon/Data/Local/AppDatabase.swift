@@ -132,6 +132,25 @@ final class AppDatabase {
                 table.add(column: "replied_at", .integer)
             }
         }
+        m.registerMigration("v7_recipe_meals") { db in
+            try db.create(table: "recipe_meals") { table in
+                table.column("id", .text).primaryKey().notNull()
+                table.column("child_id", .text).notNull().references("children", onDelete: .cascade)
+                table.column("recipe_id", .text).notNull()
+                table.column("snapshot", .text).notNull()
+                table.column("date", .text).notNull()
+                table.column("time", .text)
+                table.column("meal", .text)
+                table.column("amount", .text)
+                table.column("reaction", .text).notNull()
+                table.column("note", .text)
+                table.column("photos", .text).notNull().defaults(to: "[]")
+                table.column("created_at", .integer).notNull()
+                table.column("updated_at", .integer).notNull()
+                table.column("deleted_at", .integer)
+            }
+            try db.create(index: "recipe_meals_by_child", on: "recipe_meals", columns: ["child_id", "date"])
+        }
         return m
     }
 
@@ -140,7 +159,10 @@ final class AppDatabase {
         (try? dbQueue.read { db -> Set<String> in
             var names = Set(try String.fetchAll(db, sql: "SELECT photo FROM children WHERE photo IS NOT NULL"))
             names.formUnion(try String.fetchAll(db, sql: "SELECT photo FROM custom_products WHERE photo IS NOT NULL"))
-            for json in try String.fetchAll(db, sql: "SELECT photos FROM entries WHERE photos != '[]'") {
+            for json in try String.fetchAll(db, sql: """
+                SELECT photos FROM entries WHERE photos != '[]'
+                UNION SELECT photos FROM recipe_meals WHERE photos != '[]' AND deleted_at IS NULL
+                """) {
                 names.formUnion((try? JSONDecoder().decode([String].self, from: Data(json.utf8))) ?? [])
             }
             return names

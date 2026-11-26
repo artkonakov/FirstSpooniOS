@@ -25,7 +25,10 @@ struct ProfileView: View {
                 if app.diary.activeChild != nil {
                     ActionRow(title: L.s("export_row"), icon: "ic_document") {
                         // Есть фото проб — сначала спрашиваем, какие класть в отчёт; нет — сразу без фото.
-                        if app.diary.entries.contains(where: { !$0.photos.isEmpty }) { askPhotos = true } else { exportDiary(.none) }
+                        if app.diary.entries.contains(where: { !$0.photos.isEmpty }) ||
+                            app.diary.recipeMeals.contains(where: { !$0.photos.isEmpty }) {
+                            askPhotos = true
+                        } else { exportDiary(.none) }
                     }
                 }
                 if case .loggedIn(let email) = app.session.state, email != nil {
@@ -58,7 +61,8 @@ struct ProfileView: View {
     private func exportDiary(_ mode: DiaryPdfExporter.PhotoMode) {
         guard let child = app.diary.activeChild else { return }
         let input = DiaryPdfExporter.Input(child: child, entries: app.diary.entries, marks: app.diary.marks,
-                                           catalog: app.catalog.catalog, today: .today(), photoMode: mode, photos: app.photos)
+                                           catalog: app.catalog.catalog, today: .today(), photoMode: mode, photos: app.photos,
+                                           recipeMeals: app.diary.recipeMeals)
         do {
             exported = try DiaryPdfExporter.export(input)
             Analytics.track(.diaryExported(photos: mode.rawValue))

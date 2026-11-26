@@ -7,6 +7,7 @@ struct AppTextField: View {
     var icon: String?
     var error: String?
     var multiline = false
+    var minimumLines = 3
     var keyboard: UIKeyboardType = .default
     var contentType: UITextContentType?
     var capitalization: TextInputAutocapitalization = .sentences
@@ -23,7 +24,7 @@ struct AppTextField: View {
                 }
                 Group {
                     if multiline {
-                        TextField("", text: $text, prompt: prompt, axis: .vertical).lineLimit(3...8)
+                        TextField("", text: $text, prompt: prompt, axis: .vertical).lineLimit(minimumLines...8)
                     } else {
                         TextField("", text: $text, prompt: prompt)
                     }

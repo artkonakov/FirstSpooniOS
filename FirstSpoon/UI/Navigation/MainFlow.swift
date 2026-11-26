@@ -4,6 +4,8 @@ import FirstSpoonCore
 /// Экраны, которые открываются поверх вкладки (push в стек этой вкладки).
 enum Route: Hashable {
     case product(String)
+    case recipe(String)
+    case recipeMeal(recipeId: String?, childId: String?, entryId: String?)
     /// Новая проба (`entryId` = nil, можно с продуктом) или редактирование.
     case entry(entryId: String?, productId: String?)
     case customProduct(query: String)
@@ -25,7 +27,7 @@ final class Navigator {
     func back() { if !path.isEmpty { path.removeLast() } }
 }
 
-private enum Tab: Hashable { case home, diary, products, profile }
+private enum Tab: Hashable { case home, diary, products, recipes, profile }
 
 /// Основной граф — стандартный iOS: системный `TabView`, у каждой вкладки свой `NavigationStack` (`TabStack`).
 /// Заголовок, кнопки навбара и поиск задаёт сам экран; таб-бар виден и на вложенных экранах.
@@ -46,6 +48,11 @@ struct MainFlow: View {
             TabStack(initialPath: MainFlow.initialProductsPath) { ProductsTab(state: catalogState) }
                 .tabItem { Label(L.s("tab_products"), image: "ic_tab_products") }
                 .tag(Tab.products)
+            TabStack(initialPath: MainFlow.initialRecipesPath, onRecipeLogged: { tab = .diary }) {
+                RecipesView(onOpenProducts: { tab = .products }, onOpenHome: { tab = .home })
+            }
+            .tabItem { Label(L.s("tab_recipes"), image: "ic_document") }
+            .tag(Tab.recipes)
             TabStack { ProfileView() }
                 .tabItem { Label(L.s("tab_profile"), image: "ic_tab_profile") }
                 .tag(Tab.profile)
@@ -62,31 +69,36 @@ struct MainFlow: View {
 /// Стек одной вкладки: свой `Navigator` в окружении, все маршруты `Route`.
 struct TabStack<Root: View>: View {
     @State private var nav: Navigator
+    private let onRecipeLogged: (() -> Void)?
     @ViewBuilder let root: () -> Root
 
-    init(initialPath: [Route] = [], @ViewBuilder root: @escaping () -> Root) {
+    init(initialPath: [Route] = [], onRecipeLogged: (() -> Void)? = nil, @ViewBuilder root: @escaping () -> Root) {
         let nav = Navigator()
         nav.path = initialPath
         _nav = State(initialValue: nav)
         self.root = root
+        self.onRecipeLogged = onRecipeLogged
     }
 
     var body: some View {
-        NavigationStack(path: $nav.path) { root().routes() }
+        NavigationStack(path: $nav.path) { root().routes(onRecipeLogged: onRecipeLogged) }
             .environment(nav)
     }
 }
 
 extension View {
     /// Все экраны, которые открываются в стеке вкладки (таб-бар остаётся; нижняя кнопка — над ним).
-    func routes() -> some View {
-        navigationDestination(for: Route.self) { route in destination(route) }
+    func routes(onRecipeLogged: (() -> Void)? = nil) -> some View {
+        navigationDestination(for: Route.self) { route in destination(route, onRecipeLogged: onRecipeLogged) }
     }
 
     @ViewBuilder
-    private func destination(_ route: Route) -> some View {
+    private func destination(_ route: Route, onRecipeLogged: (() -> Void)?) -> some View {
             switch route {
             case .product(let id): ProductView(productId: id)
+            case .recipe(let id): RecipeDetailView(id: id)
+            case .recipeMeal(let recipeId, let childId, let entryId):
+                RecipeMealView(recipeId: recipeId, childId: childId, entryId: entryId, onNewMealSaved: onRecipeLogged)
             case .entry(let entryId, let productId): EntryView(entryId: entryId, productId: productId)
             case .customProduct(let query): CustomProductView(initialName: query)
             case .editCustomProduct(let id): CustomProductView(editId: id)
@@ -115,6 +127,7 @@ extension MainFlow {
         #if DEBUG
         switch DemoScreen.current {
         case "diary": return .diary
+        case let s? where s == "recipes" || s.hasPrefix("recipe:"): return .recipes
         case "catalog", "entry": return .products
         case let s? where s.hasPrefix("product:") || s.hasPrefix("assistant-product:"): return .products
         default: return .home
@@ -147,5 +160,14 @@ extension MainFlow {
         #else
         return []
         #endif
+    }
+
+    fileprivate static var initialRecipesPath: [Route] {
+        #if DEBUG
+        if let screen = DemoScreen.current, screen.hasPrefix("recipe:") {
+            return [.recipe(String(screen.dropFirst("recipe:".count)))]
+        }
+        #endif
+        return []
     }
 }

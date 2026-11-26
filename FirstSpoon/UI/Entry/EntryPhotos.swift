@@ -76,6 +76,7 @@ final class EntryPhotosDraft {
 /// спиннер во время обработки, на 5 фото исчезает). Тап по фото — на весь экран.
 struct EntryPhotosSection: View {
     let draft: EntryPhotosDraft
+    var showsHint = true
     @State private var items: [PhotosPickerItem] = []
     @State private var viewer: Int?
     @State private var failed = false
@@ -85,7 +86,9 @@ struct EntryPhotosSection: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(L.s("entry_photos_hint")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted).padding(.leading, 6)
+            if showsHint {
+                Text(L.s("entry_photos_hint")).font(AppFont.bodyMedium).foregroundStyle(AppColors.inkMuted).padding(.leading, 6)
+            }
             if draft.photos.isEmpty && !processing {
                 AppButton(L.s("photo_pick"), kind: .soft, size: .medium, icon: "ic_image_fill") { library = true }
             } else {

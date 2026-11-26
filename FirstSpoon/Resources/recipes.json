@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "recipes": [
+    {
+      "id": "turkey-buckwheat-zucchini",
+      "title": {
+        "ru": "Индейка с гречкой и кабачком",
+        "en": "Turkey with buckwheat and zucchini"
+      },
+      "minutes": 35,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "turkey",
+          "grams": 250
+        },
+        {
+          "productId": "buckwheat-groats",
+          "grams": 120
+        },
+        {
+          "productId": "zucchini",
+          "grams": 250
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Сварите гречку по инструкции на упаковке, используя воду без соли",
+          "en": "Cook the buckwheat in unsalted water according to the package directions"
+        },
+        {
+          "ru": "Нарежьте филе индейки и тушите в воде. Проверьте термометром, что внутри кусочков не меньше 74 °C",
+          "en": "Cut up the turkey breast and simmer in water. Use a thermometer to check that the pieces reach 74 °C inside"
+        },
+        {
+          "ru": "Нарежьте кабачок и сварите в небольшом количестве воды до мягкости",
+          "en": "Chop the zucchini and simmer in a little water until soft"
+        },
+        {
+          "ru": "Разложите готовые ингредиенты вместе",
+          "en": "Serve the cooked ingredients together"
+        }
+      ]
+    },
+    {
+      "id": "potato-broccoli",
+      "title": {
+        "ru": "Картофель с брокколи",
+        "en": "Potatoes with broccoli"
+      },
+      "minutes": 25,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "potato",
+          "grams": 450
+        },
+        {
+          "productId": "broccoli",
+          "grams": 250
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Очистите и нарежьте картофель. Сварите его в воде до мягкости",
+          "en": "Peel, chop and boil the potatoes in water until soft"
+        },
+        {
+          "ru": "Разберите брокколи на соцветия и приготовьте на пару до мягкости. Подавайте вместе с картофелем",
+          "en": "Steam the broccoli florets until soft and serve with the potatoes"
+        }
+      ]
+    },
+    {
+      "id": "oats-pear",
+      "title": {
+        "ru": "Овсяная каша с грушей",
+        "en": "Porridge with pear"
+      },
+      "minutes": 25,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "oat-groats",
+          "grams": 120
+        },
+        {
+          "productId": "pear",
+          "grams": 200
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Сварите овсяную крупу по инструкции на упаковке, используя воду без соли",
+          "en": "Cook the oats in unsalted water according to the package directions"
+        },
+        {
+          "ru": "Очистите грушу и удалите сердцевину. Нарежьте и потушите с небольшим количеством воды до мягкости",
+          "en": "Peel and core the pear. Chop and simmer with a little water until soft"
+        },
+        {
+          "ru": "Соедините готовые ингредиенты. При необходимости добавьте немного воды",
+          "en": "Combine the cooked ingredients. Add a little water if needed"
+        }
+      ]
+    },
+    {
+      "id": "oats-apple",
+      "title": {
+        "ru": "Овсяная каша с яблоком",
+        "en": "Porridge with apple"
+      },
+      "minutes": 25,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "oat-groats",
+          "grams": 120
+        },
+        {
+          "productId": "apple",
+          "grams": 200
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Сварите овсяную крупу по инструкции на упаковке, используя воду без соли",
+          "en": "Cook the oats in unsalted water according to the package directions"
+        },
+        {
+          "ru": "Очистите яблоко и удалите сердцевину. Нарежьте и потушите с небольшим количеством воды до мягкости",
+          "en": "Peel and core the apple. Chop and simmer with a little water until soft"
+        },
+        {
+          "ru": "Соедините готовые ингредиенты. При необходимости добавьте немного воды",
+          "en": "Combine the cooked ingredients. Add a little water if needed"
+        }
+      ]
+    },
+    {
+      "id": "oats-banana",
+      "title": {
+        "ru": "Овсяная каша с бананом",
+        "en": "Porridge with banana"
+      },
+      "minutes": 25,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "oat-groats",
+          "grams": 120
+        },
+        {
+          "productId": "banana",
+          "grams": 180
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Сварите овсяную крупу по инструкции на упаковке, используя воду без соли",
+          "en": "Cook the oats in unsalted water according to the package directions"
+        },
+        {
+          "ru": "Очистите спелый банан, разомните вилкой и вмешайте в готовую кашу",
+          "en": "Peel a ripe banana, mash it with a fork and stir it into the cooked porridge"
+        }
+      ]
+    },
+    {
+      "id": "buckwheat-pumpkin",
+      "title": {
+        "ru": "Гречка с тыквой",
+        "en": "Buckwheat with pumpkin"
+      },
+      "minutes": 30,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "buckwheat-groats",
+          "grams": 150
+        },
+        {
+          "productId": "pumpkin",
+          "grams": 320
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Сварите гречку по инструкции на упаковке, используя воду без соли",
+          "en": "Cook the buckwheat in unsalted water according to the package directions"
+        },
+        {
+          "ru": "Нарежьте очищенную тыкву и сварите в небольшом количестве воды до мягкости",
+          "en": "Chop the peeled pumpkin and simmer in a little water until soft"
+        },
+        {
+          "ru": "Соедините готовые ингредиенты. При необходимости добавьте немного воды",
+          "en": "Combine the cooked ingredients. Add a little water if needed"
+        }
+      ]
+    },
+    {
+      "id": "turkey-potato-pumpkin",
+      "title": {
+        "ru": "Индейка с картофелем и тыквой",
+        "en": "Turkey with potatoes and pumpkin"
+      },
+      "minutes": 35,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "turkey",
+          "grams": 250
+        },
+        {
+          "productId": "potato",
+          "grams": 300
+        },
+        {
+          "productId": "pumpkin",
+          "grams": 220
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Нарежьте филе индейки и тушите в воде. Проверьте термометром, что внутри кусочков не меньше 74 °C",
+          "en": "Cut up the turkey breast and simmer in water. Use a thermometer to check that the pieces reach 74 °C inside"
+        },
+        {
+          "ru": "Нарежьте очищенный картофель и тыкву и сварите в небольшом количестве воды до мягкости",
+          "en": "Chop the peeled potatoes and pumpkin and simmer in a little water until soft"
+        },
+        {
+          "ru": "Разложите готовые ингредиенты вместе",
+          "en": "Serve the cooked ingredients together"
+        }
+      ]
+    },
+    {
+      "id": "chicken-rice-cauliflower",
+      "title": {
+        "ru": "Курица с рисом и цветной капустой",
+        "en": "Chicken with rice and cauliflower"
+      },
+      "minutes": 35,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "chicken",
+          "grams": 250
+        },
+        {
+          "productId": "rice",
+          "grams": 120
+        },
+        {
+          "productId": "cauliflower",
+          "grams": 250
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Сварите рис по инструкции на упаковке, используя воду без соли",
+          "en": "Cook the rice in unsalted water according to the package directions"
+        },
+        {
+          "ru": "Нарежьте куриное филе и тушите в воде. Проверьте термометром, что внутри кусочков не меньше 74 °C",
+          "en": "Cut up the chicken breast and simmer in water. Use a thermometer to check that the pieces reach 74 °C inside"
+        },
+        {
+          "ru": "Нарежьте цветную капусту и сварите в небольшом количестве воды до мягкости",
+          "en": "Chop the cauliflower and simmer in a little water until soft"
+        },
+        {
+          "ru": "Разложите готовые ингредиенты вместе",
+          "en": "Serve the cooked ingredients together"
+        }
+      ]
+    },
+    {
+      "id": "chicken-potato-broccoli",
+      "title": {
+        "ru": "Курица с картофелем и брокколи",
+        "en": "Chicken with potatoes and broccoli"
+      },
+      "minutes": 35,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "chicken",
+          "grams": 250
+        },
+        {
+          "productId": "potato",
+          "grams": 350
+        },
+        {
+          "productId": "broccoli",
+          "grams": 230
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Нарежьте куриное филе и тушите в воде. Проверьте термометром, что внутри кусочков не меньше 74 °C",
+          "en": "Cut up the chicken breast and simmer in water. Use a thermometer to check that the pieces reach 74 °C inside"
+        },
+        {
+          "ru": "Нарежьте очищенный картофель и брокколи и сварите в небольшом количестве воды до мягкости",
+          "en": "Chop the peeled potatoes and broccoli and simmer in a little water until soft"
+        },
+        {
+          "ru": "Разложите готовые ингредиенты вместе",
+          "en": "Serve the cooked ingredients together"
+        }
+      ]
+    },
+    {
+      "id": "turkey-carrot-potato",
+      "title": {
+        "ru": "Индейка с морковью и картофелем",
+        "en": "Turkey with carrots and potatoes"
+      },
+      "minutes": 35,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "turkey",
+          "grams": 250
+        },
+        {
+          "productId": "carrot",
+          "grams": 200
+        },
+        {
+          "productId": "potato",
+          "grams": 300
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Нарежьте филе индейки и тушите в воде. Проверьте термометром, что внутри кусочков не меньше 74 °C",
+          "en": "Cut up the turkey breast and simmer in water. Use a thermometer to check that the pieces reach 74 °C inside"
+        },
+        {
+          "ru": "Нарежьте очищенную морковь и картофель и сварите в небольшом количестве воды до мягкости",
+          "en": "Chop the peeled carrots and potatoes and simmer in a little water until soft"
+        },
+        {
+          "ru": "Разложите готовые ингредиенты вместе",
+          "en": "Serve the cooked ingredients together"
+        }
+      ]
+    },
+    {
+      "id": "cauliflower-potato-soup",
+      "title": {
+        "ru": "Суп из цветной капусты и картофеля",
+        "en": "Cauliflower and potato soup"
+      },
+      "minutes": 30,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "cauliflower",
+          "grams": 300
+        },
+        {
+          "productId": "potato",
+          "grams": 300
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Нарежьте очищенный картофель и цветную капусту. Залейте водой и варите до мягкости",
+          "en": "Chop the peeled potatoes and cauliflower. Cover with water and simmer until soft"
+        },
+        {
+          "ru": "Измельчите суп блендером. Если он слишком густой, добавьте немного воды",
+          "en": "Blend the soup. Add a little water if it is too thick"
+        }
+      ],
+      "textures": [
+        "PUREE"
+      ]
+    },
+    {
+      "id": "apple-pear",
+      "title": {
+        "ru": "Тёплое яблоко с грушей",
+        "en": "Warm stewed apple and pear"
+      },
+      "minutes": 20,
+      "portions": 3,
+      "ingredients": [
+        {
+          "productId": "apple",
+          "grams": 250
+        },
+        {
+          "productId": "pear",
+          "grams": 250
+        }
+      ],
+      "steps": [
+        {
+          "ru": "Очистите яблоко и грушу, удалите сердцевины",
+          "en": "Peel and core the apple and pear"
+        },
+        {
+          "ru": "Нарежьте плоды и потушите с водой под крышкой до мягкости",
+          "en": "Chop the fruit and simmer it with a little water, covered, until soft"
+        }
+      ]
+    }
+  ]
+}

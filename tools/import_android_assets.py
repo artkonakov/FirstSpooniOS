@@ -29,6 +29,9 @@ APP = ROOT / "FirstSpoon" / "Resources"
 
 def main():
     args = [a for a in sys.argv[1:]]
+    recipes_only = "--recipes-only" in args
+    if recipes_only:
+        args.remove("--recipes-only")
     icon = None
     if "--icon" in args:
         i = args.index("--icon")
@@ -36,6 +39,17 @@ def main():
         del args[i:i + 2]
     android = Path(args[0]).expanduser() if args else Path.home() / "Documents/Claude/FirstSpoon Android"
     main_src = android / "app/src/main"
+    import_recipes(main_src)
+    if recipes_only:
+        keys = lambda key: key.startswith(("recipes_", "recipe_meal_", "diary_record_count#")) or key in {
+            "tab_recipes", "export_summary_with_meals", "diary_records_title",
+        }
+        ru = read_strings(main_src / "res/values/strings.xml")
+        en = read_strings(main_src / "res/values-en/strings.xml")
+        write_xcstrings(APP / "Localizable.xcstrings",
+                        {k: v for k, v in ru.items() if keys(k)},
+                        {k: v for k, v in en.items() if keys(k)}, merge=True)
+        return
 
     # Иконки интерфейса: залитые SVG из Android icons/ → Assets.xcassets/Icons (шаблонные, для tint).
     # Ключ — имя drawable в Android (ic_*), значение — файл SVG из icons/.
@@ -148,6 +162,19 @@ def main():
     print(f"catalog.json, {count} product images, strings, font{', icon' if icon else ''} → {APP}")
 
 
+def import_recipes(main_src: Path):
+    shutil.copy(main_src / "assets/recipes.json", APP / "recipes.json")
+    images = APP / "Assets.xcassets/Recipes"
+    write_json(images / "Contents.json", {"info": {"author": "xcode", "version": 1}})
+    for photo in sorted((main_src / "res/drawable-nodpi").glob("recipe_*.jpg")):
+        imageset = images / f"{photo.stem}.imageset"
+        write_json(imageset / "Contents.json", {
+            "images": [{"filename": photo.name, "idiom": "universal"}],
+            "info": {"author": "xcode", "version": 1},
+        })
+        shutil.copy(photo, imageset / photo.name)
+
+
 def write_json(path: Path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -177,10 +204,10 @@ def read_strings(xml_path: Path) -> dict:
     return out
 
 
-def write_xcstrings(path: Path, ru: dict, en: dict):
+def write_xcstrings(path: Path, ru: dict, en: dict, merge: bool = False):
     """String Catalog: исходный язык ru, перевод en. Xcode компилирует его в ru.lproj / en.lproj."""
     unit = lambda v: {"stringUnit": {"state": "translated", "value": v}}
-    strings = {}
+    strings = json.loads(path.read_text(encoding="utf-8"))["strings"] if merge else {}
     for key in sorted(set(ru) | set(en)):
         loc = {}
         if key in ru:

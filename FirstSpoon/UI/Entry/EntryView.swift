@@ -206,7 +206,7 @@ struct TileGrid<T: Hashable, Tile: View>: View {
 }
 
 /// Дата и время пробы. Будущее недоступно.
-private struct DateTimeSheet: View {
+struct DateTimeSheet: View {
     @Binding var date: LocalDate
     @Binding var time: LocalTime
     let onDone: () -> Void

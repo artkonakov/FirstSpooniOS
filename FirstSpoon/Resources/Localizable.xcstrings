@@ -1417,6 +1417,62 @@
         }
       }
     },
+    "diary_record_count#few": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$d записи"
+          }
+        }
+      }
+    },
+    "diary_record_count#many": {
+      "extractionState": "manual",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$d записей"
+          }
+        }
+      }
+    },
+    "diary_record_count#one": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$d entry"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$d запись"
+          }
+        }
+      }
+    },
+    "diary_record_count#other": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$d entries"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ · %2$d записи"
+          }
+        }
+      }
+    },
     "diary_title": {
       "extractionState": "manual",
       "localizations": {
@@ -2416,6 +2472,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Введено %1$d из %2$d продуктов · в процессе введения %3$d · всего проб %4$d"
+          }
+        }
+      }
+    },
+    "export_summary_with_meals": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d of %2$d foods introduced · %3$d in progress · %4$d entries in total"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Введено %1$d из %2$d продуктов · в процессе введения %3$d · всего записей %4$d"
           }
         }
       }
@@ -5835,6 +5908,720 @@
         }
       }
     },
+    "recipe_meal_contents": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your baby ate: %1$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Малыш съел: %1$@"
+          }
+        }
+      }
+    },
+    "recipe_meal_delete": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete entry"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить запись"
+          }
+        }
+      }
+    },
+    "recipe_meal_delete_confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove this meal from the diary?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить это блюдо из дневника?"
+          }
+        }
+      }
+    },
+    "recipe_meal_eaten": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What did your baby eat?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что малыш съел?"
+          }
+        }
+      }
+    },
+    "recipe_meal_edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit entry"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Редактировать запись"
+          }
+        }
+      }
+    },
+    "recipe_meal_log": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log in diary"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать в дневник"
+          }
+        }
+      }
+    },
+    "recipe_meal_note_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For example, ate half the serving"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Например, съел половину порции"
+          }
+        }
+      }
+    },
+    "recipe_meal_previous_reaction": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your diary records a reaction to this meal"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В дневнике отмечена реакция на это блюдо"
+          }
+        }
+      }
+    },
+    "recipe_meal_reaction": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reaction to the meal"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Реакция на блюдо"
+          }
+        }
+      }
+    },
+    "recipe_meal_save_error": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t save the entry. Try again"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось сохранить запись. Попробуйте ещё раз"
+          }
+        }
+      }
+    },
+    "recipe_meal_unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This meal entry is unavailable"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Запись блюда недоступна"
+          }
+        }
+      }
+    },
+    "recipes_catalog_error": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Couldn’t open recipes"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось открыть рецепты"
+          }
+        }
+      }
+    },
+    "recipes_check_labels": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For food allergies, check labels and use clean utensils that have not touched the allergen"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "При аллергии сверяйте состав на этикетке и используйте чистую посуду, которая не контактировала с аллергеном"
+          }
+        }
+      }
+    },
+    "recipes_favorite": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Includes a favorite food"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Есть любимые продукты"
+          }
+        }
+      }
+    },
+    "recipes_few_help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If your baby already eats other foods, mark them in the catalog to see more ideas"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если малыш уже ел другие продукты, отметьте их в каталоге. Тогда сможем подобрать больше блюд"
+          }
+        }
+      }
+    },
+    "recipes_few_known": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not enough familiar foods yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока мало знакомых продуктов"
+          }
+        }
+      }
+    },
+    "recipes_for_reference": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Family meal ideas"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Идеи для семьи"
+          }
+        }
+      }
+    },
+    "recipes_grams": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d g"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$d г"
+          }
+        }
+      }
+    },
+    "recipes_ingredients": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ingredients"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ингредиенты"
+          }
+        }
+      }
+    },
+    "recipes_known": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Made with familiar foods"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Из знакомых продуктов"
+          }
+        }
+      }
+    },
+    "recipes_minutes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About %1$d min"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Около %1$d мин"
+          }
+        }
+      }
+    },
+    "recipes_no_available": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No matching meals yet"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подходящих блюд пока нет"
+          }
+        }
+      }
+    },
+    "recipes_not_match": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For browsing. The dish contains foods that are not suitable yet or that your baby is still getting to know"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока для просмотра. В блюде есть продукты, которые ещё не подходят малышу или с которыми он ещё не знаком"
+          }
+        }
+      }
+    },
+    "recipes_not_ready": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "We’ll suggest meals for your baby once they’re ready for solids"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Подберём блюда для малыша, когда начнётся прикорм"
+          }
+        }
+      }
+    },
+    "recipes_one_meal": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One meal · two ways to serve"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одна готовка · две подачи"
+          }
+        }
+      }
+    },
+    "recipes_open_home": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Go to home"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На главную"
+          }
+        }
+      }
+    },
+    "recipes_open_products": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open foods"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открыть продукты"
+          }
+        }
+      }
+    },
+    "recipes_paused": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "There’s a pause in feeding recommendations. Check the home screen for the next step"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока в прикорме пауза. Откройте главную, чтобы проверить следующий шаг"
+          }
+        }
+      }
+    },
+    "recipes_portions": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Makes %1$d servings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "На %1$d порции"
+          }
+        }
+      }
+    },
+    "recipes_reference": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "For browsing"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пока для просмотра"
+          }
+        }
+      }
+    },
+    "recipes_serve_mash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mash the cooked portion with a fork to a familiar texture and let it cool before serving"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Разомните готовую порцию вилкой до знакомой малышу текстуры и остудите перед подачей"
+          }
+        }
+      }
+    },
+    "recipes_serve_puree": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Blend the cooked portion until smooth and let it cool before serving"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Измельчите готовую порцию до однородного пюре и остудите перед подачей"
+          }
+        }
+      }
+    },
+    "recipes_serving": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How to serve it to your baby"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как подать малышу"
+          }
+        }
+      }
+    },
+    "recipes_split": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Set aside a portion for your baby before adding salt. Salt the adult portions separately"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Отложите порцию малышу до добавления соли. Взрослую часть можно посолить отдельно"
+          }
+        }
+      }
+    },
+    "recipes_steps": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How to cook"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Как приготовить"
+          }
+        }
+      }
+    },
+    "recipes_texture_hint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choose a texture your baby already manages"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Выберите текстуру, с которой малыш уже справляется"
+          }
+        }
+      }
+    },
+    "recipes_texture_mash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mashed"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Размятая еда"
+          }
+        }
+      }
+    },
+    "recipes_texture_puree": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puréed"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Пюре"
+          }
+        }
+      }
+    },
+    "recipes_today": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What shall we cook today?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Что приготовить сегодня?"
+          }
+        }
+      }
+    },
+    "recipes_unavailable": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This recipe is unavailable with the current diary settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Блюдо сейчас недоступно с учётом отметок в дневнике"
+          }
+        }
+      }
+    },
+    "recipes_unknown_allergy": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your diary records an allergy to a custom food. Check the ingredients before serving this dish to your baby"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "В дневнике отмечена аллергия на свой продукт. Сверьте состав блюда, прежде чем дать его малышу"
+          }
+        }
+      }
+    },
+    "recipes_wait_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Family meals can wait"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Семейные блюда чуть позже"
+          }
+        }
+      }
+    },
     "retry": {
       "extractionState": "manual",
       "localizations": {
@@ -6834,6 +7621,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Профиль"
+          }
+        }
+      }
+    },
+    "tab_recipes": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recipes"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Рецепты"
           }
         }
       }

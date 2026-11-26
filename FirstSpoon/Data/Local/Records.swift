@@ -68,6 +68,32 @@ struct EntryRecord: SnakeCaseRecord, Equatable {
     }
 }
 
+struct RecipeMealRecord: SnakeCaseRecord {
+    static let databaseTableName = "recipe_meals"
+    var id: String
+    var childId: String
+    var recipeId: String
+    var snapshot: RecipeMeal.Snapshot
+    var date: String
+    var time: String?
+    var meal: String?
+    var amount: String?
+    var reaction: String
+    var note: String?
+    var photos: [String]
+    var createdAt: Int64
+    var updatedAt: Int64
+    var deletedAt: Int64?
+
+    func toDomain() -> RecipeMeal? {
+        guard let day = LocalDate.parse(date) else { return nil }
+        return RecipeMeal(id: id, childId: childId, recipeId: recipeId, snapshot: snapshot, date: day,
+                          time: time.flatMap(LocalTime.parse), meal: meal.flatMap(Meal.init(rawValue:)),
+                          amount: amount.flatMap(Amount.init(rawValue:)), reaction: Reaction(rawValue: reaction) ?? .unknown,
+                          note: note, photos: photos, createdAt: createdAt)
+    }
+}
+
 /// То, что нельзя вывести из проб: ручная отметка и избранное. Одна строка на пару ребёнок + продукт.
 struct ChildProductRecord: SnakeCaseRecord, Equatable {
     static let databaseTableName = "child_products"
