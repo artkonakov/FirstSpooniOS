@@ -16,7 +16,7 @@ final class AppContainer {
     let catalog: CatalogRepository
     let activeChildStore: ActiveChildStore
     let diary: DiaryRepository
-    private(set) var diarySync: DiarySync!
+    private(set) var diarySync: DiarySync?
     let onboarding: OnboardingStore
     let recommendations: RecommendationRepository
     let reminderSettings: ReminderSettings
@@ -50,12 +50,14 @@ final class AppContainer {
         reminders = ReminderScheduler(settings: reminderSettings, onboarding: onboarding, diary: diary, catalog: catalog,
                                       accountStarted: { [unowned self] in self.accountStarted })
 
-        diarySync = DiarySync(db: self.db, api: api, tokens: tokens, restored: { [weak self] in
-            self?.onboarding.set(true)
-        }, changed: { [weak self] in
-            self?.catalog.reload()
-            self?.diary.reload()
-        })
+        if PilotFeatures.enabled {
+            diarySync = DiarySync(db: self.db, api: api, tokens: tokens, restored: { [weak self] in
+                self?.onboarding.set(true)
+            }, changed: { [weak self] in
+                self?.catalog.reload()
+                self?.diary.reload()
+            })
+        }
 
         auth.onUserDataCleared = { [unowned self] in
             catalog.reload()

@@ -1,21 +1,30 @@
 import Foundation
 import FirstSpoonCore
 
-enum AssistantPilot {
-    static var enabled: Bool {
-        #if DEBUG || ASSISTANT_PILOT
-        true
-        #else
-        false
-        #endif
-    }
+enum PilotFeatures {
+    // ASSISTANT_PILOT включается скриптом только для внутренней сборки TestFlight.
+    #if DEBUG || ASSISTANT_PILOT
+    static let enabled = true
+    #else
+    static let enabled = false
+    #endif
+}
 
+enum AssistantPilot {
+    static var enabled: Bool { PilotFeatures.enabled }
+
+    #if DEBUG || ASSISTANT_PILOT
     private static let gateway = URL(string: "https://d5d3r0mjsmuuqmckv04v.qsvaa8tq.apigw.yandexcloud.net/")!
     private static let chatEncoder = JSONEncoder()
+    #endif
 
     static func reply(api: ApiClient, request: AssistantRequest, owner: String) async -> ApiResult<AssistantReply> {
+        #if DEBUG || ASSISTANT_PILOT
         await api.call("POST", "assistant/chat", body: request, authorized: true,
                        root: gateway, encoder: chatEncoder, expectedOwner: owner)
+        #else
+        .failure(ApiError(status: 403, message: "assistant_disabled", code: "assistant_disabled"))
+        #endif
     }
 }
 

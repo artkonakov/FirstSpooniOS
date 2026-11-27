@@ -32,9 +32,10 @@ struct ProfileView: View {
                     }
                 }
                 if case .loggedIn(let email) = app.session.state, email != nil {
-                    DiarySyncControls(sync: app.diarySync) {
-                        nav.open(.devices)
-                        Analytics.track(.deviceSessionsOpened)
+                    if let sync = app.diarySync {
+                        DiarySyncControls(sync: sync, onDevices: openDevices)
+                    } else {
+                        ActionRow(title: L.s("devices_title"), onTap: openDevices)
                     }
                 }
                 ActionRow(title: L.s("settings"), icon: "ic_settings") { nav.open(.settings) }
@@ -55,6 +56,11 @@ struct ProfileView: View {
             .presentationBackground(AppColors.background)
         }
         .alert(L.s("export_failed"), isPresented: $exportFailed) { Button(L.s("ok"), role: .cancel) {} }
+    }
+
+    private func openDevices() {
+        Analytics.track(.deviceSessionsOpened)
+        nav.open(.devices)
     }
 
     /// PDF дневника активного ребёнка → системный лист «Поделиться» (в нём же «Сохранить в Файлы»).

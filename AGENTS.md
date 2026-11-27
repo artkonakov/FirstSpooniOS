@@ -83,7 +83,8 @@
 | Блокирующий экран «Нет доступа к интернету» при запрете сети для приложения (не авиарежим, не сбой сети), «Открыть настройки», снимается сам | ✅ экран проверен через debug-флаг; реальный запрет в симуляторе не воспроизвести | `Core/Network/NetworkAccessMonitor.swift` |
 | Локализация ru / en по языку телефона (ru + СНГ → русский, иначе английский): интерфейс, каталог, даты, время, plurals, PDF; название «Ложку за маму» / «LittleBite»; Настройки → «Язык» открывает страницу приложения в «Настройках» iOS (`UIApplication.openSettingsURLString`) — пункт «Язык» там есть, только если в телефоне больше одного языка; Настройки → уведомления открывают страницу уведомлений приложения (`UIApplication.openNotificationSettingsURLString`). Своих экранов настроек в приложении нет — системные страницы приложения, не корень системы | ✅ тесты `AppLocaleTests`; проверено в симуляторе на en (iPhone, iPad) | `AppLocale` (Core), `UI/Common/Strings.swift`, `Resources/*.xcstrings` |
 | Скриншоты App Store ru и en (iPhone 6.9", iPad 13") — без касаний: `-demo_data YES -debug_offline YES`, затем `-demo_screen home_progress\|diary\|catalog\|product:broccoli\|entry` (только debug) | ✅ | `store/screenshots`, `store/screenshots-en`, `App/DemoData.swift` |
-| Подписка «Плюс» (StoreKit), синхронизация дневника | ❌ не делаем на первом этапе (логика Entitlement уже в Core) | — |
+| Подписка «Плюс» (StoreKit) | ❌ пока не подключена (логика Entitlement в Core) | — |
+| Синхронизация дневника | Debug и внутренний TestFlight с `ASSISTANT_PILOT`; в App Store дневник локальный | `Data/Sync/DiarySync.swift`, `UI/Settings/DiarySyncView.swift` |
 | Debug-экраны рекомендаций/уведомлений, витрина компонентов, демо-данные, тап по уведомлению → экран | ❌ ещё нет | — |
 
 ## Структура
