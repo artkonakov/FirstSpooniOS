@@ -1,7 +1,7 @@
 import XCTest
 @testable import FirstSpoonCore
 
-/// Каталог событий и docs/analytics.md совпадают; имена корректны и те же, что в Android; трекеры получают события.
+/// Каталог событий совпадает с документацией и общим каталогом Android. Трекеры получают события.
 final class AnalyticsCatalogTests: XCTestCase {
     private let root = URL(fileURLWithPath: #filePath)
         .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
@@ -45,15 +45,17 @@ final class AnalyticsCatalogTests: XCTestCase {
         XCTAssertEqual(samples.map(\.name), AnalyticsEvent.allNames)
     }
 
-    /// Каталог совпадает с Android, если Android-проект лежит рядом (иначе тест пропускается).
-    func testSameNamesAsAndroid() throws {
+    /// Сверяем общий каталог и явно перечисляем платёжные события, которые пока есть только в Android.
+    func testSharedNamesMatchAndroid() throws {
         let android = root.deletingLastPathComponent()
             .appendingPathComponent("FirstSpoon Android/app/src/main/java/com/firstspoon/app/core/analytics/AnalyticsEvent.kt")
         guard let source = try? String(contentsOf: android, encoding: .utf8) else { throw XCTSkip("нет Android-проекта рядом") }
         let re = try NSRegularExpression(pattern: "AnalyticsEvent\\(\"([^\"]+)\"")
         let names = re.matches(in: source, range: NSRange(source.startIndex..., in: source))
             .map { String(source[Range($0.range(at: 1), in: source)!]) }
-        XCTAssertEqual(AnalyticsEvent.allNames.sorted(), names.sorted(), "каталог событий разошёлся с Android")
+        let androidOnlyBillingEvents = ["purchase_cancelled", "purchase_revenue", "restore_finished"]
+        XCTAssertEqual((AnalyticsEvent.allNames + androidOnlyBillingEvents).sorted(), names.sorted(),
+                       "общий каталог или список Android-событий покупок изменился")
     }
 
     func testTrackReachesTrackersWithParams() {

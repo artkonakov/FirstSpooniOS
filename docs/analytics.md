@@ -2,10 +2,12 @@
 
 Продуктовая аналитика iOS-приложения. Каталог событий — `Core/Sources/FirstSpoonCore/Analytics.swift`,
 трекеры — `FirstSpoon/Core/Analytics/`. Тест `AnalyticsCatalogTests` (`cd Core && swift test`) проверяет, что этот файл
-и каталог в коде совпадают, и что имена те же, что в Android (`core/analytics/AnalyticsEvent.kt`).
+и каталог в коде совпадают. Тест также сверяет имена общих событий с Android (`core/analytics/AnalyticsEvent.kt`).
 
-**Ключ AppMetrica общий с Android** (одно приложение в консоли) — поэтому имена и параметры событий совпадают
-с Android один в один, отчёты и воронки общие, платформа видна в разрезе «ОС».
+**Ключ AppMetrica общий с Android** (одно приложение в консоли). Общие события используют одинаковые имена и параметры.
+Платформа видна в разрезе «ОС». В Android RuStore Pay дополнительно отправляет `purchase_cancelled`,
+`purchase_revenue` (In-App Revenue) и `restore_finished`. События покупки Android также включают канал сборки
+в поле `store`. Интеграция StoreKit на iOS ещё не подключена.
 
 ## Как устроено
 
